@@ -1,0 +1,7 @@
+{
+  "name": "souq",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
