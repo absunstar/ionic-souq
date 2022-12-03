@@ -1,5 +1,8 @@
+:host{
+    --theme: #009688;
+}
 ion-content {
-  --background: #009688;
+  --background: var(--theme);
   h1 {
     text-align: center;
     color: #fff;
@@ -42,6 +45,7 @@ ion-avatar img{
 }
 .add-ads{
   transform: scale(2.5);
+  color: var(--theme);
 }
 .menu{
   display: block;

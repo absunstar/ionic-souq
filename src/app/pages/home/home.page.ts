@@ -17,4 +17,10 @@ export class HomePage implements OnInit {
       '_self'
     );
   }
+  addContent(){
+    window.open(
+      this.isite.baseURL + '/create_content?access_token=' + this.isite.accessToken,
+      '_self'
+    );
+  }
 }
