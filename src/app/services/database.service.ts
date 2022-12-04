@@ -6,7 +6,7 @@ import { PhotoService } from './photo.service';
 })
 export class DatabaseService {
   setting: setting;
-  list: [];
+  contentList: [];
   constructor(public photoService: PhotoService) {
     this.setting = {
       site_name: '',

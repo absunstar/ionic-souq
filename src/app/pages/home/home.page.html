@@ -1,59 +1,85 @@
-<ion-menu contentId="main-content">
-  <div class="menu">
-    <ion-item lines="full">
-      <ion-icon name="star" slot="start"></ion-icon>
-      <ion-label>Top Items</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-avatar slot="start">
-        <img src="/assets/images/logo.png" />
-      </ion-avatar>
-      <ion-label>
-        Avatar Item
-      </ion-label>
-    </ion-item>
-  </div>
-</ion-menu>
 <div class="ion-page" id="main-content">
-  <ion-header>
-    <ion-toolbar>
-      <ion-buttons slot="end">
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-      <ion-title >
-        <img [src]="isite.db.setting.logo" />
-        <h1>{{isite.db.setting.site_name}}</h1>
-      </ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content class="ion-padding" >
-   
-  </ion-content>
   <ion-tabs>
+    <ion-header >
+      <ion-toolbar >
+        <ion-title>
+          <img [src]="isite.db.setting.logo" />
+          <h1>{{isite.db.setting.site_name}}</h1>
+        </ion-title>
+        <ion-buttons slot="end">
+
+          <ion-button size="small">
+            <ion-icon name="notifications-outline"></ion-icon>
+          </ion-button>
+          <ion-button size="small">
+            <ion-icon name="search-outline"></ion-icon>
+          </ion-button>
+          <ion-button size="small">
+            <ion-icon name="person-circle-outline"></ion-icon>
+          </ion-button>
+          <ion-menu-button autoHide="true"></ion-menu-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content fullscreen="true" scrollEvents="true">
+      <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content
+          refreshingSpinner="crescent"
+          pullingIcon="refresh-outline"
+        ></ion-refresher-content>
+      </ion-refresher>
+      <ion-list>
+        <ion-card *ngFor="let content of isite.db.contentList">
+          <ion-item>
+            <ion-avatar item-start>
+              <img src="/assets/images/logo.png" />
+            </ion-avatar>
+            <h2>Marty McFly</h2>
+            <p>November 5, 1955</p>
+          </ion-item>
+        </ion-card>
+      </ion-list>
+    </ion-content>
     <ion-tab-bar slot="bottom">
-      <ion-tab-button tab="schedule">
-        <ion-icon name="calendar"></ion-icon>
-        <ion-label>Schedule</ion-label>
-        <ion-badge>6</ion-badge>
+      <ion-tab-button tab="search">
+        <ion-icon name="search"></ion-icon>
+        <ion-label>بحث</ion-label>
       </ion-tab-button>
-  
+
       <ion-tab-button tab="speakers">
-        <ion-icon name="person-circle"></ion-icon>
-        <ion-label>Speakers</ion-label>
+        <ion-icon name="heart"></ion-icon>
+        <ion-label>المفضله</ion-label>
       </ion-tab-button>
       <ion-tab-button tab="add" (click)="addContent()">
-        <ion-icon class="add-ads" name="add-circle-outline"></ion-icon>
+        <ion-icon class="add-ads" name="add-circle"></ion-icon>
       </ion-tab-button>
-  
+
       <ion-tab-button tab="map">
         <ion-icon name="map"></ion-icon>
-        <ion-label>Map</ion-label>
+        <ion-label>خريطه</ion-label>
       </ion-tab-button>
-  
-      <ion-tab-button tab="about">
-        <ion-icon name="information-circle"></ion-icon>
-        <ion-label>About</ion-label>
+
+      <ion-tab-button tab="chat">
+        <ion-icon name="chatbox"></ion-icon>
+        <ion-label>الرسائل</ion-label>
+        <ion-badge>6</ion-badge>
       </ion-tab-button>
     </ion-tab-bar>
+
+    <ion-menu contentId="main-content" side="end">
+      <div class="menu">
+        <ion-item lines="full">
+          <ion-icon name="star" slot="start"></ion-icon>
+          <ion-label>Top Items</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-avatar slot="start">
+            <img src="/assets/images/logo.png" />
+          </ion-avatar>
+          <ion-label> Avatar Item </ion-label>
+        </ion-item>
+      </div>
+    </ion-menu>
   </ion-tabs>
 </div>

@@ -7,7 +7,12 @@ import { IsiteService } from '../../services/isite.service';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
-  constructor(public isite: IsiteService) {}
+  contentList : [];
+
+  constructor(public isite: IsiteService) {
+    this.isite.loadSetting();
+    this.isite.loadPosts();
+  }
 
   ngOnInit() {}
 
@@ -17,10 +22,15 @@ export class HomePage implements OnInit {
       '_self'
     );
   }
-  addContent(){
+  addContent() {
     window.open(
-      this.isite.baseURL + '/create_content?access_token=' + this.isite.accessToken,
+      this.isite.baseURL +
+        '/create_content?access_token=' +
+        this.isite.accessToken,
       '_self'
     );
+  }
+  doRefresh(event : Event){
+
   }
 }

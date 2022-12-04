@@ -1,32 +1,12 @@
-:host{
-    --theme: #009688;
+:host {
+  --theme: #009688;
 }
-ion-content {
+ion-toolbar{
   --background: var(--theme);
-  h1 {
-    text-align: center;
+  --color : #fff;
+  h1{
     color: #fff;
-  }
-  img {
-    width: 128px;
-    height: 128px;
-    display: block;
-    margin: 0 auto;
-    margin-top: 50px;
-    border-radius: 10px;
-  }
-  ion-button{
-    display: block;
-    margin: 0 auto;
-    margin-top: 20vh;
-    width: 50vw;
-    font-size: 22px;
-  }
-}
-ion-header {
-  h1 {
-       color: #000;
-       margin: 10px;
+    margin: 10px;
   }
   img {
     width: 32px;
@@ -36,19 +16,43 @@ ion-header {
     float: left;
     margin: 10px;
   }
- 
 }
-ion-avatar img{
+ion-content {
+  h1 {
+    text-align: center;
+    color: #fff;
+  }
+  ion-button {
+    display: block;
+    margin: 0 auto;
+    margin-top: 20vh;
+    width: 50vw;
+    font-size: 22px;
+  }
+}
+
+ion-menu {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+ion-avatar img {
   width: 32px;
   height: 32px;
   margin: 0;
 }
-.add-ads{
+ion-list {
+  background: transparent;
+}
+.add-ads {
   transform: scale(2.5);
   color: var(--theme);
 }
-.menu{
+.menu {
   display: block;
   background: #222428;
   height: 100%;
+}
+
+.tabs-inner {
+  flex: 0 !important;
 }

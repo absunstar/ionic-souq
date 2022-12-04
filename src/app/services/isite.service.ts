@@ -40,7 +40,7 @@ export class IsiteService {
     });
   }
 
-  msg(msg: string) {
+  toast(msg: string) {
     return this.toastCtrl
       .create({
         message: msg,
@@ -64,17 +64,16 @@ export class IsiteService {
     }
   }
   hideLoading() {
-    this.loader.dismiss();
+    if (this.loader) {
+      this.loader.dismiss();
+    }
   }
 
   async start() {
-    await this.showLoading();
+    // await this.showLoading();
     if (!this.accessToken) {
       this.accessToken =
         (await (await Preferences.get({ key: 'accessToken' })).value) || null;
-      if (this.accessToken) {
-        this.loadSetting();
-      }
     }
     if (!this.accessToken) {
       this.http
@@ -87,14 +86,17 @@ export class IsiteService {
                 key: 'accessToken',
                 value: this.accessToken,
               });
+              this.hideLoading();
             }
-            this.loadSetting();
           }
         });
+    } else {
+      this.hideLoading();
     }
   }
 
   async post(options: any) {
+    console.log('post.............', options);
     return new Promise((resolve, reject) => {
       if (!this.accessToken) {
         this.start();
@@ -114,10 +116,9 @@ export class IsiteService {
   }
 
   loadPosts() {
-    this.post({ url: this.baseURL + '/api/posts/all' }).then((res: any) => {
+    this.post({ url: this.baseURL + '/api/contents/all' }).then((res: any) => {
       if (res.done) {
-        this.db.list = res.list;
-        console.log(this.db.list);
+        this.db.contentList = res.list;
       }
     });
   }
@@ -127,11 +128,6 @@ export class IsiteService {
         if (res.done) {
           this.db.setting = res.doc;
           this.db.setting.logo = this.baseURL + this.db.setting.logo;
-          //  this.msg('التطبيق جاهز للعمل');
-          this.hideLoading();
-          setTimeout(() => {
-           // window.open(this.baseURL+'?access_token=' + this.accessToken, '_self');
-          }, 1000 * 3);
         }
       }
     );
