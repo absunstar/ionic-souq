@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">souq</string>
-    <string name="title_activity_main">souq</string>
-    <string name="package_name">io.ionic.starter</string>
-    <string name="custom_url_scheme">io.ionic.starter</string>
+    <string name="app_name">Haraj Tmor</string>
+    <string name="title_activity_main">Haraj Tmor</string>
+    <string name="package_name">com.harajtmor.app</string>
+    <string name="custom_url_scheme">com.harajtmor.app</string>
 </resources>

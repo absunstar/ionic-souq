@@ -6,7 +6,7 @@ import { PhotoService } from './photo.service';
 })
 export class DatabaseService {
   setting: setting;
-  contentList: [];
+  contentList: [content];
   constructor(public photoService: PhotoService) {
     this.setting = {
       site_name: '',
@@ -22,4 +22,10 @@ export interface UserPhoto {
 export interface setting {
   site_name: string;
   logo: string;
+}
+export interface content {
+  id: number;
+  image_url: string;
+  name : string;
+  date : Date;
 }

@@ -1,8 +1,8 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'souq',
+  appId: 'com.harajtmor.app',
+  appName: 'harajtmor',
   webDir: 'www',
   bundledWebRuntime: false
 };
