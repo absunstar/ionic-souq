@@ -17,7 +17,10 @@ export class HomePage implements OnInit {
     private actionSheetCtrl: ActionSheetController,
     private modalCtrl: ModalController
   ) {
-    this.isite.openOnlineSite();
+    // this.isite.openOnlineSite();
+    setTimeout(() => {
+      this.loadPosts();
+    }, 1000 * 3);
   }
 
   async login() {
@@ -62,7 +65,9 @@ export class HomePage implements OnInit {
     let result2 = JSON.stringify(result, null, 2);
     console.log(result2);
   }
+
   ngOnInit() {}
+
   loadMore(ev: Event) {
     console.log('Load More ...');
     setTimeout(() => {
@@ -78,7 +83,18 @@ export class HomePage implements OnInit {
       '_self'
     );
   }
+
   doRefresh(event: Event) {}
 
-
+  loadPosts() {
+    this.isite.api({ url: '/api/contents/all' }).subscribe((res: any) => {
+      if (res.done) {
+        res.list.forEach((ad) => {
+          ad.image_url = this.isite.baseURL + ad.image_url;
+        });
+        this.isite.db.contentList = res.list;
+        console.log(res);
+      }
+    });
+  }
 }

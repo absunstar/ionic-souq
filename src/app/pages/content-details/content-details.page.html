@@ -1,51 +1,13 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>content-details</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-<h1> Content Details</h1>
+  <h1>{{content.name}}</h1>
+  <img [src]="content.image_url">
 </ion-content>
 
-<ion-tab-bar slot="bottom">
-  <ion-tab-button tab="search">
-    <ion-icon name="search"></ion-icon>
-    <ion-label>بحث</ion-label>
-  </ion-tab-button>
-
-  <ion-tab-button tab="speakers">
-    <ion-icon name="heart"></ion-icon>
-    <ion-label>المفضله</ion-label>
-  </ion-tab-button>
-  <ion-tab-button tab="add" >
-    <ion-icon class="add-ads" name="add-circle"></ion-icon>
-  </ion-tab-button>
-
-  <ion-tab-button tab="map">
-    <ion-icon name="map"></ion-icon>
-    <ion-label>خريطه</ion-label>
-  </ion-tab-button>
-
-  <ion-tab-button tab="chat">
-    <ion-icon name="chatbox"></ion-icon>
-    <ion-label>الرسائل</ion-label>
-    <ion-badge>6</ion-badge>
-  </ion-tab-button>
-</ion-tab-bar>
-
-
-<ion-menu contentId="main-content" side="end" type="overlay">
-  <div class="menu">
-    <ion-item lines="full">
-      <ion-icon name="star" slot="start"></ion-icon>
-      <ion-label>Top Items</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-avatar slot="start">
-        <img src="/assets/images/logo.png" />
-      </ion-avatar>
-      <ion-label> Avatar Item </ion-label>
-    </ion-item>
-  </div>
-</ion-menu>

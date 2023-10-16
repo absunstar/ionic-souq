@@ -25,7 +25,8 @@
       <ion-item
         button
         *ngFor="let content of isite.db.contentList"
-        [routerLink]="['/content-details' ]"
+        [routerLink]="['/content-details']"
+        [queryParams]="{id: content.id}"
       >
         <ion-avatar slot="start">
           <img [src]="content.image_url" />
@@ -93,7 +94,9 @@
         <ion-toolbar>
           <ion-title>Modal</ion-title>
           <ion-buttons slot="end">
-            <ion-button color="light" (click)="modal.dismiss()">Close</ion-button>
+            <ion-button color="light" (click)="modal.dismiss()"
+              >Close</ion-button
+            >
           </ion-buttons>
         </ion-toolbar>
         <ion-list>
@@ -137,5 +140,4 @@
       </ion-content>
     </ng-template>
   </ion-modal>
-
 </ion-app>
