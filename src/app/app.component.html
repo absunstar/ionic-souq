@@ -1,9 +1,7 @@
 <ion-app>
   <ion-header>
     <ion-toolbar>
-      <ion-buttons slot="start">
-       
-      </ion-buttons>
+      <ion-buttons slot="start"> </ion-buttons>
 
       <ion-title>
         <img [src]="isite.db.setting.logo" />
@@ -11,14 +9,14 @@
       </ion-title>
 
       <ion-buttons slot="end">
-        <ion-back-button ></ion-back-button>
+        <ion-back-button></ion-back-button>
         <ion-button size="small">
           <ion-icon name="notifications-outline"></ion-icon>
         </ion-button>
         <ion-button size="small">
           <ion-icon name="search-outline"></ion-icon>
         </ion-button>
-        <ion-button size="small">
+        <ion-button size="small" (click)="userProfile()">
           <ion-icon name="person-circle-outline"></ion-icon>
         </ion-button>
         <ion-menu-button autoHide="false"></ion-menu-button>
@@ -31,19 +29,47 @@
 
   <ion-menu contentId="main-app-content" side="end" type="overlay">
     <div class="menu">
-      <ion-item lines="full">
-        <ion-icon name="star" slot="start"></ion-icon>
-        <ion-label>Top Items</ion-label>
-      </ion-item>
-      <ion-item>
-        <ion-avatar slot="start">
-          <img src="/assets/images/logo.png" />
+      <ion-item
+        lines="full"
+        *ngIf="isite.db.userSession && isite.db.userSession.id"
+      >
+        <ion-avatar slot="end">
+          <img [src]="isite.db.userSession.image_url" />
         </ion-avatar>
-        <ion-label> Avatar Item </ion-label>
+        <ion-label class="right"
+          >{{ isite.db.userSession.name }}
+          {{ isite.db.userSession.last_name }}</ion-label
+        >
       </ion-item>
-      <ion-button expand="block" (click)="login()">
+      <ion-item *ngIf="isite.db.userSession && isite.db.userSession.id">
+        <ion-icon name="mail-outline" class="main-color" slot="end"></ion-icon>
+        <ion-label class="right"> {{ isite.db.userSession.email }} </ion-label>
+      </ion-item>
+      <ion-button
+        *ngIf="!isite.db.userSession || !isite.db.userSession.id"
+        expand="block"
+        (click)="login()"
+      >
         <ion-icon name="log-in-outline"></ion-icon>
         <ion-label>تسجيل دخول</ion-label>
+      </ion-button>
+      <ion-button
+      color="light"
+        *ngIf="isite.db.userSession && isite.db.userSession.id"
+        expand="block"
+        (click)="userManage()"
+      >
+      <ion-icon name="settings-outline"></ion-icon>
+        <ion-label>إدارة حسابك الشخصي</ion-label>
+      </ion-button>
+      <ion-button
+        color="danger"
+        *ngIf="isite.db.userSession && isite.db.userSession.id"
+        expand="block"
+        (click)="logout()"
+      >
+        <ion-icon name="log-out-outline"></ion-icon>
+        <ion-label>تسجيل خروج</ion-label>
       </ion-button>
     </div>
   </ion-menu>
@@ -51,17 +77,21 @@
   <ion-router-outlet id="main-app-content"></ion-router-outlet>
 
   <ion-tab-bar slot="bottom">
-    <ion-tab-button (click)="login()">
+   <!--  <ion-tab-button (click)="login()">
       <ion-icon name="search"></ion-icon>
       <ion-label>بحث</ion-label>
-    </ion-tab-button>
+    </ion-tab-button> -->
 
-    <ion-tab-button id="open-modal">
-      <ion-icon name="heart"></ion-icon>
+    <ion-tab-button id="open-modal" *ngIf="isite.db.userSession && isite.db.userSession.id">
+      <ion-icon [routerLink]="['/favorite']" name="heart"></ion-icon>
       <ion-label>المفضله</ion-label>
     </ion-tab-button>
-    <ion-tab-button tab="add">
-      <ion-icon class="add-ads" name="add-circle" (click)="CreateNewAd()"></ion-icon>
+    <ion-tab-button tab="add" >
+      <ion-icon
+        class="add-ads"
+        name="add-circle"
+        (click)="createNewAd()"
+      ></ion-icon>
     </ion-tab-button>
 
     <ion-tab-button tab="map">
@@ -69,10 +99,10 @@
       <ion-label>خريطه</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="chat">
-      <ion-icon name="chatbox"></ion-icon>
+    <ion-tab-button tab="chat" *ngIf="isite.db.userSession && isite.db.userSession.id">
+      <ion-icon name="chatbox" (click)="userMessages()"></ion-icon>
       <ion-label>الرسائل</ion-label>
-      <ion-badge>6</ion-badge>
+      <ion-badge>{{isite.db.userSession.message_count}}</ion-badge>
     </ion-tab-button>
   </ion-tab-bar>
 </ion-app>

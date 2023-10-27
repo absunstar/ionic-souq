@@ -6,6 +6,7 @@ import { PhotoService } from './photo.service';
 })
 export class DatabaseService {
   setting: setting;
+  userSession : userSession;
   content : content;
   contentList: [content];
   constructor(public photoService: PhotoService) {
@@ -23,6 +24,16 @@ export interface UserPhoto {
 export interface setting {
   site_name: string;
   logo: string;
+}
+export interface userSession {
+  id: number;
+  message_count: number;
+  email: string;
+  name: string;
+  last_name: string;
+  image_url: string;
+  feedback_list: any[];
+
 }
 export interface content {
   id: number;

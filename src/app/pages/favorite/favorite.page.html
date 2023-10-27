@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>المفضلات</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item button *ngFor="let content of contentList">
+      <ion-avatar
+        slot="start"
+        [routerLink]="['/content-details']"
+        [queryParams]="{id: content.id}"
+      >
+        <img [src]="content.image_url" />
+      </ion-avatar>
+      <ion-label
+        class="ion-text-wrap"
+        [routerLink]="['/content-details']"
+        [queryParams]="{id: content.id}"
+      >
+        <h3>{{ content.name }}</h3>
+        <p class="time-publish">
+          {{content.$time}} <ion-icon name="time-outline"></ion-icon>
+        </p>
+      </ion-label>
+      <!-- ion-badge -->
+      <ion-button color="danger" (click)="updateFavorite(content.id)">
+        <ion-icon name="trash-outline"></ion-icon>
+        <ion-label>إزالة</ion-label>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+</ion-content>

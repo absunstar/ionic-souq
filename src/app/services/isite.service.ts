@@ -15,6 +15,7 @@ import {
   ToastController,
   LoadingController,
 } from '@ionic/angular';
+import { timeout } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -34,7 +35,6 @@ export class IsiteService {
     public loadingCtrl: LoadingController,
     public iab: InAppBrowser
   ) {
-    // this.start();
     let ii = setInterval(() => {
       if (this.accessToken) {
         clearInterval(ii);
@@ -47,6 +47,7 @@ export class IsiteService {
         // });
       }
     }, 1000);
+    this.start();
   }
 
   alert(title: any, msg: any) {
@@ -84,8 +85,34 @@ export class IsiteService {
       message: ' انتظر قليلا - جارى التحميل',
     });
     await loader.present();
-
     if (!this.accessToken) {
+      this.accessToken =
+        (await (await Preferences.get({ key: 'accessToken' })).value) || null;
+    }
+    this.api({
+      url: '/x-api/session',
+      body: {},
+    }).subscribe((resUserSession: any) => {
+      loader.dismiss();
+      if (resUserSession.done) {
+        if (resUserSession.session.user) {
+          this.db.userSession = {
+            id: resUserSession.session.user.id,
+            email: resUserSession.session.user.email,
+            name: resUserSession.session.user.profile.name,
+            last_name: resUserSession.session.user.profile.last_name,
+            image_url: resUserSession.session.user.profile.image_url,
+            feedback_list: resUserSession.session.user.feedback_list,
+            message_count: resUserSession.session.user.message_count,
+            
+          };
+          this.db.userSession.image_url =
+            this.baseURL + this.db.userSession.image_url;
+        }
+      }
+    });
+
+    /*     if (!this.accessToken) {
       this.accessToken =
         (await (await Preferences.get({ key: 'accessToken' })).value) || null;
     }
@@ -108,11 +135,10 @@ export class IsiteService {
     } else {
       loader.dismiss();
       this.busy = false;
-    }
+    } */
   }
 
   api(options: any) {
-  
     if (typeof options == 'string') {
       options = {
         url: options,

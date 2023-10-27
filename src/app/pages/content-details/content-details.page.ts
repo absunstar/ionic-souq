@@ -14,7 +14,6 @@ export class ContentDetailsPage implements OnInit {
   connectModal: false;
   content: content;
   userAd: userAd;
-  userSession: userSession;
   user: user;
   category_list: [category_list];
 
@@ -53,13 +52,7 @@ export class ContentDetailsPage implements OnInit {
 
       date: new Date(),
     };
-    this.userSession = {
-      id: 0,
-      name: '',
-      email: '',
-      last_name: '',
-      image_url: '',
-    };
+
     this.userAd = {
       id: 0,
       profile: {},
@@ -84,7 +77,6 @@ export class ContentDetailsPage implements OnInit {
     setTimeout(() => {
       this.getContent();
     }, 1000);
-    this.getUserSession();
   }
 
   ngOnInit() {}
@@ -94,7 +86,6 @@ export class ContentDetailsPage implements OnInit {
   }
 
   showReportReply(code) {
-
     let reply = document.querySelector(`#reply_${code}`);
     console.log(reply);
     if (reply) {
@@ -122,38 +113,6 @@ export class ContentDetailsPage implements OnInit {
           this.userAd = resUser.doc;
         }
       });
-  }
-
-  getUserSession() {
-    this.route.queryParams.subscribe((params) => {
-      this.isite
-        .api({
-          url: '/x-api/session',
-          body: {},
-        })
-        .subscribe((resUserSession: any) => {
-          if (resUserSession.done) {
-
-            if (resUserSession.session.user) {
-              this.userSession = {
-                id: resUserSession.session.user.id,
-                email: resUserSession.session.user.email,
-                name: resUserSession.session.user.profile.name,
-                last_name: resUserSession.session.user.profile.last_name,
-                image_url: resUserSession.session.user.profile.image_url,
-              };
-              this.userSession.image_url =
-                this.isite.baseURL + this.userSession.image_url;
-
-              this.activity.favorite =
-                resUserSession.session.user.feedback_list.some(
-                  (_f) =>
-                    _f.type && _f.ad && _f.type.id == 2 && _f.ad.id == params.id
-                );
-            }
-          }
-        });
-    });
   }
 
   getSetting() {
@@ -202,6 +161,7 @@ export class ContentDetailsPage implements OnInit {
         },
       })
       .subscribe((res_category_list: any) => {
+        console.log(this.isite.db.userSession,"hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
         if (res_category_list.done) {
           res_category_list.list.forEach((_c) => {
             _c.image_url = this.isite.baseURL + _c.image_url;
@@ -274,6 +234,13 @@ export class ContentDetailsPage implements OnInit {
               });
             }
 
+            if (this.isite.db.userSession) {
+              this.activity.favorite =
+                this.isite.db.userSession.feedback_list.some(
+                  (_f) =>
+                    _f.type && _f.ad && _f.type.id == 2 && _f.ad.id == params.id
+                );
+            }
             this.getSetting();
             this.getAdUser(res.doc.store.user.id);
             this.getCategories(this.content.main_category);
@@ -282,7 +249,6 @@ export class ContentDetailsPage implements OnInit {
     });
   }
   showReplyComment(c) {
-    
     if (c.$showReply) {
       c.$showReply = false;
     } else {
@@ -295,7 +261,9 @@ export class ContentDetailsPage implements OnInit {
     if (this.activity.busy) {
       return;
     }
-    if (!this.userSession || !this.userSession.id) {
+
+    this.activity.$error = '';
+    if (!this.isite.db.userSession || !this.isite.db.userSession.id) {
       const modal = await this.modalCtrl.create({
         component: LoginPage,
         initialBreakpoint: 0.5,
@@ -316,9 +284,18 @@ export class ContentDetailsPage implements OnInit {
         this.activity.follow = false;
       }
     } else if (type == 'reply_comment') {
+      if (!comment.$reply_comment) {
+        this.activity.$error = 'يجب كتابة تعليق';
+        return;
+      }
       this.activity.comment_code = other;
       this.activity.$comment = comment.$reply_comment;
       comment.$reply_comment = '';
+    } else if (type == 'comment') {
+      if (!this.activity.comment) {
+        this.activity.$error = 'يجب كتابة تعليق';
+        return;
+      }
     } else if (
       type == 'report' ||
       type == 'report_comment' ||
@@ -351,13 +328,13 @@ export class ContentDetailsPage implements OnInit {
             month: 'short',
             day: 'numeric',
           });
-          if (type == 'comment') {
+          if (type == 'comment' && this.isite.db.userSession) {
             this.content.comment_list.push({
               user: {
-                name: this.userSession.name,
-                id: this.userSession.id,
-                last_name: this.userSession.last_name,
-                image_url: this.isite.baseURL + this.userSession.image_url,
+                name: this.isite.db.userSession.name,
+                id: this.isite.db.userSession.id,
+                last_name: this.isite.db.userSession.last_name,
+                image_url: this.isite.db.userSession.image_url,
               },
               comment_type: this.activity.comment_type,
               comment: this.activity.comment,
@@ -367,15 +344,15 @@ export class ContentDetailsPage implements OnInit {
 
             this.activity.comment = '';
             this.content.number_comments += 1;
-          } else if (type == 'reply_comment') {
+          } else if (type == 'reply_comment' && this.isite.db.userSession) {
             this.content.comment_list.forEach((_c, indx) => {
               if (this.activity.comment_code == _c.code) {
                 _c.reply_list = _c.reply_list || [];
                 _c.reply_list.push({
                   user: {
-                    name: this.userSession.name,
-                    last_name: this.userSession.last_name,
-                    image_url: this.isite.baseURL + this.userSession.image_url,
+                    name: this.isite.db.userSession.name,
+                    last_name: this.isite.db.userSession.last_name,
+                    image_url: this.isite.db.userSession.image_url,
                   },
                   comment_type: this.activity.comment_type,
                   comment: this.activity.$comment,

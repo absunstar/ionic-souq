@@ -13,6 +13,7 @@ import { LoginPage } from '../login/login.page';
 })
 export class HomePage implements OnInit {
   contentList: [];
+  top_category_list: [top_category_list];
 
   constructor(
     public isite: IsiteService,
@@ -22,6 +23,7 @@ export class HomePage implements OnInit {
     // this.isite.openOnlineSite();
     setTimeout(() => {
       this.loadPosts();
+      this.getCategories();
     }, 1000 * 3);
   }
 
@@ -66,6 +68,28 @@ export class HomePage implements OnInit {
     let result = await actionSheet.onDidDismiss();
     let result2 = JSON.stringify(result, null, 2);
     console.log(result2);
+  }
+
+  getCategories() {
+    this.isite
+      .api({
+        url: '/api/main_categories/all',
+        body: {
+          where: {
+            status: 'active',
+          },
+          top: true,
+        },
+      })
+      .subscribe((res_category_list: any) => {
+        if (res_category_list.done) {
+          res_category_list.top_list.forEach((_c) => {
+            _c.image_url = this.isite.baseURL + _c.image_url;
+          });
+          this.top_category_list = res_category_list.top_list;
+          /* this.category_list = res_category_list.list; */
+        }
+      });
   }
 
   ngOnInit() {}
@@ -122,4 +146,10 @@ export class HomePage implements OnInit {
       }
     });
   }
+}
+export interface top_category_list {
+  id: number;
+  image_url: string;
+  name_ar: string;
+  name_en: string;
 }

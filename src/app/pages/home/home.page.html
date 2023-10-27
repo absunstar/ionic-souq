@@ -1,5 +1,17 @@
-<ion-app id="main-content" >
-  <ion-content >
+<ion-app id="main-content">
+
+  <ion-content>
+    <div class="tags">
+      <ion-item class="tag-list">
+        <ion-col *ngFor="let top_category of top_category_list">
+          <a class="tab_link" href="">
+            <img class="userImage" src="{{top_category.image_url}}" />
+            <p class="category-name">{{top_category.name_ar}}</p>
+            </a
+          >
+        </ion-col>
+      </ion-item>
+    </div>
     <ion-list>
       <ion-item
         button
@@ -49,5 +61,4 @@
       </ion-infinite-scroll-content>
     </ion-infinite-scroll>
   </ion-content>
-
 </ion-app>

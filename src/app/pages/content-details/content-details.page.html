@@ -226,6 +226,8 @@
         >إرسال
         <ion-icon name="send-outline"></ion-icon>
       </ion-button>
+      <p class="center red">{{activity.$error}}</p>
+
     </div>
 
     <div *ngIf="!content.disable_replies_feature">
@@ -237,7 +239,7 @@
           <ion-icon
             class="icon-message"
             name="mail-outline"
-            *ngIf="userSession.id != c.user.id"
+            *ngIf="isite.db.userSession && isite.db.userSession.id != c.user.id"
             (click)="showMessage(c.user)"
           ></ion-icon>
           <a href="/profile/{{c.user.id}}/{{c.user.name}}/{{c.user.last_name}}">
@@ -257,7 +259,7 @@
 
         <p class="text-comment bold">{{c.comment}}</p>
         <a
-          *ngIf="userSession.id"
+          *ngIf="isite.db.userSession &&isite.db.userSession.id"
           class="pointer reply"
           (click)="showReplyComment(c)"
         >
@@ -266,7 +268,7 @@
         </a>
         <a
           class="left pointer font-20"
-          *ngIf="userSession.id != c.user.id"
+          *ngIf="isite.db.userSession && isite.db.userSession.id != c.user.id"
           (click)="showReportComment(c.code)"
         >
           <i class="fa fa-bars"></i>
@@ -294,7 +296,7 @@
                 <ion-icon
                   class="icon-message"
                   name="mail-outline"
-                  *ngIf="userSession.id != r.user.id"
+                  *ngIf="isite.db.userSession && isite.db.userSession.id != r.user.id"
                   (click)="showMessage(r.user)"
                 ></ion-icon>
                 <a href="/profile/{{r.user.id}}/{{r.user.name}}/{{r.user.last_name}}">
@@ -313,17 +315,17 @@
               </div>
 
               <p class="text-comment bold">{{r.comment}}</p>
-              <a
-                *ngIf="userSession.id"
+              <!-- <a
+                *ngIf="isite.db.userSession.id"
                 class="pointer reply"
                 (click)="showReplyComment(r.code)"
               >
                 <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
                 رد
-              </a>
+              </a> -->
               <a
                 class="left pointer font-20"
-                *ngIf="userSession.id != r.user.id && userSession.id"
+                *ngIf="isite.db.userSession && isite.db.userSession.id != r.user.id"
                 (click)="showReportReply(r.code)"
               >
                 <i class="fa fa-bars"></i>
