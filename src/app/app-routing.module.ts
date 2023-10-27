@@ -41,7 +41,12 @@ const routes: Routes = [
   {
     path: 'online',
     loadChildren: () => import('./pages/online/online.module').then( m => m.OnlinePageModule)
+  },
+  {
+    path: 'menu',
+    loadChildren: () => import('./pages/menu/menu.module').then( m => m.MenuPageModule)
   }
+
 ];
 @NgModule({
   imports: [

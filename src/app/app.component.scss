@@ -1,0 +1,26 @@
+ion-toolbar {
+    --background: var(--theme);
+    --color: #fff;
+
+    h1 {
+        color: #fff;
+        margin: 10px;
+    }
+
+    img {
+        width: 32px;
+        height: 32px;
+        display: inline;
+        border-radius: 5px;
+        float: left;
+        margin: 10px;
+    }
+}
+
+ion-menu {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+#main-app-content{
+    margin-top: 15%;
+  }

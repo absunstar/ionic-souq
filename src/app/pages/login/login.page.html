@@ -1,6 +1,6 @@
 <ion-header>
 	<ion-toolbar color="primary">
-		<ion-title>Login</ion-title>
+		<ion-title>تسجيل دخول</ion-title>
 	</ion-toolbar>
 </ion-header>
 
@@ -8,14 +8,14 @@
 	<div>
 		<div class="input-group">
 			<ion-item>
-				<ion-input type="email" placeholder="Email" ></ion-input>
+				<ion-input type="email" [(ngModel)]="user.email" placeholder="Email" ></ion-input>
 			</ion-item>
 			<ion-item>
-				<ion-input type="password" placeholder="Password" ></ion-input>
+				<ion-input type="password" [(ngModel)]="user.password" placeholder="Password" ></ion-input>
 			</ion-item>
 		</div>
-
-		<ion-button type="submit" expand="block">Log in</ion-button>
+		<p class="errors" *ngIf="user.$error">{{user.$error}}</p>
+		<ion-button (click)="loginUser(user)" type="submit" expand="block">دخول</ion-button>
 		<ion-button (click)="close()" type="button" expand="block" color="light" fill="clear"
 			>Not yet a member? Sign up!
 		</ion-button>

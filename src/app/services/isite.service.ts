@@ -22,7 +22,7 @@ import {
 export class IsiteService {
   busy: boolean = false;
   accessToken: string = null;
-  baseURL: string = 'https://harajtmor.com';
+  baseURL: string = 'http://127.0.0.1';
   loader: HTMLIonLoadingElement = null;
   browser: InAppBrowserObject = null;
   constructor(
@@ -34,7 +34,7 @@ export class IsiteService {
     public loadingCtrl: LoadingController,
     public iab: InAppBrowser
   ) {
-    this.start();
+    // this.start();
     let ii = setInterval(() => {
       if (this.accessToken) {
         clearInterval(ii);
@@ -122,7 +122,7 @@ export class IsiteService {
     console.log(' [ API ] ', options);
 
     options.headers = options.headers || {};
-    options.headers['Access-Token'] = this.accessToken;
+    options.headers['Access-Token'] = this.accessToken || '';
     options.url = this.baseURL + options.url;
     if (options.type == 'get') {
       return this.http.get(options.url, {
@@ -155,7 +155,7 @@ export class IsiteService {
         clearInterval(ii);
         if (!this.browser) {
           this.browser = this.iab.create(
-            this.baseURL + '?access_token=' + this.accessToken,
+            this.baseURL + '/create-ad' + '?access-token=' + this.accessToken,
             '_self',
             {
               location: 'no', //Or 'no'

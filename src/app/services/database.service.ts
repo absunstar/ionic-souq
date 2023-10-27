@@ -28,5 +28,8 @@ export interface content {
   id: number;
   image_url: string;
   name : string;
-  date : Date;
+  address: any;
+  set_price: string;
+  quantity_list: any[];
+  $time : string;
 }

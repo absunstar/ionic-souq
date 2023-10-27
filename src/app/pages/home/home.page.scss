@@ -1,6 +1,7 @@
 :host {
   --theme: #009688;
 }
+
 ion-toolbar{
   --background: var(--theme);
   --color : #fff;
@@ -17,7 +18,22 @@ ion-toolbar{
     margin: 10px;
   }
 }
+.price {
+  width: 100% !important;
+  text-align: right;
+  padding: 0;
+  font-size: 12px;
+}
+
+.line-through {
+  text-decoration: line-through;
+}
+
+.save-money {
+ font-size: x-small;
+}
 ion-content {
+ 
   h1 {
     text-align: center;
     color: #fff;
