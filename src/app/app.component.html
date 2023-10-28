@@ -4,25 +4,17 @@
       <ion-buttons slot="start"> </ion-buttons>
 
       <ion-title>
-        <img [src]="isite.db.setting.logo" />
-        <h1>{{ isite.db.setting.site_name }}</h1>
+        <a [routerLink]="['/home']">
+          <img [src]="isite.db.setting.logo" />
+          <p>{{ isite.db.setting.site_name }}</p>
+        </a>
       </ion-title>
 
       <ion-buttons slot="end">
-        <ion-back-button></ion-back-button>
-        <ion-button size="small">
-          <ion-icon name="notifications-outline"></ion-icon>
-        </ion-button>
-        <ion-button size="small">
-          <ion-icon name="search-outline"></ion-icon>
-        </ion-button>
-        <ion-button size="small" (click)="userProfile()">
+        <ion-button size="small" (click)="userProfile()" *ngIf="isite.db.userSession && isite.db.userSession.id">
           <ion-icon name="person-circle-outline"></ion-icon>
         </ion-button>
         <ion-menu-button autoHide="false"></ion-menu-button>
-        <!-- <ion-button (click)="menu()">
-          <ion-icon name="menu-outline"></ion-icon>
-        </ion-button> -->
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
@@ -54,12 +46,12 @@
         <ion-label>تسجيل دخول</ion-label>
       </ion-button>
       <ion-button
-      color="light"
+        color="light"
         *ngIf="isite.db.userSession && isite.db.userSession.id"
         expand="block"
         (click)="userManage()"
       >
-      <ion-icon name="settings-outline"></ion-icon>
+        <ion-icon name="settings-outline"></ion-icon>
         <ion-label>إدارة حسابك الشخصي</ion-label>
       </ion-button>
       <ion-button
@@ -77,16 +69,17 @@
   <ion-router-outlet id="main-app-content"></ion-router-outlet>
 
   <ion-tab-bar slot="bottom">
-   <!--  <ion-tab-button (click)="login()">
-      <ion-icon name="search"></ion-icon>
-      <ion-label>بحث</ion-label>
-    </ion-tab-button> -->
-
-    <ion-tab-button id="open-modal" *ngIf="isite.db.userSession && isite.db.userSession.id">
+    <ion-tab-button
+      id="open-modal"
+      *ngIf="isite.db.userSession && isite.db.userSession.id"
+    >
       <ion-icon [routerLink]="['/favorite']" name="heart"></ion-icon>
       <ion-label>المفضله</ion-label>
     </ion-tab-button>
-    <ion-tab-button tab="add" >
+    <ion-tab-button
+      tab="add"
+      *ngIf="isite.db.userSession && isite.db.userSession.id"
+    >
       <ion-icon
         class="add-ads"
         name="add-circle"
@@ -94,15 +87,13 @@
       ></ion-icon>
     </ion-tab-button>
 
-    <ion-tab-button tab="map">
-      <ion-icon name="map"></ion-icon>
-      <ion-label>خريطه</ion-label>
-    </ion-tab-button>
-
-    <ion-tab-button tab="chat" *ngIf="isite.db.userSession && isite.db.userSession.id">
+    <ion-tab-button
+      tab="chat"
+      *ngIf="isite.db.userSession && isite.db.userSession.id"
+    >
       <ion-icon name="chatbox" (click)="userMessages()"></ion-icon>
       <ion-label>الرسائل</ion-label>
-      <ion-badge>{{isite.db.userSession.message_count}}</ion-badge>
+      <ion-badge>{{ isite.db.userSession.message_count }}</ion-badge>
     </ion-tab-button>
   </ion-tab-bar>
 </ion-app>

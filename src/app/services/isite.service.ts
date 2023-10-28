@@ -23,7 +23,7 @@ import { timeout } from 'rxjs';
 export class IsiteService {
   busy: boolean = false;
   accessToken: string = null;
-  baseURL: string = 'http://127.0.0.1';
+  baseURL: string = 'https://harajtmor.com';
   loader: HTMLIonLoadingElement = null;
   browser: InAppBrowserObject = null;
   constructor(
@@ -38,13 +38,7 @@ export class IsiteService {
     let ii = setInterval(() => {
       if (this.accessToken) {
         clearInterval(ii);
-        // this.initBrowser();
-        // this.api('/api/default_setting/get').subscribe((res: any) => {
-        //   if (res.done) {
-        //     this.db.setting = res.doc;
-        //     this.db.setting.logo = this.baseURL + this.db.setting.logo;
-        //   }
-        // });
+        this.getSetting();
       }
     }, 1000);
     this.start();
@@ -89,11 +83,23 @@ export class IsiteService {
       this.accessToken =
         (await (await Preferences.get({ key: 'accessToken' })).value) || null;
     }
+    this.getUserSession(() => {
+      loader.dismiss();
+    });
+  }
+
+  async getUserSession(callback) {
     this.api({
       url: '/x-api/session',
       body: {},
     }).subscribe((resUserSession: any) => {
-      loader.dismiss();
+      if (callback) {
+        callback();
+      }
+      if (resUserSession.session.accessToken) {
+        this.accessToken = resUserSession.session.accessToken;
+        Preferences.set({ key: 'accessToken', value: this.accessToken });
+      }
       if (resUserSession.done) {
         if (resUserSession.session.user) {
           this.db.userSession = {
@@ -104,41 +110,25 @@ export class IsiteService {
             image_url: resUserSession.session.user.profile.image_url,
             feedback_list: resUserSession.session.user.feedback_list,
             message_count: resUserSession.session.user.message_count,
-            
           };
           this.db.userSession.image_url =
             this.baseURL + this.db.userSession.image_url;
         }
       }
     });
+  }
 
-    /*     if (!this.accessToken) {
-      this.accessToken =
-        (await (await Preferences.get({ key: 'accessToken' })).value) || null;
-    }
-    if (!this.accessToken) {
-      this.http
-        .post(this.baseURL + '/x-api/session', {})
-        .subscribe((res: any) => {
-          if (res.done) {
-            this.accessToken = res.session.accessToken;
-            if (this.accessToken) {
-              Preferences.set({
-                key: 'accessToken',
-                value: this.accessToken,
-              });
-              loader.dismiss();
-              this.busy = false;
-            }
-          }
-        });
-    } else {
-      loader.dismiss();
-      this.busy = false;
-    } */
+  async getSetting() {
+    this.api('/api/default_setting/get').subscribe((res: any) => {
+      if (res.done) {
+        this.db.setting = res.doc;
+        this.db.setting.logo = this.baseURL + this.db.setting.logo;
+      }
+    });
   }
 
   api(options: any) {
+    
     if (typeof options == 'string') {
       options = {
         url: options,

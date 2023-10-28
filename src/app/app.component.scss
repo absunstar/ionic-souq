@@ -1,30 +1,34 @@
 ion-toolbar {
-    --background: var(--theme);
-    --color: #fff;
-
-    h1 {
-        color: #fff;
-        margin: 10px;
+  --background: var(--theme);
+  --color: #000;
+  a {
+    text-decoration: none;
+    p {
+      font-size: 13px;
+      color: green;
+      font-weight: bold;
+      padding-top: 7px;
     }
 
     img {
-        width: 32px;
-        height: 32px;
-        display: inline;
-        border-radius: 5px;
-        float: left;
-        margin: 10px;
+      width: 32px;
+      height: 32px;
+      display: inline;
+      border-radius: 5px;
+      float: left;
+      margin: 10px;
     }
+  }
 }
 
 .right {
-    text-align: right;
+  text-align: right;
 }
 
 ion-menu {
-    margin-top: 0px;
-    margin-bottom: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
-#main-app-content{
-    margin-top: 15%;
-  }
+#main-app-content {
+  margin-top: 15%;
+}

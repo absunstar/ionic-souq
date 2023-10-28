@@ -1,394 +1,390 @@
 .main {
-    text-align: right;
+  text-align: right;
 }
 
-
 .contact-ad {
-    cursor: pointer;
-    color: #007f45;
-    margin: 10px;
-    padding: 3px;
-    font-size: 19px;
+  cursor: pointer;
+  color: #007f45;
+  margin: 10px;
+  padding: 3px;
+  font-size: 19px;
 }
 
 .text-right {
-
-    text-align: right;
+  text-align: right;
 }
 
 .contact-ad:hover {
-    color: #979797;
+  color: #979797;
 }
 
 .underline-hover:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .contentName {
-    font-size: 29px !important;
-    font-weight: bold;
-    color: #009688;
-    text-align: right;
-    margin: 5px;
+  font-size: 29px !important;
+  font-weight: bold;
+  color: #009688;
+  text-align: right;
+  margin: 5px;
 }
 
 .warning_message {
-    font-size: 21px;
-    background: #defff3;
-    margin-top: 15px !important;
-    color: #00784a;
-    border-radius: 13px;
-    padding: 20px !important;
+  font-size: 21px;
+  background: #defff3;
+  margin-top: 15px !important;
+  color: #00784a;
+  border-radius: 13px;
+  padding: 20px !important;
 }
 
 .reply-comment {
-    display: none;
+  display: none;
 }
 
 .reply {
-    font-size: 20px;
-    border: 2px solid #b4b4b4;
-    border-radius: 25px;
-    background: #f4f4f4;
-    color: #5f5f5f;
-    padding: 0px 13px 0px 13px;
-    margin: 5px;
+  font-size: 20px;
+  border: 2px solid #b4b4b4;
+  border-radius: 25px;
+  background: #f4f4f4;
+  color: #5f5f5f;
+  padding: 0px 13px 0px 13px;
+  margin: 5px;
 }
 
 .textarea {
-    border: #aba4a4 2px solid;
-    border-radius: 5px;
+  border: #aba4a4 2px solid;
+  border-radius: 5px;
 }
 
 .send-reply-btn {
-    font-size: 20px;
-    border: 3px solid #b4b4b4;
-    border-radius: 25px;
-    background: #f4f4f4;
-    color: #5f5f5f;
-    cursor: pointer;
-    padding: 10px 15px 10px 15px;
+  font-size: 20px;
+  border: 3px solid #b4b4b4;
+  border-radius: 25px;
+  background: #f4f4f4;
+  color: #5f5f5f;
+  cursor: pointer;
+  padding: 10px 15px 10px 15px;
 }
 
 .bg-white {
-    background-color: white !important;
+  background-color: white !important;
 }
 
 .price {
-    width: 100% !important;
-    text-align: right;
-    padding: 0;
-    margin-right: 5px;
-    font-size: 17px;
-    font-weight: bold;
+  width: 100% !important;
+  text-align: right;
+  padding: 0;
+  margin-right: 5px;
+  font-size: 17px;
+  font-weight: bold;
 }
 
 .line-through {
-    text-decoration: line-through;
+  text-decoration: line-through;
 }
 
 .green {
-    color: green;
+  color: green;
 }
 
 .save-money {
-    background: red;
-    margin: 5px;
-    color: white;
-    padding: 1px 7px 1px 7px;
-    border-radius: 13px;
-    display: inline-block;
+  background: red;
+  margin: 5px;
+  color: white;
+  padding: 1px 7px 1px 7px;
+  border-radius: 13px;
+  display: inline-block;
 }
 
 .red {
-    color: red;
+  color: red;
 }
 
 .warning-message {
-    font-size: 21px;
-    background: #defff3;
-    margin-top: 15px !important;
-    color: #00784a;
-    border-radius: 13px;
-    padding: 20px !important;
-    justify-content: right;
+  font-size: 21px;
+  background: #defff3;
+  margin-top: 15px !important;
+  color: #00784a;
+  border-radius: 13px;
+  padding: 20px !important;
+  justify-content: right;
 }
 
 .padding-right {
-    padding-right: 5px;
+  padding-right: 5px;
 }
 
 .post-statistics {
-    border-radius: 13px;
-    border-color: #009688 !important;
-    background: #e6e6e6;
-    padding: 15px;
-    width: 100%;
-    margin: 10px !important;
-    color: #2c7171;
-    font-size: 20px;
+  border-radius: 13px;
+  border-color: #009688 !important;
+  background: #e6e6e6;
+  padding: 15px;
+  width: 100%;
+  margin: 10px !important;
+  color: #2c7171;
+  font-size: 20px;
 }
 
 .user-action {
-    color: #919191;
-    font-size: 13px;
-    align-items: center;
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: row;
-    margin: 5px 0 !important;
+  color: #919191;
+  font-size: 13px;
+  align-items: center;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  margin: 5px 0 !important;
 }
 
 .comment-count {
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 0.7em;
-    height: 0.7em;
-    padding: 10px;
-    background-color: rgb(228, 231, 245);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 0.7em;
+  height: 0.7em;
+  padding: 10px;
+  background-color: rgb(228, 231, 245);
 }
 
 .select-all {
-    user-select: all;
+  user-select: all;
 }
 
 .bold {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .userPrint {
-    user-select: text;
+  user-select: text;
 }
 
 .ad-code {
-    font-size: 23px;
-    color: #6b6b6b;
-    margin: 25px 10px 12px 13px !important;
+  font-size: 23px;
+  color: #6b6b6b;
+  margin: 25px 10px 12px 13px !important;
 }
 
 .ad-code-text {
-    border: 1px solid #cecece;
-    padding: 10px;
-    background: #e6e6e6;
-    border-radius: 17px;
-    font-family: cursive;
+  border: 1px solid #cecece;
+  padding: 10px;
+  background: #e6e6e6;
+  border-radius: 17px;
+  font-family: cursive;
 }
 
 .userName {
-    font-size: 18px !important;
-    color: #007f45;
+  font-size: 18px !important;
+  color: #007f45;
 }
 
 .main-color {
-    color: #007f45;
-
+  color: #007f45;
 }
 
 .bg-ad {
-    background-color: #fffaed;
-    border-radius: 13px;
+  background-color: #fffaed;
+  border-radius: 13px;
 }
 
 .gray-desc {
-    color: #5a6257;
+  color: #5a6257;
 }
 
 .pre_text {
-    white-space: pre-wrap !important;
-
+  white-space: pre-wrap !important;
 }
 
 .content-img {
-    width: 90% !important;
-    height: auto !important;
+  width: 90% !important;
+  height: auto !important;
 }
 
 .statistics {
-    margin: 20px !important;
-    background: aliceblue;
-    border-radius: 13px;
-    display: inline-table;
-    padding: 20px;
-    border: unset;
-    width: 15%;
-    color: #2c7171;
-    font-size: 17px;
-    text-decoration: none;
+  margin: 20px !important;
+  background: aliceblue;
+  border-radius: 13px;
+  display: inline-table;
+  padding: 20px;
+  border: unset;
+  width: 15%;
+  color: #2c7171;
+  font-size: 17px;
+  text-decoration: none;
 }
 
 .userad-logo {
-    border-radius: 50%;
-    height: 25px;
-    width: 25px;
-    margin: -5px 0px -5px 0px !important;
+  border-radius: 50%;
+  height: 25px;
+  width: 25px;
+  margin: -5px 0px -5px 0px !important;
 }
 
 .text-comment {
-    font-size: 20px;
-    margin-right: 5px;
-    font-family: ui-monospace;
-    white-space: pre-wrap;
+  font-size: 20px;
+  margin-right: 5px;
+  font-family: ui-monospace;
+  white-space: pre-wrap;
 }
 
 .comment-ad {
-    border-radius: 15px !important;
-    margin-top: 20px !important;
-    padding: 15px !important;
+  border-radius: 15px !important;
+  margin-top: 20px !important;
+  padding: 15px !important;
 }
 
 .time-publish {
-    /* padding: 0px 15px 0px; */
-    color: #919191;
-    font-size: 14px;
+  /* padding: 0px 15px 0px; */
+  color: #919191;
+  font-size: 14px;
 }
 
 .content-ad {
-    border-radius: 15px !important;
-    background: rgb(242, 242, 242) !important;
-    padding: 8px !important;
-    margin: 2px;
+  border-radius: 15px !important;
+  background: rgb(242, 242, 242) !important;
+  padding: 8px !important;
+  margin: 2px;
 }
 
 .icon-message {
-    font-size: 20px;
-    padding: 0px 7px;
-    margin: 0px 0px -5px;
-    color: #007f45;
+  font-size: 20px;
+  padding: 0px 7px;
+  margin: 0px 0px -5px;
+  color: #007f45;
 }
 
 .userImage {
-    border-radius: 50%;
-    height: 25px;
-    width: 25px;
-    margin: -5px 10px -8px 0px !important;
-    color: #007f45;
+  border-radius: 50%;
+  height: 25px;
+  width: 25px;
+  margin: -5px 10px -8px 0px !important;
+  color: #007f45;
 }
 
 .btn-group a {
-    background-color: white;
-    border: 1px solid #00ab6f;
-    display: inline-flex;
-    width: 23%;
-    color: #2c7171;
-    font-size: 20px;
-    border-radius: 7px;
-    margin-top: 10px !important;
-    margin-left: 5px !important;
-    padding: 17px 23px;
-    cursor: pointer;
+  background-color: white;
+  border: 1px solid #00ab6f;
+  display: inline-flex;
+  width: 23%;
+  color: #2c7171;
+  font-size: 20px;
+  border-radius: 7px;
+  margin-top: 10px !important;
+  margin-left: 5px !important;
+  padding: 17px 23px;
+  cursor: pointer;
 }
 
 .btn-group:after {
-    content: "";
-    clear: both;
-    display: table;
+  content: "";
+  clear: both;
+  display: table;
 }
 
 .bg-red {
-    background-color: red !important;
+  background-color: red !important;
 }
 
 .btn-group a:not(:last-child) {
-    border-right: none;
-    /* Prevent double borders */
+  border-right: none;
+  /* Prevent double borders */
 }
 
 /* Add a background color on hover */
 .btn-group a:hover {
-    background-color: #edf9ff;
+  background-color: #edf9ff;
 }
 
 .blue {
-    color: #3f51b5 !important;
+  color: #3f51b5 !important;
 }
 
 .center {
-    text-align: center;
+  text-align: center;
 }
 
 .pointer {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .font-17 {
-    font-size: 17px !important;
+  font-size: 17px !important;
 }
 
 .font-18 {
-    font-size: 18px !important;
+  font-size: 18px !important;
 }
 
 .font-19 {
-    font-size: 19px !important;
+  font-size: 19px !important;
 }
 
 .font-20 {
-    font-size: 20px !important;
+  font-size: 20px !important;
 }
 
 .font-21 {
-    font-size: 21px !important;
+  font-size: 21px !important;
 }
 
 .font-22 {
-    font-size: 22px !important;
+  font-size: 22px !important;
 }
 
 .font-23 {
-    font-size: 23px !important;
+  font-size: 23px !important;
 }
 
 .font-24 {
-    font-size: 24px !important;
+  font-size: 24px !important;
 }
 
 .font-25 {
-    font-size: 25px !important;
+  font-size: 25px !important;
 }
 
 .font-26 {
-    font-size: 26px !important;
+  font-size: 26px !important;
 }
 
 .font-27 {
-    font-size: 27px !important;
+  font-size: 27px !important;
 }
 
 .font-28 {
-    font-size: 28px !important;
+  font-size: 28px !important;
 }
 
 .font-29 {
-    font-size: 29px !important;
+  font-size: 29px !important;
 }
 
 .font-30 {
-    font-size: 30px !important;
+  font-size: 30px !important;
 }
 
 .font-31 {
-    font-size: 31px !important;
+  font-size: 31px !important;
 }
 
 .font-32 {
-    font-size: 32px !important;
+  font-size: 32px !important;
 }
 
 .font-33 {
-    font-size: 33px !important;
+  font-size: 33px !important;
 }
 
 .font-34 {
-    font-size: 34px !important;
+  font-size: 34px !important;
 }
 
 .font-35 {
-    font-size: 35px !important;
+  font-size: 35px !important;
 }
 
 .fms-title {
-    font-size: 1.2em;
-    color: #929aaa;
+  font-size: 1.2em;
+  color: #929aaa;
 }

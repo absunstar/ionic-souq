@@ -1,14 +1,12 @@
 <ion-app id="main-content">
-
   <ion-content>
     <div class="tags">
       <ion-item class="tag-list">
         <ion-col *ngFor="let top_category of top_category_list">
-          <a class="tab_link" href="">
-            <img class="userImage" src="{{top_category.image_url}}" />
-            <p class="category-name">{{top_category.name_ar}}</p>
-            </a
-          >
+          <a (click)="loadPosts({more : false , category_id :top_category.id })">
+            <img src="{{top_category.image_url}}" />
+            <p>{{top_category.name_ar}}</p>
+          </a>
         </ion-col>
       </ion-item>
     </div>

@@ -1,6 +1,11 @@
-
-
-<ion-content class="main " >
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="main">
   <div class="content-ad">
     <p class="contentName">{{content.name}}</p>
     <div class="bg-ad">
@@ -227,7 +232,6 @@
         <ion-icon name="send-outline"></ion-icon>
       </ion-button>
       <p class="center red">{{activity.$error}}</p>
-
     </div>
 
     <div *ngIf="!content.disable_replies_feature">
@@ -299,13 +303,15 @@
                   *ngIf="isite.db.userSession && isite.db.userSession.id != r.user.id"
                   (click)="showMessage(r.user)"
                 ></ion-icon>
-                <a href="/profile/{{r.user.id}}/{{r.user.name}}/{{r.user.last_name}}">
+                <a
+                  href="/profile/{{r.user.id}}/{{r.user.name}}/{{r.user.last_name}}"
+                >
                   <span class="user-name-stlye"
                     >{{r.user.name}} {{r.user.last_name}}</span
                   >
                   <img class="userImage" [src]="r.user.image_url" />
                 </a>
-      
+
                 <span class="comment-count">
                   <span *ngIf="10 > i + 1">0</span> {{i + 1}}
                 </span>

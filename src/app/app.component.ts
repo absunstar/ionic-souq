@@ -3,6 +3,7 @@ import { ActionSheetController, ModalController } from '@ionic/angular';
 import { LoginPage } from './pages/login/login.page';
 import { IsiteService } from './services/isite.service';
 import { AlertController } from '@ionic/angular';
+import { Router } from '@angular/router';
 import {
   InAppBrowser,
   InAppBrowserObject,
@@ -21,7 +22,8 @@ export class AppComponent {
     public isite: IsiteService,
     private modalCtrl: ModalController,
     public iab: InAppBrowser,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private router: Router
   ) {}
 
   async logout() {
@@ -42,8 +44,14 @@ export class AppComponent {
                 url: '/api/user/logout',
               })
               .subscribe((resUser: any) => {
+                if (resUser.accessToken) {
+                  this.isite.accessToken = resUser.accessToken;
+                }
                 if (resUser.done) {
-                  window.location.href = '/home';
+                  this.isite.db.userSession = null;
+                  this.isite.getUserSession(()=>{
+                    this.router.navigateByUrl('/', { replaceUrl: true });
+                  })
                 } else {
                 }
               });
@@ -65,13 +73,6 @@ export class AppComponent {
     await modal.present();
   }
 
-  /*   async logout() {
-    const modal = await this.modalCtrl.create({
-      component: LoginPage,
-      initialBreakpoint: 0.5,
-    });
-    await modal.present();
-  } */
 
   userMessages() {
     this.iab
@@ -102,7 +103,7 @@ export class AppComponent {
       .show();
   }
 
-  userProfile() {    
+  userProfile() {
     if (this.isite.db.userSession) {
       this.iab
         .create(

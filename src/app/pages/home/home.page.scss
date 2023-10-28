@@ -5,7 +5,7 @@
 .userImage {
   max-width: 25px;
   height: 30px;
-    width: 30px;
+  width: 30px;
 }
 
 .category-name {
@@ -18,23 +18,45 @@
 }
 .tag-list {
   display: flex;
-  justify-content: end;
-  align-items: center;
-  flex-wrap: nowrap;
+  align-items: flex-start;
+  flex-wrap: wrap;
   list-style-type: none;
   margin: 0;
-  padding: 0;
+  padding: 10px;
   width: 100%;
   overflow-x: auto;
   text-align: right;
   max-width: 1010px;
-  /* flex-direction: row-reverse; */
+  gap: 0px;
+  flex-direction: row-reverse;
+  align-content: space-around;
 }
 
 .tags {
   margin: 0 10px;
   display: -webkit-box;
   justify-content: flex-end;
+  a {
+    text-decoration: none;
+    display: grid;
+    align-content: space-evenly;
+    justify-content: space-between;
+    align-items: stretch;
+    justify-items: stretch;
+  }
+  img {
+    width: 32px;
+    height: 32px;
+    display: inline;
+    border-radius: 5px;
+    float: left;
+    margin: 10px;
+  }
+  p{
+    font-size: 15px;
+    text-align: center;
+    font-weight: bold;
+  }
 }
 
 .tag {
@@ -65,43 +87,43 @@ ion-scroll[scrollX] {
     display: inline-block;
   }
 
-  .selectable-icon{
+  .selectable-icon {
     margin: 10px 20px 10px 20px;
     color: red;
     font-size: 100px;
   }
 
-  ion-avatar img{
+  ion-avatar img {
     margin: 10px;
   }
 }
 
-ion-scroll[scroll-avatar]{
+ion-scroll[scroll-avatar] {
   height: 60px;
 }
 
 /* Hide ion-content scrollbar */
-::-webkit-scrollbar{
-  display:none;
+::-webkit-scrollbar {
+  display: none;
 }
 
 .top-items {
   align-items: center;
-    flex-wrap: nowrap;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    overflow-x: overlay;
-    text-align: right;
-    max-width: 1010px;
-    justify-content: flex-end;
+  flex-wrap: nowrap;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: overlay;
+  text-align: right;
+  max-width: 1010px;
+  justify-content: flex-end;
 }
 
-ion-toolbar{
+ion-toolbar {
   --background: var(--theme);
-  --color : #fff;
-  h1{
+  --color: #fff;
+  h1 {
     color: #fff;
     margin: 10px;
   }
@@ -126,10 +148,9 @@ ion-toolbar{
 }
 
 .save-money {
- font-size: x-small;
+  font-size: x-small;
 }
 ion-content {
- 
   h1 {
     text-align: center;
     color: #fff;
@@ -172,7 +193,8 @@ ion-list {
 ion-modal {
   --height: 50%;
   --border-radius: 16px;
-  --box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+    0 4px 6px -4px rgb(0 0 0 / 0.1);
 }
 
 ion-modal::part(backdrop) {
