@@ -4,7 +4,7 @@
       <ion-buttons slot="start"> </ion-buttons>
 
       <ion-title>
-        <a [routerLink]="['/home']">
+        <a (click)="gotoHome()">
           <img [src]="isite.db.setting.logo" />
           <p>{{ isite.db.setting.site_name }}</p>
         </a>

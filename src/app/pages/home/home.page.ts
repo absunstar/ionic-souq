@@ -3,6 +3,7 @@ import { InfiniteScrollCustomEvent } from '@ionic/angular';
 import { ActionSheetController, ModalController } from '@ionic/angular';
 import { LoginPage } from '../login/login.page';
 import { MenuPage } from '../menu/menu.page';
+import { ActivatedRoute } from '@angular/router';
 import { IsiteService } from '../../services/isite.service';
 import {
   NavController,
@@ -28,17 +29,20 @@ export class HomePage implements OnInit {
     public isite: IsiteService,
     private actionSheetCtrl: ActionSheetController,
     private modalCtrl: ModalController,
-    public loadingCtrl: LoadingController
+    public loadingCtrl: LoadingController,
+    private route: ActivatedRoute
   ) {
-    if (!this.isite.accessToken) {
-      this.isite.getUserSession(() => {
+    this.route.queryParams.subscribe((params) => {
+      if (!this.isite.accessToken) {
+        this.isite.getUserSession(() => {
+          this.loadPosts({ more: false });
+          this.getCategories();
+        });
+      } else {
         this.loadPosts({ more: false });
         this.getCategories();
-      });
-    } else {
-      this.loadPosts({ more: false });
-      this.getCategories();
-    }
+      }
+    });
   }
 
   async menu() {
@@ -85,6 +89,9 @@ export class HomePage implements OnInit {
   }
 
   getCategories() {
+    if (this.top_category_list && this.top_category_list.length > 0) {
+      return false;
+    }
     this.isite
       .api({
         url: '/api/main_categories/all',
@@ -111,7 +118,7 @@ export class HomePage implements OnInit {
     this.loadPosts({ more: true });
     setTimeout(() => {
       (ev as InfiniteScrollCustomEvent).target.complete();
-    }, 1000 * 5);
+    }, 1000 * 2);
   }
 
   addContent() {
@@ -133,6 +140,8 @@ export class HomePage implements OnInit {
 
     if (options.more) {
       this.page_number = this.page_number + 1;
+    } else {
+      this.page_number = 0;
     }
     this.isite
       .api({

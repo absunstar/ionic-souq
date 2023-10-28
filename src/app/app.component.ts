@@ -199,4 +199,8 @@ export class AppComponent {
       )
       .show();
   }
+
+  async gotoHome(){
+    this.router.navigateByUrl('/home?time=' + Date.now(), { replaceUrl: true });
+  }
 }
