@@ -6,6 +6,7 @@ import { PhotoService } from './photo.service';
 })
 export class DatabaseService {
   setting: setting;
+  time: time;
   userSession : userSession;
   content : content;
   contentList: [content];
@@ -20,7 +21,9 @@ export interface UserPhoto {
   filepath: string;
   webviewPath: string;
 }
-
+export interface time {
+  time1: string;
+}
 export interface setting {
   site_name: string;
   logo: string;

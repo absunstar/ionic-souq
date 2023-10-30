@@ -8,6 +8,7 @@ import {
   InAppBrowser,
   InAppBrowserObject,
 } from '@awesome-cordova-plugins/in-app-browser/ngx';
+import { timeout } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -24,7 +25,9 @@ export class AppComponent {
     public iab: InAppBrowser,
     private alertController: AlertController,
     private router: Router
-  ) {}
+  ) {
+    this.startTime()
+  }
 
   async logout() {
     const alert = await this.alertController.create({
@@ -63,6 +66,32 @@ export class AppComponent {
     await alert.present();
 
     const { role } = await alert.onDidDismiss();
+  }
+
+  startTime() {
+    var d = new Date();
+    var local = d.getTime();
+    var offset = d.getTimezoneOffset() * (60 * 1000);
+    var utc = new Date(local + offset);
+    var riyadh = new Date(utc.getTime() + 3 * 60 * 60 * 1000);
+    let h = riyadh.getHours();
+    let m = riyadh.getMinutes();
+    let s = riyadh.getSeconds();
+    m = this.checkTime(m);
+    s = this.checkTime(s);
+    this.isite.db.time.time1 = h + ":" + m + ":" + s; 
+    console.log(this.isite.db.time.time1);
+     /* document.getElementById("time1").innerHTML = h + ":" + m + ":" + s; */ 
+    setTimeout(() => {
+      this.startTime();
+    }, 1000);
+  }
+
+   checkTime(i) {
+    if (i < 10) {
+      i = "0" + i;
+    }
+    return i;
   }
 
   async login() {
@@ -139,6 +168,8 @@ export class AppComponent {
         .show();
     }
   }
+
+  
 
   userManage() {
     if (this.isite.db.userSession) {

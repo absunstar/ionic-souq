@@ -74,7 +74,9 @@ export class IsiteService {
       return false;
     }
     this.busy = true;
-
+    this.db.time = {
+      time1 : ''
+    };
     const loader = await this.loadingCtrl.create({
       message: ' انتظر قليلا - جارى التحميل',
     });

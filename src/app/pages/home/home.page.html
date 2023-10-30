@@ -1,9 +1,11 @@
-<ion-app id="main-content">
+<ion-app class="main-content">
   <ion-content>
     <div class="tags">
       <ion-item class="tag-list">
         <ion-col *ngFor="let top_category of top_category_list">
-          <a (click)="loadPosts({more : false , category_id :top_category.id })">
+          <a
+            (click)="loadPosts({more : false , category_id :top_category.id })"
+          >
             <img src="{{top_category.image_url}}" />
             <p>{{top_category.name_ar}}</p>
           </a>
@@ -12,17 +14,19 @@
     </div>
     <ion-list>
       <ion-item
+        class="content-items"
         button
         *ngFor="let content of isite.db.contentList"
         [routerLink]="['/content-details']"
         [queryParams]="{id: content.id}"
       >
-        <ion-avatar slot="start">
+      
+        <ion-avatar slot="start" class="avatar-content">
           <img [src]="content.image_url" />
         </ion-avatar>
 
         <ion-label class="ion-text-wrap">
-          <h3>{{ content.name }}</h3>
+          <h3 class="ellipsis-txt">{{ content.name }}</h3>
           <p class="time-publish">
             {{content.$time}} <ion-icon name="time-outline"></ion-icon>
           </p>
@@ -30,24 +34,22 @@
         <!-- ion-badge -->
         <ion-label slot="end">
           <div *ngIf="content.set_price == 'yes'">
-            <ion-row *ngFor="let q of content.quantity_list">
-              <p class="price">
-                <span *ngIf="q.discount > 0" class="line-through red"
-                  >{{q.price}} {{q.currency.name_ar}}</span
-                >
-                <span class="green"> {{q.net_value}} </span>
-                {{q.currency.name_ar}}
-                <span *ngIf="q.unit.id"> / {{q.unit.name_ar}} </span>
-              </p>
-              <p class="save-money" *ngIf="q.discount > 0">
-                وفر {{q.discount}}
-                <span *ngIf="q.discount_type == 'percent'"> % </span>
-                <span *ngIf="q.discount_type == 'number'"> $ </span>
-              </p>
-            </ion-row>
+            <p class="price">
+              <span *ngIf="content.quantity_list[0].discount > 0" class="line-through red"
+                >{{content.quantity_list[0].price}} {{content.quantity_list[0].currency.name_ar}}</span
+              >
+              <span class="green"> {{content.quantity_list[0].net_value}} </span>
+              {{content.quantity_list[0].currency.name_ar}}
+              <span *ngIf="content.quantity_list[0].unit.id"> / {{content.quantity_list[0].unit.name_ar}} </span>
+            </p>
+            <p class="save-money" *ngIf="content.quantity_list[0].discount > 0">
+              وفر {{content.quantity_list[0].discount}}
+              <span *ngIf="content.quantity_list[0].discount_type == 'percent'"> % </span>
+              <span *ngIf="content.quantity_list[0].discount_type == 'number'"> $ </span>
+            </p>
           </div>
           <p class="time-publish text-right" *ngIf="content.address.country.id">
-            {{content.address.country.name_ar}} {{content.address.gov.name_ar}}
+            {{content.address.gov.name_ar}}
             <ion-icon name="location-outline"></ion-icon>
           </p>
         </ion-label>
