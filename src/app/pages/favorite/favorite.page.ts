@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { IsiteService } from '../../services/isite.service';
 import { ActivatedRoute } from '@angular/router';
-import { LoginPage } from '../login/login.page';
 import { ActionSheetController, ModalController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
+import { LoginPage } from '../login/login.page';
 
 @Component({
   selector: 'app-favorite',

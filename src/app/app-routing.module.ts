@@ -48,6 +48,10 @@ const routes: Routes = [
   },  {
     path: 'favorite',
     loadChildren: () => import('./pages/favorite/favorite.module').then( m => m.FavoritePageModule)
+  },
+  {
+    path: 'create-ad',
+    loadChildren: () => import('./pages/create-ad/create-ad.module').then( m => m.CreateAdPageModule)
   }
 
 

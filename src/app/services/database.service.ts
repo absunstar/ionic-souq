@@ -13,6 +13,19 @@ export class DatabaseService {
   constructor(public photoService: PhotoService) {
     this.setting = {
       site_name: '',
+      tax_number_show: false,
+      commercial_registration_no_show: false,
+      commercial_registration_no: '',
+      tax_number: '',
+      you_tube_accouunt: '',
+      instagram_accouunt: '',
+      twitter_accouunt: '',
+      facebook_account: '',
+      powered_whatsapp: '',
+      powered_logo: '',
+      powered_title: '',
+      phone: '',
+      email: '',
       logo: '../assets/images/logo.png',
     };
   }
@@ -26,6 +39,19 @@ export interface time {
 }
 export interface setting {
   site_name: string;
+  tax_number_show :boolean;
+  commercial_registration_no_show :boolean;
+  commercial_registration_no: string;
+  tax_number: string;
+  you_tube_accouunt: string;
+  instagram_accouunt: string;
+  twitter_accouunt: string;
+  facebook_account: string;
+  phone: string;
+  powered_whatsapp: string;
+  powered_logo: string;
+  powered_title: string;
+  email: string;
   logo: string;
 }
 export interface userSession {
@@ -45,5 +71,6 @@ export interface content {
   address: any;
   set_price: string;
   quantity_list: any[];
+  store: any;
   $time : string;
 }

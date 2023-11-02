@@ -87,7 +87,6 @@ export class ContentDetailsPage implements OnInit {
 
   showReportReply(code) {
     let reply = document.querySelector(`#reply_${code}`);
-    console.log(reply);
     if (reply) {
       /*   if (reply.style.display === "block") {
         reply.style.display = "none";
@@ -161,7 +160,6 @@ export class ContentDetailsPage implements OnInit {
         },
       })
       .subscribe((res_category_list: any) => {
-        console.log(this.isite.db.userSession,"hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
         if (res_category_list.done) {
           res_category_list.list.forEach((_c) => {
             _c.image_url = this.isite.baseURL + _c.image_url;
@@ -254,7 +252,6 @@ export class ContentDetailsPage implements OnInit {
     } else {
       c.$showReply = true;
     }
-    console.log(c);
   }
 
   async updateFeedback(type, other, comment) {

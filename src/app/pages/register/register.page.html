@@ -1,9 +1,102 @@
-<ion-header>
+<ion-header class="main-padding">
   <ion-toolbar>
-    <ion-title>register</ion-title>
+    <ion-title>تسجيل حساب جديد</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <ion-list>
+    <ion-item>
+      <ion-input
+        [clearInput]="true"
+        label="الإسم الأول"
+        labelPlacement="floating"
+        placeholder="أدخل الإسم الأول"
+        [(ngModel)]="user.first_name"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input
+        [clearInput]="true"
+        label="الإسم الثاني"
+        labelPlacement="floating"
+        placeholder="أدخل الإسم الثاني أو إسم العائلة"
+        [(ngModel)]="user.last_name"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input
+        [clearInput]="true"
+        label="البريد الإلكتروني"
+        type="email"
+        labelPlacement="floating"
+        helperText="أدخل بريد إلكتروني صالح"
+        errorText="البريد الإلكتروني غير صالح"
+        placeholder="أدخل بريد إلكتروني صالح"
+        [(ngModel)]="user.email"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-select
+        label="الدولة"
+        placeholder="إختر دولتك"
+        okText="إختيار"
+        cancelText="إغلاق"
+        [(ngModel)]="user.country"
+      >
+        <ion-select-option
+          *ngFor="let country of countriesList"
+          value="{{country.id}}"
+        >
+        {{country.name_ar}} - {{country.country_code}}
+         <!--  <img src="{{country.image_url}}" />
+          <ion-avatar> <img src="{{country.image_url}}" /></ion-avatar>
+          <ion-img width="80" height="80" src="{{country.image_url}}"></ion-img> -->
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+    
+    <ion-item>
+      <ion-input
+        [clearInput]="true"
+        label="رقم الجوال"
+        labelPlacement="floating"
+        type="tel"
+        placeholder="888-888-8888"
+        [(ngModel)]="user.mobile"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input
+        [clearInput]="true"
+        label="كلمة السر"
+        labelPlacement="floating"
+        type="password"
+        placeholder="أدخل كلمة سر"
+        [(ngModel)]="user.password"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input
+        [clearInput]="true"
+        label="إعادة كتابة كلمة السر"
+        labelPlacement="floating"
+        type="password"
+        placeholder="كلمة سر متطابقة"
+        [(ngModel)]="user.re_password"
+      ></ion-input>
+    </ion-item>
+  </ion-list>
+  <p class="center red font-20">{{user.$error}}</p>
+  <ion-button
+       (click)="addUser(user)"
+        expand="block"
+        color="secondary"
+      >
+        <ion-icon name="person-add-outline"></ion-icon>
+        <ion-label>إنشاء حساب جديد</ion-label>
+      </ion-button>
+  <p class="font-18 center">
+    المستخدم موجود <a (click)="login()" class="underline-hover">تسجيل الآن</a>
+  </p>
 </ion-content>

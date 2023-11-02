@@ -20,10 +20,12 @@ import { timeout } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
+/* https://harajtmor.com */
+/* http://127.0.0.1 */
 export class IsiteService {
   busy: boolean = false;
   accessToken: string = null;
-  baseURL: string = 'https://harajtmor.com';
+  baseURL: string = 'http://127.0.0.1';
   loader: HTMLIonLoadingElement = null;
   browser: InAppBrowserObject = null;
   constructor(
@@ -124,7 +126,23 @@ export class IsiteService {
     this.api('/api/default_setting/get').subscribe((res: any) => {
       if (res.done) {
         this.db.setting = res.doc;
+        this.db.setting.tax_number_show = res.doc.tax_number_show || false;
+        this.db.setting.commercial_registration_no_show = res.doc.commercial_registration_no_show || false;
+        this.db.setting.commercial_registration_no = res.doc.commercial_registration_no || '';
+        this.db.setting.tax_number = res.doc.tax_number || '';
+        this.db.setting.you_tube_accouunt = res.doc.you_tube_accouunt || '';
+        this.db.setting.instagram_accouunt = res.doc.instagram_accouunt || '';
+        this.db.setting.twitter_accouunt = res.doc.twitter_accouunt || '';
+        this.db.setting.facebook_account = res.doc.facebook_account || '';
+        this.db.setting.powered_whatsapp = res.doc.powered_whatsapp || '';
+        this.db.setting.powered_logo = res.doc.powered_logo || '';
+        this.db.setting.powered_title = res.doc.powered_title || '';
+        this.db.setting.phone = res.doc.phone || '';
+        this.db.setting.email = res.doc.email || '';
         this.db.setting.logo = this.baseURL + this.db.setting.logo;
+        if(this.db.setting.powered_logo){
+        this.db.setting.powered_logo = this.baseURL + this.db.setting.powered_logo;
+        }
       }
     });
   }

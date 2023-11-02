@@ -1,0 +1,58 @@
+.deal_1 {
+  color: #4f4f4f !important;
+}
+
+.deal_2 {
+  color: #858585 !important;
+}
+
+.bold {
+  font-weight: bold;
+}
+.main-padding {
+  padding: 10px 10px 50px 5px; 
+}
+.text-right {
+  text-align: right;
+}
+.font-23 {
+  font-size: 23px !important;
+}
+.font-21 {
+  font-size: 21px !important;
+}
+.font-29 {
+  font-size: 29px !important;
+}
+.main-color {
+  color: #009688;
+}
+.category-list {
+  padding: 50px !important;
+}
+
+.category {
+  border: 1px solid #ddd;
+  text-align: center;
+  padding: 20px;
+  border-radius: 5px;
+  background: #f4f4f4;
+  margin: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.h-bg-green :hover {
+  background: radial-gradient(#009688, #2f6c44);
+  color: white;
+}
+
+.category img {
+  width: 128px;
+  height: 128px;
+}
+
+.category p {
+  text-align: center;
+  font-size: 20px;
+}

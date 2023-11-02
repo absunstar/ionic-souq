@@ -4,7 +4,7 @@
       <ion-title class="main-title">
         <a (click)="gotoHome()">
           <img [src]="isite.db.setting.logo" />
-          <p>{{ isite.db.setting.site_name }}</p>
+          <p >{{ isite.db.setting.site_name }}</p>
         </a>
       </ion-title>
       <ion-button
@@ -45,14 +45,14 @@
         <ion-avatar slot="end">
           <img [src]="isite.db.userSession.image_url" />
         </ion-avatar>
-        <ion-label class="right"
+        <ion-label class="right main-color bold"
           >{{ isite.db.userSession.name }}
           {{ isite.db.userSession.last_name }}</ion-label
         >
       </ion-item>
       <ion-item *ngIf="isite.db.userSession && isite.db.userSession.id">
         <ion-icon name="mail-outline" class="main-color" slot="end"></ion-icon>
-        <ion-label class="right"> {{ isite.db.userSession.email }} </ion-label>
+        <ion-label class="right main-color bold"> {{ isite.db.userSession.email }} </ion-label>
       </ion-item>
       <ion-button
         *ngIf="!isite.db.userSession || !isite.db.userSession.id"
@@ -64,11 +64,12 @@
       </ion-button>
       <ion-button
         *ngIf="!isite.db.userSession || !isite.db.userSession.id"
+        [routerLink]="['/register']"
         expand="block"
         color="secondary"
       >
         <ion-icon name="person-add-outline"></ion-icon>
-        <ion-label>تسجيل</ion-label>
+        <ion-label>حساب جديد</ion-label>
       </ion-button>
       <ion-button
         color="light"
@@ -89,11 +90,93 @@
         <ion-label>تسجيل خروج</ion-label>
       </ion-button>
     </div>
+    <ion-footer collapse="fade">
+      <!--     <ion-toolbar class="menu-toolbar">
+        <ion-grid>
+          <ion-row>
+            <ion-col>دعم الهاتف</ion-col>
+            <ion-col>دعم البريد الإلكتروني</ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-toolbar> -->
+      <ion-toolbar class="menu-toolbar">
+        <p class="right-float">
+          <span class="footer-title">
+            : <ion-icon name="call-outline"></ion-icon> هاتف الدعم
+          </span>
+          <label class="footer-data"
+            ><a href="tel:{{ isite.db.setting.phone }}">{{
+              isite.db.setting.phone
+            }}</a></label
+          >
+        </p>
+        <p class="right-float">
+          <span class="footer-title">
+            : <ion-icon name="mail-outline"></ion-icon> بريد الدعم
+          </span>
+          <label class="footer-data"
+            ><a href="mailto:{{ isite.db.setting.email }}">{{
+              isite.db.setting.email
+            }}</a></label
+          >
+        </p>
+      </ion-toolbar>
+      <ion-toolbar class="menu-toolbar">
+        <p *ngIf="isite.db.setting.tax_number_show">
+          <span class="footer-title"> : الرقم الضريبي</span>
+          <label class="footer-data">{{ isite.db.setting.tax_number }}</label>
+        </p>
+        <p *ngIf="isite.db.setting.commercial_registration_no_show">
+          <span class="footer-title"> : رقم السجل التجاري</span>
+          <label class="footer-data">{{
+            isite.db.setting.commercial_registration_no
+          }}</label>
+        </p>
+      </ion-toolbar>
+      <ion-toolbar class="menu-toolbar">
+        <p class="center">
+          <a
+            class="social-logo"
+            href="https://www.facebook.com/{{
+              isite.db.setting.facebook_account
+            }}"
+            ><ion-icon name="logo-facebook"></ion-icon
+          ></a>
+          <a
+            class="social-logo"
+            href="https://www.twitter.com/{{
+              isite.db.setting.twitter_accouunt
+            }}"
+            ><ion-icon name="logo-twitter"></ion-icon
+          ></a>
+          <a
+            class="social-logo"
+            href="https://www.instagram.com/{{
+              isite.db.setting.instagram_accouunt
+            }}"
+            ><ion-icon name="logo-instagram"></ion-icon
+          ></a>
+          <a
+            class="social-logo"
+            href="https://www.youtube.com/{{
+              isite.db.setting.you_tube_accouunt
+            }}"
+            ><ion-icon name="logo-youtube"></ion-icon
+          ></a>
+        </p>
+      </ion-toolbar>
+      <ion-toolbar class="menu-toolbar" *ngIf="isite.db.setting.powered_whatsapp">
+        <a id="vat_link" href="https://wa.me/{{isite.db.setting.powered_whatsapp}}" target="_blank" rel="noopener noreferrer">
+          <img src="{{isite.db.setting.powered_logo}}" />
+          <p class="font-22">{{isite.db.setting.powered_title}}</p>
+        </a>
+      </ion-toolbar>
+    </ion-footer>
   </ion-menu>
 
   <ion-router-outlet id="main-app-content"></ion-router-outlet>
 
-  <ion-tab-bar slot="bottom">
+  <ion-tab-bar slot="bottom" *ngIf="isite.db.userSession && isite.db.userSession.id">
     <ion-tab-button
       id="open-modal"
       *ngIf="isite.db.userSession && isite.db.userSession.id"
@@ -108,7 +191,7 @@
       <ion-icon
         class="add-ads"
         name="add-circle"
-        (click)="createNewAd()"
+        [routerLink]="['/create-ad']"
       ></ion-icon>
     </ion-tab-button>
 

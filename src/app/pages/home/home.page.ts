@@ -85,7 +85,6 @@ export class HomePage implements OnInit {
 
     let result = await actionSheet.onDidDismiss();
     let result2 = JSON.stringify(result, null, 2);
-    console.log(result2);
   }
 
   getCategories() {

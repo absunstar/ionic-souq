@@ -27,7 +27,7 @@
   flex-wrap: wrap;
   list-style-type: none;
   margin: 0;
-  padding: 10px;
+  padding: 5px;
   width: 100%;
   overflow-x: auto;
   text-align: right;
@@ -68,20 +68,20 @@
   justify-content: flex-end;
 
   a {
-    height: 100px;
+    height: 113px;
     text-decoration: none;
-    display: block;
-    align-content: space-evenly;
+    display: grid;
+    align-content: initial;
     justify-content: space-between;
     align-items: stretch;
     justify-items: stretch;
     position: relative;
-    width: 55px;
+    width: 90px;
   }
 
   img {
-    width: 64px;
-    height: 40px;
+    width: inherit;
+    height: 55px;
     display: inline;
     border-radius: 5px;
     float: left;
@@ -89,10 +89,11 @@
   }
 
   p {
-    font-size: 15px;
+    font-size: 16px;
+    margin-top: inherit;
     text-align: center;
-    font-weight: bold;
     color: #009688;
+    font-weight: bold;
   }
 }
 

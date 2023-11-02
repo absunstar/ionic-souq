@@ -80,7 +80,6 @@ export class AppComponent {
     m = this.checkTime(m);
     s = this.checkTime(s);
     this.isite.db.time.time1 = h + ":" + m + ":" + s; 
-    console.log(this.isite.db.time.time1);
      /* document.getElementById("time1").innerHTML = h + ":" + m + ":" + s; */ 
     setTimeout(() => {
       this.startTime();
