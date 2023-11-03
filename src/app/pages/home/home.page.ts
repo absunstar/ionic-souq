@@ -132,8 +132,9 @@ export class HomePage implements OnInit {
   doRefresh(event: Event) {}
 
   async loadPosts(options: any) {
+
     const loader = await this.loadingCtrl.create({
-      message: ' انتظر قليلا - جارى التحميل',
+      message: ' انتظر قليلا - جاري التحميل',
     });
     await loader.present();
 
@@ -142,6 +143,7 @@ export class HomePage implements OnInit {
     } else {
       this.page_number = 0;
     }
+
     this.isite
       .api({
         url: '/api/contents/all',
@@ -154,7 +156,7 @@ export class HomePage implements OnInit {
       })
       .subscribe((res: any) => {
         loader.dismiss();
-        if (res.done) {
+    if (res.done) {
           res.list.forEach((ad) => {
             ad.image_url = this.isite.baseURL + ad.image_url;
             ad.address = ad.address || {};

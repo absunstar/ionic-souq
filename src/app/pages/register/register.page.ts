@@ -45,7 +45,6 @@ export class RegisterPage implements OnInit {
     }
 
     if (user) {
-      console.log(user.country);
       
       user.$error = '';
       if (!user.first_name) {

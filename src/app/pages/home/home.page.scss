@@ -36,8 +36,8 @@
   align-content: space-around;
 }
 .content-items{
-  display: revert;
- /*  border-bottom: 2px solid #00766b; */
+  border-bottom: 2px solid #039789;
+  display: flow-root;
 }
 /* .content-items:nth-child(2n) {
   background-color: #ebfaf6;

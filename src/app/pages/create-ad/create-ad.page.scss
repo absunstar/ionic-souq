@@ -9,26 +9,79 @@
 .bold {
   font-weight: bold;
 }
+
 .main-padding {
-  padding: 10px 10px 50px 5px; 
+  padding: 10px 10px 50px 5px;
 }
+
 .text-right {
   text-align: right;
 }
+
 .font-23 {
   font-size: 23px !important;
 }
+
 .font-21 {
   font-size: 21px !important;
 }
+
 .font-29 {
   font-size: 29px !important;
 }
+
+.font-27 {
+  font-size: 27px !important;
+}
+
 .main-color {
   color: #009688;
 }
+
 .category-list {
   padding: 50px !important;
+}
+
+.vedio-padding {
+  padding: 30px 10px 50px 5px;
+}
+.grid-quantity {
+  border: 1px solid #009688;
+  border-radius: 10px;
+  margin-bottom: 5px;
+}
+.errors {
+	color: #fff;
+	background: var(--ion-color-danger);
+	padding-left: 15px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+  text-align: center;
+}
+.border-table-col{
+  border-right: 1px solid #009688;
+}
+.center {
+  text-align: center;
+}
+.max-width{
+  max-width: none;
+}
+.table-tr {
+  border: 1px solid #009688;
+  text-align: center;
+  font-size: small;
+}
+.table-hr {
+
+  text-align: center;
+  background-color: #009688;
+  color: white;
+  border-radius: 5px;
+}
+
+.finish-padding {
+  padding: 55px 10px 50px 5px;
 }
 
 .category {
@@ -41,9 +94,16 @@
   cursor: pointer;
   transition: all 0.2s ease;
 }
-
+.price-tittle {
+  display: flex;
+  border-top-style: groove;
+  font-size: x-large;
+  font-weight: bold;
+  color: #009688;
+  justify-content: center;
+}
 .h-bg-green :hover {
-  background: radial-gradient(#009688, #2f6c44);
+  background: radial-gradient(#009688, #193529);
   color: white;
 }
 
@@ -51,8 +111,35 @@
   width: 128px;
   height: 128px;
 }
+.black {
+  color: black;
+}
 
 .category p {
   text-align: center;
   font-size: 20px;
+}
+
+.secound-padding {
+  padding: 50px 10px 50px 5px;
+}
+
+ion-radio {
+  --border-radius: 4px;
+  --inner-border-radius: 4px;
+
+  --color: #ddd;
+  --color-checked: #1d8177;
+}
+
+ion-radio.ios::part(container) {
+  width: 20px;
+  height: 20px;
+
+  border: 2px solid #ddd;
+  border-radius: 4px;
+}
+
+.radio-checked.ios::part(container) {
+  border-color: #1d8177;
 }

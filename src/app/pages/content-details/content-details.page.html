@@ -222,6 +222,7 @@
         <ion-textarea
           [(ngModel)]="activity.comment"
           placeholder="أكتب سؤالك للمعلن هنا"
+          [autoGrow]="true"
         ></ion-textarea>
       </ion-item>
       <ion-button
@@ -282,6 +283,7 @@
             <ion-textarea
               [(ngModel)]="c.$reply_comment"
               placeholder="أكتب تعليقك هنا"
+              [autoGrow]="true"
             ></ion-textarea>
           </ion-item>
 
@@ -341,6 +343,7 @@
                   <ion-textarea
                     [(ngModel)]="r.$reply_comment"
                     placeholder="أكتب تعليقك هنا"
+                    [autoGrow]="true"
                   ></ion-textarea>
                 </ion-item>
                 <ion-button

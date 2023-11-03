@@ -16,6 +16,7 @@ export class DatabaseService {
       tax_number_show: false,
       commercial_registration_no_show: false,
       commercial_registration_no: '',
+      content: {},
       tax_number: '',
       you_tube_accouunt: '',
       instagram_accouunt: '',
@@ -48,6 +49,7 @@ export interface setting {
   twitter_accouunt: string;
   facebook_account: string;
   phone: string;
+  content: any;
   powered_whatsapp: string;
   powered_logo: string;
   powered_title: string;
@@ -57,10 +59,12 @@ export interface setting {
 export interface userSession {
   id: number;
   message_count: number;
+  main_address: any;
   email: string;
   name: string;
   last_name: string;
   image_url: string;
+  mobile: string;
   feedback_list: any[];
 
 }

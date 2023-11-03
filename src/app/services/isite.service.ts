@@ -80,7 +80,7 @@ export class IsiteService {
       time1 : ''
     };
     const loader = await this.loadingCtrl.create({
-      message: ' انتظر قليلا - جارى التحميل',
+      message: ' انتظر قليلا - جاري التحميل',
     });
     await loader.present();
     if (!this.accessToken) {
@@ -109,11 +109,13 @@ export class IsiteService {
           this.db.userSession = {
             id: resUserSession.session.user.id,
             email: resUserSession.session.user.email,
+            mobile: resUserSession.session.user.mobile,
             name: resUserSession.session.user.profile.name,
             last_name: resUserSession.session.user.profile.last_name,
             image_url: resUserSession.session.user.profile.image_url,
             feedback_list: resUserSession.session.user.feedback_list,
             message_count: resUserSession.session.user.message_count,
+            main_address: resUserSession.session.user.profile.main_address,
           };
           this.db.userSession.image_url =
             this.baseURL + this.db.userSession.image_url;
