@@ -9,7 +9,15 @@
   <div class="content-ad">
     <p class="contentName">{{content.name}}</p>
     <div class="bg-ad">
-      <a class="">
+      <a
+        class=""
+        [routerLink]="['/profile']"
+        [queryParams]="{
+        id: userAd.id,
+        name: userAd.profile.name,
+        last_name: userAd.profile.last_name
+      }"
+      >
         <span class="userName"
           >{{userAd.profile.name}} {{userAd.profile.last_name}}</span
         >
@@ -88,17 +96,16 @@
     </div>
     <ion-row *ngIf="content.images_list.length > 0">
       <ion-card *ngFor="let c of content.images_list">
-        <ion-card-header class="pre_text font-19 gray-desc center">{{c.description}}</ion-card-header>
+        <ion-card-header class="pre_text font-19 gray-desc center"
+          >{{c.description}}</ion-card-header
+        >
         <ion-card-content>
-          <img  *ngIf="c.image_url" [src]="c.image_url" />
+          <img *ngIf="c.image_url" [src]="c.image_url" />
         </ion-card-content>
       </ion-card>
     </ion-row>
     <ion-row *ngIf="content.videos_list.length > 0">
-      <ion-card
-        class="video-card"
-        *ngFor="let v of content.videos_list"
-      >
+      <ion-card class="video-card" *ngFor="let v of content.videos_list">
         <ion-card-header class="pre_text font-19 gray-desc center">
           {{v.description}}
         </ion-card-header>
@@ -196,7 +203,7 @@
       >
     </div>
 
-    <ion-row *ngIf="userAd.id != user.id">
+    <ion-row *ngIf="userAd.id != user.id" style="place-content: center">
       <div class="btn-group">
         <a class="center"><ion-icon name="flag-outline"></ion-icon> </a>
         <a class="center"><ion-icon name="share-social-outline"></ion-icon> </a>
@@ -214,7 +221,7 @@
           class="center bg-red"
           (click)="updateFeedback('favorite','false',null)"
           *ngIf="activity.favorite"
-          ><ion-icon name="heart-outline"></ion-icon>
+          ><ion-icon class="white" name="heart-outline"></ion-icon>
         </a>
       </div>
     </ion-row>
@@ -277,7 +284,15 @@
             *ngIf="isite.db.userSession && isite.db.userSession.id != c.user.id"
             (click)="showMessage(c.user)"
           ></ion-icon>
-          <a href="/profile/{{c.user.id}}/{{c.user.name}}/{{c.user.last_name}}">
+          <a
+            href="/profile/{{c.user.id}}/{{c.user.name}}/{{c.user.last_name}}"
+            [routerLink]="['/profile']"
+            [queryParams]="{
+            id: c.user.id,
+            name: c.user.name,
+            last_name: c.user.last_name
+          }"
+          >
             <span class="user-name-stlye"
               >{{c.user.name}} {{c.user.last_name}}</span
             >
@@ -336,7 +351,12 @@
                   (click)="showMessage(r.user)"
                 ></ion-icon>
                 <a
-                  href="/profile/{{r.user.id}}/{{r.user.name}}/{{r.user.last_name}}"
+                  [routerLink]="['/profile']"
+                  [queryParams]="{
+                  id: r.user.id,
+                  name: r.user.name,
+                  last_name: r.user.last_name
+                }"
                 >
                   <span class="user-name-stlye"
                     >{{r.user.name}} {{r.user.last_name}}</span

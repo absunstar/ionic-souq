@@ -17,14 +17,15 @@
         class="content-items"
         button
         *ngFor="let content of isite.db.contentList"
-        [routerLink]="['/content-details']"
-        [queryParams]="{id: content.id,name :content.name}"
+       
       >
         <ion-avatar slot="start" class="avatar-content">
-          <img [src]="content.image_url" />
+          <img [src]="content.image_url"  [routerLink]="['/content-details']"
+          [queryParams]="{id: content.id,name :content.name}" />
         </ion-avatar>
 
-        <ion-label class="ion-text-wrap">
+        <ion-label class="ion-text-wrap"  [routerLink]="['/content-details']"
+        [queryParams]="{id: content.id,name :content.name}">
           <p class="ellipsis-txt font-18 main-color bold">{{ content.name }}</p>
           <p class="time-publish">
             {{content.$time}} <ion-icon name="time-outline"></ion-icon>
@@ -32,7 +33,8 @@
         </ion-label>
         <!-- ion-badge -->
         <ion-label slot="end">
-          <div *ngIf="content.set_price == 'yes'">
+          <div *ngIf="content.set_price == 'yes'"  [routerLink]="['/content-details']"
+          [queryParams]="{id: content.id,name :content.name}">
             <p class="price">
               <span
                 *ngIf="content.quantity_list[0].discount > 0"
@@ -54,11 +56,17 @@
               <span *ngIf="content.quantity_list[0].discount_type == 'number'"> $ </span>
             </p> -->
           </div>
-          <p class="time-publish text-right">
+          <p class="time-publish text-right" [routerLink]="['/profile']"
+          [queryParams]="{
+            id: content.store.user.id,
+            name: content.store.user.profile.name,
+            last_name: content.store.user.profile.last_name
+          }">
             {{ content.store.user.profile.name }}
             <ion-icon name="person-outline"></ion-icon>
           </p>
-          <p class="time-publish text-right" *ngIf="content.address.country.id">
+          <p class="time-publish text-right" *ngIf="content.address.country.id"  [routerLink]="['/content-details']"
+          [queryParams]="{id: content.id,name :content.name}">
             {{content.address.gov.name_ar}}
             <ion-icon name="location-outline"></ion-icon>
           </p>

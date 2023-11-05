@@ -1,24 +1,28 @@
-
 <ion-header class="main-padding">
   <ion-toolbar>
     <ion-title></ion-title>
   </ion-toolbar>
 </ion-header>
- 
-<ion-content class="main" >
+
+<ion-content class="main">
   <div class="content-ad">
-    <p>xxxxxxxxxxxxxxxxxxxxxxxxxxxxx</p>
     <div class="bg-ad">
-    
+      <img class="cover" [src]="user.profile.cover" />
+      <img class="profile-img" [src]="user.profile.image_url" />
+      <span
+        class="online-badge"
+        [ngClass]="{'offline-badge' : !user.$isOnline}"
+      ></span>
       <h3
         class="darkgray font-20 center"
-        *ngIf="user.followers_list.length > 0"
+        *ngIf="user.followers_list && user.followers_list.length > 0"
       >
         {{user.followers_list.length}} متابع
       </h3>
       <h3
+        style="margin-top: 50px"
         class="darkgray font-20 center"
-        *ngIf="user.followers_list.length < 1"
+        *ngIf="!user.followers_list || user.followers_list.length < 1"
       >
         لا يوجد متابعين
       </h3>
@@ -26,6 +30,38 @@
       <h2 class="user-name-stlye black font-25 userPrint center">
         {{user.email}}
       </h2>
+      <p *ngIf="!user.$isOnline" class="margin darkgray font-16 padding center">
+        آخر ظهور {{user.$last_seen}}
+      </p>
+      <p *ngIf="user.$isOnline" class="margin green font-18 padding center">
+        متصل
+      </p>
+      <p class="main-color">
+        {{user.$created_date ||'Not set'}}
+        <ion-icon name="calendar-outline"></ion-icon>
+      </p>
     </div>
+    <ion-list>
+      <ion-item button *ngFor="let content of contentList">
+        <ion-avatar
+          slot="start"
+          [routerLink]="['/content-details']"
+          [queryParams]="{id: content.id}"
+        >
+          <img [src]="content.image_url" />
+        </ion-avatar>
+        <ion-label
+          class="ion-text-wrap"
+          [routerLink]="['/content-details']"
+          [queryParams]="{id: content.id}"
+        >
+          <h3>{{ content.name }}</h3>
+          <p class="time-publish">
+            {{content.$time}} <ion-icon name="time-outline"></ion-icon>
+          </p>
+        </ion-label>
+        <!-- ion-badge -->
+      </ion-item>
+    </ion-list>
   </div>
 </ion-content>

@@ -16,6 +16,7 @@ import {
   LoadingController,
 } from '@ionic/angular';
 import { timeout } from 'rxjs';
+import { get } from 'http';
 
 @Injectable({
   providedIn: 'root',
@@ -39,6 +40,7 @@ export class IsiteService {
   ) {
     let ii = setInterval(() => {
       if (this.accessToken) {
+        
         clearInterval(ii);
         this.getSetting();
       }
@@ -77,16 +79,18 @@ export class IsiteService {
     }
     this.busy = true;
     this.db.time = {
-      time1 : ''
+      time1: '',
     };
     const loader = await this.loadingCtrl.create({
       message: ' انتظر قليلا - جاري التحميل',
     });
+
     await loader.present();
     if (!this.accessToken) {
       this.accessToken =
         (await (await Preferences.get({ key: 'accessToken' })).value) || null;
     }
+
     this.getUserSession(() => {
       loader.dismiss();
     });
@@ -104,8 +108,11 @@ export class IsiteService {
         this.accessToken = resUserSession.session.accessToken;
         Preferences.set({ key: 'accessToken', value: this.accessToken });
       }
+      
       if (resUserSession.done) {
         if (resUserSession.session.user) {
+        this.updateVisit();
+
           this.db.userSession = {
             id: resUserSession.session.user.id,
             email: resUserSession.session.user.email,
@@ -119,6 +126,8 @@ export class IsiteService {
           };
           this.db.userSession.image_url =
             this.baseURL + this.db.userSession.image_url;
+          /*           this.updateVisit();
+           */
         }
       }
     });
@@ -129,8 +138,10 @@ export class IsiteService {
       if (res.done) {
         this.db.setting = res.doc;
         this.db.setting.tax_number_show = res.doc.tax_number_show || false;
-        this.db.setting.commercial_registration_no_show = res.doc.commercial_registration_no_show || false;
-        this.db.setting.commercial_registration_no = res.doc.commercial_registration_no || '';
+        this.db.setting.commercial_registration_no_show =
+          res.doc.commercial_registration_no_show || false;
+        this.db.setting.commercial_registration_no =
+          res.doc.commercial_registration_no || '';
         this.db.setting.tax_number = res.doc.tax_number || '';
         this.db.setting.you_tube_accouunt = res.doc.you_tube_accouunt || '';
         this.db.setting.instagram_accouunt = res.doc.instagram_accouunt || '';
@@ -142,15 +153,15 @@ export class IsiteService {
         this.db.setting.phone = res.doc.phone || '';
         this.db.setting.email = res.doc.email || '';
         this.db.setting.logo = this.baseURL + this.db.setting.logo;
-        if(this.db.setting.powered_logo){
-        this.db.setting.powered_logo = this.baseURL + this.db.setting.powered_logo;
+        if (this.db.setting.powered_logo) {
+          this.db.setting.powered_logo =
+            this.baseURL + this.db.setting.powered_logo;
         }
       }
     });
   }
 
   api(options: any) {
-    
     if (typeof options == 'string') {
       options = {
         url: options,
@@ -185,6 +196,14 @@ export class IsiteService {
         }
       }
     }, 100);
+  }
+
+  updateVisit() {
+    this.api({
+      type: 'get',
+      url: '/api/user/update-visit-date',
+    }).subscribe((res: any) => {
+    });
   }
 
   initBrowser() {
