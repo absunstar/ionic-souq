@@ -1,9 +1,23 @@
 import { IsiteService } from '../../services/isite.service';
 import { ActivatedRoute } from '@angular/router';
 import { ActionSheetController, ModalController } from '@ionic/angular';
-import { AlertController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+
+import {
+  NavController,
+  MenuController,
+  AlertController,
+  ToastController,
+  LoadingController,
+} from '@ionic/angular';
+import {
+  Camera,
+  CameraResultType,
+  CameraSource,
+  Photo,
+} from '@capacitor/camera';
 @Component({
   selector: 'app-create-ad',
   templateUrl: './create-ad.page.html',
@@ -25,7 +39,9 @@ export class CreateAdPage implements OnInit {
     private modalCtrl: ModalController,
     private route: ActivatedRoute,
     private alertController: AlertController,
-    private router: Router
+    private router: Router,
+    public http: HttpClient,
+    public loadingCtrl: LoadingController
   ) {
     this.content = {
       id: 0,
@@ -46,7 +62,9 @@ export class CreateAdPage implements OnInit {
       $show_choose_address: false,
       $show_address: false,
       $show_videos_link: false,
+      $show_images: false,
       $show_finish: false,
+      $image_details: '',
       $error: '',
       $video_link: '',
       $video_details: '',
@@ -59,6 +77,9 @@ export class CreateAdPage implements OnInit {
       hide_mobile: false,
       $warning_message: {},
       image_url: '',
+      $image_url_main: '',
+      $image_url: '',
+      $image_url_list: '',
       description: '',
       code: '',
       videos_list: [],
@@ -84,11 +105,63 @@ export class CreateAdPage implements OnInit {
   }
 
   ngOnInit() {}
+
+  async selectImage(type) {
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: false,
+      resultType: CameraResultType.DataUrl,
+      source: CameraSource.Prompt, // Camera, Photos or Prompt!
+    });
+    this.startUpload(image, type);
+  }
+
+  async startUpload(image: any, type) {
+    const base64Response = await fetch(image.dataUrl);
+    const blob = await base64Response.blob();
+    const formData = new FormData();
+    formData.append('fileToUpload', blob, 'image1.png');
+    this.uploadData(formData, type);
+  }
+  async uploadData(formData: FormData, type) {
+    const loading = await this.loadingCtrl.create({
+      message: 'جاري تحميل الصورة',
+    });
+    await loading.present();
+    this.http
+      .post(`${this.isite.baseURL}/x-api/upload/image`, formData)
+      .subscribe((res: any) => {
+        if (type == 'list') {
+          this.content.$image_url = res.image.url;
+          this.content.$image_url_list = this.isite.baseURL + res.image.url;
+        } else if (type == 'main') {
+          this.content.image_url = res.image.url;
+          this.content.$image_url_main = this.isite.baseURL + res.image.url;
+        }
+        /* this.user.image_url = res.image.url;
+        this.user.$image_url = this.isite.baseURL + res.image.url; */
+        loading.dismiss();
+      });
+  }
+  upDownList(list, type, index) {
+    let element = list[index];
+    let toIndex = index;
+
+    if (type == 'up') {
+      toIndex = index - 1;
+    } else if (type == 'down') {
+      toIndex = index + 1;
+    }
+
+    list.splice(index, 1);
+    list.splice(toIndex, 0, element);
+  }
   selectStep(c, type) {
     this.content.$show_category = false;
     this.content.$show_choose_address = false;
     this.content.$show_address = false;
     this.content.$show_videos_link = false;
+    this.content.$show_images = false;
     this.content.$show_finish = false;
 
     if (type == 'main_category') {
@@ -140,9 +213,11 @@ export class CreateAdPage implements OnInit {
         }
       }
     } else if (type == 'done_address') {
-      this.content.$show_videos_link = true;
+      this.content.$show_images = true;
     } else if (type == 'done_video') {
       this.content.$show_finish = true;
+    }  else if (type == 'done_images_list') {
+      this.content.$show_videos_link = true;
     }
   }
   addVideosLink() {
@@ -153,6 +228,18 @@ export class CreateAdPage implements OnInit {
       });
       this.content.$video_link = '';
       this.content.$video_details = '';
+    }
+  }
+  addImagesLink() {
+    if (this.content.$image_url) {
+      this.content.images_list.push({
+        image_url: this.content.$image_url,
+        $image_url: this.isite.baseURL + this.content.$image_url,
+        description: this.content.$image_details || '',
+      });
+      this.content.$image_url = '';
+      this.content.$image_url_list = '';
+      this.content.$image_details = '';
     }
   }
   addQuantity() {
@@ -194,9 +281,10 @@ export class CreateAdPage implements OnInit {
   }
   calcDiscount(obj) {
     setTimeout(() => {
-        let discount = obj.discount || 0;
-        if (obj.discount_type == 'percent') discount = (obj.price * obj.discount) / 100;
-        obj.net_value = obj.price - discount;
+      let discount = obj.discount || 0;
+      if (obj.discount_type == 'percent')
+        discount = (obj.price * obj.discount) / 100;
+      obj.net_value = obj.price - discount;
     }, 250);
   }
   changeSetPrice(type) {
@@ -251,6 +339,21 @@ export class CreateAdPage implements OnInit {
     }
     this.content.ad_status = this.isite.db.setting.content.status;
     this.content.expiry_date.setDate(this.content.expiry_date.getDate() + 7);
+    if (this.content.quantity_list) {
+      for (let i = 0; i < this.content.quantity_list.length; i++) {
+        let element = this.content.quantity_list[i];
+        if (element.$unit) {
+          element.unit = this.units_list.find(
+            (a) => a.id == Number(element.$unit)
+          );
+        }
+        if (element.$currency) {
+          element.currency = this.currencies_list.find(
+            (a) => a.id == Number(element.$currency)
+          );
+        }
+      }
+    }
     this.content.$busy = true;
     this.isite
       .api({
@@ -283,7 +386,6 @@ export class CreateAdPage implements OnInit {
       .subscribe((res: any) => {
         if (res.done) {
           this.units_list = res.list;
-          
         }
       });
   }
@@ -409,6 +511,7 @@ export interface content {
   $show_choose_address: boolean;
   $show_address: boolean;
   $show_videos_link: boolean;
+  $show_images: boolean;
   $show_finish: boolean;
   $video_link: string;
   $video_details: string;
@@ -418,6 +521,10 @@ export interface content {
   $area: number;
   $error: string;
   image_url: string;
+  $image_url: string;
+  $image_url_main: string;
+  $image_url_list: string;
+  $image_details: string;
   ad_status: any;
   disable_replies_feature: boolean;
   $warning_message: any;

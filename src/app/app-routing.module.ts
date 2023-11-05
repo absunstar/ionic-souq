@@ -45,13 +45,18 @@ const routes: Routes = [
   {
     path: 'menu',
     loadChildren: () => import('./pages/menu/menu.module').then( m => m.MenuPageModule)
-  },  {
+  },
+  {
     path: 'favorite',
     loadChildren: () => import('./pages/favorite/favorite.module').then( m => m.FavoritePageModule)
   },
   {
     path: 'create-ad',
     loadChildren: () => import('./pages/create-ad/create-ad.module').then( m => m.CreateAdPageModule)
+  },
+  {
+    path: 'profile',
+    loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule)
   }
 
 

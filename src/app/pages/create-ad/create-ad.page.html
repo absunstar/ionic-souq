@@ -159,12 +159,96 @@
   </ion-toolbar>
   <ion-toolbar
     class="border text-right vedio-padding"
-    *ngIf="content.$show_videos_link"
+    *ngIf="content.$show_images"
   >
     <ion-buttons end>
       <ion-button
         class="font-27"
         (click)="selectStep(null,'choose_address')"
+        color="medium"
+      >
+        <ion-icon name="arrow-back-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-item>
+      <div (click)="selectImage('list')" class="upload-img">
+        <p *ngIf="!content.$image_url_list" class="title-uploadimg-createAd">
+          <ion-icon name="camera-outline"></ion-icon> تحميل صورة
+        </p>
+        <img
+          style="height: 128px; width: 128px; border-radius: 50%"
+          [src]="content.$image_url_list"
+        />
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-textarea
+        [(ngModel)]="content.$image_details"
+        placeholder="وصف الصورة"
+        [autoGrow]="true"
+      ></ion-textarea>
+    </ion-item>
+    <ion-button expand="end" color="secondary" (click)="addImagesLink()">
+      <ion-icon name="add-circle-outline"></ion-icon>
+      <ion-label> إضافة صور متعددة</ion-label>
+    </ion-button>
+
+    <ion-grid>
+      <ion-row class="table-hr">
+        <ion-col size="auto">
+          <div style="width: 70px">حذف</div>
+        </ion-col>
+        <ion-col>الوصف</ion-col>
+        <ion-col>الصورة</ion-col>
+      </ion-row>
+      <ion-row
+        class="table-tr"
+        *ngFor="let image of content.images_list; let i = index"
+      >
+        <ion-col class="border-table-col" size="auto">
+          <div style="width: 60px">
+            <ion-button
+              color="danger"
+              expand="end"
+              (click)="content.images_list.splice(i,1)"
+            >
+              <ion-icon name="trash-outline"></ion-icon>
+            </ion-button>
+            <ion-button
+              (click)="upDownList(content.images_list, 'up',i)"
+              color="medium"
+              *ngIf="i != 0"
+            >
+              <ion-icon name="arrow-up-outline"></ion-icon>
+            </ion-button>
+            <ion-button
+              (click)="upDownList(content.images_list, 'down',i)"
+              color="medium"
+              *ngIf="i != (content.images_list.length - 1) "
+            >
+            <ion-icon name="arrow-down-outline"></ion-icon>
+            </ion-button>
+          </div>
+        </ion-col>
+        <ion-col class="border-table-col">{{image.description}}</ion-col>
+        <ion-col class="border-table-col">
+          <img class="image-list" [src]="image.$image_url" />
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-button expand="block" (click)="selectStep(null,'done_images_list')">
+      <ion-icon name="play-forward-outline"></ion-icon>
+      <ion-label> إستمرار</ion-label>
+    </ion-button>
+  </ion-toolbar>
+  <ion-toolbar
+    class="border text-right vedio-padding"
+    *ngIf="content.$show_videos_link"
+  >
+    <ion-buttons end>
+      <ion-button
+        class="font-27"
+        (click)="selectStep(null,'done_address')"
         color="medium"
       >
         <ion-icon name="arrow-back-circle-outline"></ion-icon>
@@ -212,6 +296,20 @@
             >
               <ion-icon name="trash-outline"></ion-icon>
             </ion-button>
+            <ion-button
+              (click)="upDownList(content.videos_list, 'up',i)"
+              color="medium"
+              *ngIf="i != 0"
+            >
+              <ion-icon name="arrow-up-outline"></ion-icon>
+            </ion-button>
+            <ion-button
+              (click)="upDownList(content.videos_list, 'down',i)"
+              color="medium"
+              *ngIf="i != (content.videos_list.length - 1) "
+            >
+            <ion-icon name="arrow-down-outline"></ion-icon>
+            </ion-button>
           </div>
         </ion-col>
         <ion-col class="border-table-col">{{video.description}}</ion-col>
@@ -230,12 +328,20 @@
     <ion-buttons end>
       <ion-button
         class="font-27"
-        (click)="selectStep(null,'done_address')"
+        (click)="selectStep(null,'done_images_list')"
         color="medium"
       >
         <ion-icon name="arrow-back-circle-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
+    <ion-item>
+      <div (click)="selectImage('main')" class="upload-img">
+        <p *ngIf="!content.$image_url_main" class="title-uploadimg-createAd">
+          <ion-icon name="camera-outline"></ion-icon> صورة شخصية
+        </p>
+        <img style="height: 128px; width: 128px;border-radius: 50%;" [src]="content.$image_url_main" />
+      </div>
+    </ion-item>
     <ion-item>
       <ion-input
         [clearInput]="true"
@@ -314,7 +420,7 @@
       <ion-row>
         <ion-col>
           <ion-select
-          *ngIf="isite.db.setting.content.currencies_can_be_used"
+            *ngIf="isite.db.setting.content.currencies_can_be_used"
             class="max-width border-table-col"
             label="العملة"
             placeholder="إختر العملة"
@@ -329,11 +435,10 @@
               {{currency.name_ar}}
             </ion-select-option>
           </ion-select>
-         
         </ion-col>
         <ion-col>
           <ion-select
-          *ngIf="isite.db.setting.content.quantities_can_be_used"
+            *ngIf="isite.db.setting.content.quantities_can_be_used"
             class="max-width"
             label="الوحدة"
             placeholder="إختر الوحدة"
@@ -395,16 +500,16 @@
         </ion-col>
         <ion-col>
           <ion-input
-          class="center "
-          [clearInput]="true"
-          type="number"
-          label="الكمية المتاحة"
-          labelPlacement="floating"
-          placeholder="الكمية المتاحة"
-          [(ngModel)]="quantity.available_quantity"
-        >
-          <ion-label>الكمية المتاحة</ion-label>
-        </ion-input>
+            class="center"
+            [clearInput]="true"
+            type="number"
+            label="الكمية المتاحة"
+            labelPlacement="floating"
+            placeholder="الكمية المتاحة"
+            [(ngModel)]="quantity.available_quantity"
+          >
+            <ion-label>الكمية المتاحة</ion-label>
+          </ion-input>
         </ion-col>
       </ion-row>
       <ion-row>
@@ -434,7 +539,7 @@
         </ion-col>
         <ion-col>
           <ion-input
-            class="center "
+            class="center"
             [clearInput]="true"
             type="number"
             label="الخصم"
@@ -446,7 +551,7 @@
             <ion-label>الخصم</ion-label>
           </ion-input>
           <ion-input
-            class="center "
+            class="center"
             [clearInput]="true"
             type="number"
             label="المبلغ المطلوب"

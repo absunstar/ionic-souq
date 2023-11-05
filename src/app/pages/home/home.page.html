@@ -18,9 +18,8 @@
         button
         *ngFor="let content of isite.db.contentList"
         [routerLink]="['/content-details']"
-        [queryParams]="{id: content.id}"
+        [queryParams]="{id: content.id,name :content.name}"
       >
-
         <ion-avatar slot="start" class="avatar-content">
           <img [src]="content.image_url" />
         </ion-avatar>
@@ -30,31 +29,39 @@
           <p class="time-publish">
             {{content.$time}} <ion-icon name="time-outline"></ion-icon>
           </p>
-
         </ion-label>
         <!-- ion-badge -->
         <ion-label slot="end">
           <div *ngIf="content.set_price == 'yes'">
             <p class="price">
-              <span *ngIf="content.quantity_list[0].discount > 0" class="line-through red"
-                >{{content.quantity_list[0].price}} {{content.quantity_list[0].currency.name_ar}}</span
+              <span
+                *ngIf="content.quantity_list[0].discount > 0"
+                class="line-through red"
+                >{{content.quantity_list[0].price}}
+                {{content.quantity_list[0].currency.name_ar}}</span
               >
-              <span class="green"> {{content.quantity_list[0].net_value}} </span>
+              <span class="green">
+                {{content.quantity_list[0].net_value}}
+              </span>
               {{content.quantity_list[0].currency.name_ar}}
-              <span *ngIf="content.quantity_list[0].unit.id"> / {{content.quantity_list[0].unit.name_ar}} </span>
+              <span *ngIf="content.quantity_list[0].unit.id">
+                / {{content.quantity_list[0].unit.name_ar}}
+              </span>
             </p>
-           <!--  <p class="save-money" *ngIf="content.quantity_list[0].discount > 0">
+            <!--  <p class="save-money" *ngIf="content.quantity_list[0].discount > 0">
               وفر {{content.quantity_list[0].discount}}
               <span *ngIf="content.quantity_list[0].discount_type == 'percent'"> % </span>
               <span *ngIf="content.quantity_list[0].discount_type == 'number'"> $ </span>
             </p> -->
           </div>
-          <p class="time-publish text-right">{{ content.store.user.profile.name }} <ion-icon name="person-outline"></ion-icon></p>
+          <p class="time-publish text-right">
+            {{ content.store.user.profile.name }}
+            <ion-icon name="person-outline"></ion-icon>
+          </p>
           <p class="time-publish text-right" *ngIf="content.address.country.id">
             {{content.address.gov.name_ar}}
             <ion-icon name="location-outline"></ion-icon>
           </p>
-
         </ion-label>
       </ion-item>
     </ion-list>

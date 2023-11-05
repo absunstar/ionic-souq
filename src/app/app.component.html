@@ -4,13 +4,18 @@
       <ion-title class="main-title">
         <a (click)="gotoHome()">
           <img [src]="isite.db.setting.logo" />
-          <p >{{ isite.db.setting.site_name }}</p>
+          <p>{{ isite.db.setting.site_name }}</p>
         </a>
       </ion-title>
       <ion-button
         size="small"
-        (click)="userProfile()"
         *ngIf="isite.db.userSession && isite.db.userSession.id"
+        [routerLink]="['/profile']"
+        [queryParams]="{
+          id: isite.db.userSession.id,
+          name: isite.db.userSession.name,
+          last_name: isite.db.userSession.last_name
+        }"
       >
         <ion-icon name="person-circle-outline"></ion-icon>
       </ion-button>
@@ -26,10 +31,16 @@
       <ion-buttons slot="end">
         <ion-button
           size="small"
-          (click)="userProfile()"
+          [routerLink]="['/profile']"
+          [queryParams]="{
+            id: isite.db.userSession.id,
+            name: isite.db.userSession.name,
+            last_name: isite.db.userSession.last_name
+          }"
           *ngIf="isite.db.userSession && isite.db.userSession.id"
         >
-          <ion-icon name="person-circle-outline"></ion-icon>
+       
+            <ion-icon name="person-circle-outline"></ion-icon>
         </ion-button>
         <ion-menu-button autoHide="false"></ion-menu-button>
       </ion-buttons>
@@ -41,6 +52,12 @@
       <ion-item
         lines="full"
         *ngIf="isite.db.userSession && isite.db.userSession.id"
+        [routerLink]="['/profile']"
+        [queryParams]="{
+          id: isite.db.userSession.id,
+          name: isite.db.userSession.name,
+          last_name: isite.db.userSession.last_name
+        }"
       >
         <ion-avatar slot="end">
           <img [src]="isite.db.userSession.image_url" />
@@ -52,7 +69,9 @@
       </ion-item>
       <ion-item *ngIf="isite.db.userSession && isite.db.userSession.id">
         <ion-icon name="mail-outline" class="main-color" slot="end"></ion-icon>
-        <ion-label class="right main-color bold"> {{ isite.db.userSession.email }} </ion-label>
+        <ion-label class="right main-color bold">
+          {{ isite.db.userSession.email }}
+        </ion-label>
       </ion-item>
       <ion-button
         *ngIf="!isite.db.userSession || !isite.db.userSession.id"
@@ -165,10 +184,18 @@
           ></a>
         </p>
       </ion-toolbar>
-      <ion-toolbar class="menu-toolbar" *ngIf="isite.db.setting.powered_whatsapp">
-        <a id="vat_link" href="https://wa.me/{{isite.db.setting.powered_whatsapp}}" target="_blank" rel="noopener noreferrer">
-          <img src="{{isite.db.setting.powered_logo}}" />
-          <p class="font-22">{{isite.db.setting.powered_title}}</p>
+      <ion-toolbar
+        class="menu-toolbar"
+        *ngIf="isite.db.setting.powered_whatsapp"
+      >
+        <a
+          id="vat_link"
+          href="https://wa.me/{{ isite.db.setting.powered_whatsapp }}"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img src="{{ isite.db.setting.powered_logo }}" />
+          <p class="font-19">{{ isite.db.setting.powered_title }}</p>
         </a>
       </ion-toolbar>
     </ion-footer>
@@ -176,7 +203,10 @@
 
   <ion-router-outlet id="main-app-content"></ion-router-outlet>
 
-  <ion-tab-bar slot="bottom" *ngIf="isite.db.userSession && isite.db.userSession.id">
+  <ion-tab-bar
+    slot="bottom"
+    *ngIf="isite.db.userSession && isite.db.userSession.id"
+  >
     <ion-tab-button
       id="open-modal"
       *ngIf="isite.db.userSession && isite.db.userSession.id"

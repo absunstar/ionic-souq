@@ -3,12 +3,14 @@ import { IsiteService } from '../../services/isite.service';
 import { ActivatedRoute } from '@angular/router';
 import { LoginPage } from '../login/login.page';
 import { ActionSheetController, ModalController } from '@ionic/angular';
-
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 @Component({
   selector: 'app-content-details',
   templateUrl: './content-details.page.html',
   styleUrls: ['./content-details.page.scss'],
+  
 })
+
 export class ContentDetailsPage implements OnInit {
   activity: activity;
   connectModal: false;
@@ -20,6 +22,7 @@ export class ContentDetailsPage implements OnInit {
   constructor(
     public isite: IsiteService,
     private modalCtrl: ModalController,
+    private sanitizer: DomSanitizer,
     private route: ActivatedRoute
   ) {
     this.connectModal = false;
@@ -38,6 +41,7 @@ export class ContentDetailsPage implements OnInit {
       category_require_list: [],
       quantity_list: [],
       images_list: [],
+      videos_list: [],
       $time: '',
       set_price: '',
       comment_list: [],
@@ -239,6 +243,13 @@ export class ContentDetailsPage implements OnInit {
                     _f.type && _f.ad && _f.type.id == 2 && _f.ad.id == params.id
                 );
             }
+            if (this.content.videos_list) {              
+              this.content.videos_list.forEach((_c) => {
+                _c.$link = this.sanitizer.bypassSecurityTrustResourceUrl(_c.$link);
+                console.log(_c.$link);
+                
+              });
+            }
             this.getSetting();
             this.getAdUser(res.doc.store.user.id);
             this.getCategories(this.content.main_category);
@@ -386,7 +397,9 @@ export class ContentDetailsPage implements OnInit {
         }
         this.activity.busy = false;
       });
+      
   }
+  
 }
 
 export interface content {
@@ -405,6 +418,7 @@ export interface content {
   images_list: any[];
   quantity_list: any[];
   comment_list: any[];
+  videos_list: any[];
   address: any;
   /*  address: any;
    quantity_list: {

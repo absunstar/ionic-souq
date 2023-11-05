@@ -9,9 +9,16 @@
   padding: 3px;
   font-size: 19px;
 }
-
+.darkGray {
+  color: #919191;
+}
 .text-right {
   text-align: right;
+}
+
+.video-card {
+  background: white;
+  margin: 5px 8px 0px 5px !important;
 }
 
 .contact-ad:hover {
@@ -165,9 +172,11 @@
   color: #6b6b6b;
   margin: 25px 10px 12px 13px !important;
 }
+
 .main-padding {
   padding-top: 40px;
 }
+
 .ad-code-text {
   border: 1px solid #cecece;
   padding: 10px;

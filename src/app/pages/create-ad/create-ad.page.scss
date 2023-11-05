@@ -139,7 +139,33 @@ ion-radio.ios::part(container) {
   border: 2px solid #ddd;
   border-radius: 4px;
 }
-
+.title-uploadimg-createAd {
+  position: fixed;
+  left: 40px;
+  top: 95px;
+  margin: 5px;
+  font-weight: bold;
+  color: #009688;
+}
+.image-list{
+  border-radius: 50%;
+    height: 64px;
+    width: 64px;
+}
 .radio-checked.ios::part(container) {
   border-color: #1d8177;
+}
+
+.title-uploadimg {
+  position: fixed;
+  top: 50px;
+  margin: 6px;
+  font-weight: bold;
+  color: #009688;
+}
+
+.upload-img {
+  padding: 5px 5px 0px 5px;
+  border-radius: 50%;
+  border: 1px dashed #009688;
 }

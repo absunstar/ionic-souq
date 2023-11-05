@@ -4,6 +4,23 @@ import { ActionSheetController, ModalController } from '@ionic/angular';
 import { IsiteService } from '../../services/isite.service';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { Capacitor } from '@capacitor/core';
+
+import {
+  NavController,
+  MenuController,
+  AlertController,
+  ToastController,
+  LoadingController,
+} from '@ionic/angular';
+import {
+  Camera,
+  CameraResultType,
+  CameraSource,
+  Photo,
+} from '@capacitor/camera';
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
@@ -20,7 +37,9 @@ export class RegisterPage implements OnInit {
     private modalCtrl: ModalController,
     public isite: IsiteService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public http: HttpClient,
+    public loadingCtrl: LoadingController
   ) {
     this.user = {
       $error: '',
@@ -32,6 +51,8 @@ export class RegisterPage implements OnInit {
       email: '',
       password: '',
       re_password: '',
+      image_url: '',
+      $image_url: '',
       country: {},
     };
     this.getCountriesList();
@@ -39,13 +60,43 @@ export class RegisterPage implements OnInit {
 
   ngOnInit() {}
 
+  async selectImage() {
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: false,
+      resultType: CameraResultType.DataUrl,
+      source: CameraSource.Prompt, // Camera, Photos or Prompt!
+    });
+    this.startUpload(image);
+  }
+
+  async startUpload(image: any) {
+    const base64Response = await fetch(image.dataUrl);
+    const blob = await base64Response.blob();
+    const formData = new FormData();
+    formData.append('fileToUpload', blob, 'image1.png');
+    this.uploadData(formData);
+  }
+  async uploadData(formData: FormData) {
+    const loading = await this.loadingCtrl.create({
+      message: 'جاري تحميل الصورة',
+    });
+    await loading.present();
+    this.http
+      .post(`${this.isite.baseURL}/x-api/upload/image`, formData)
+      .subscribe((res: any) => {
+        this.user.image_url = res.image.url;
+        this.user.$image_url = this.isite.baseURL + res.image.url;
+        loading.dismiss();
+      });
+  }
+
   addUser(user) {
     if (user.$busy) {
       return;
     }
 
     if (user) {
-      
       user.$error = '';
       if (!user.first_name) {
         user.$error = 'يجب إدخال الإسم الأول';
@@ -148,6 +199,8 @@ export class RegisterPage implements OnInit {
 export interface user {
   id: number;
   $busy: boolean;
+  image_url: string;
+  $image_url: string;
   $error: string;
   first_name: string;
   last_name: string;

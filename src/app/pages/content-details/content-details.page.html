@@ -87,11 +87,41 @@
       </ion-row>
     </div>
     <ion-row *ngIf="content.images_list.length > 0">
-      <div class="center" *ngFor="let c of content.images_list">
-        <img class="content-img" *ngIf="c.image_url" [src]="c.image_url" />
-        <p class="pre_text font-19 gray-desc center">{{c.description}}</p>
-      </div>
+      <ion-card *ngFor="let c of content.images_list">
+        <ion-card-header class="pre_text font-19 gray-desc center">{{c.description}}</ion-card-header>
+        <ion-card-content>
+          <img  *ngIf="c.image_url" [src]="c.image_url" />
+        </ion-card-content>
+      </ion-card>
     </ion-row>
+    <ion-row *ngIf="content.videos_list.length > 0">
+      <ion-card
+        class="video-card"
+        *ngFor="let v of content.videos_list"
+      >
+        <ion-card-header class="pre_text font-19 gray-desc center">
+          {{v.description}}
+        </ion-card-header>
+        <ion-card-content>
+          <iframe [src]="v.$link" width="”100%”" height="”1000″"></iframe>
+        </ion-card-content>
+      </ion-card>
+    </ion-row>
+
+    <!-- <ion-row *ngIf="content.videos_list.length > 0">
+      <div class="center" *ngFor="let c of content.videos_list">
+        <p class="pre_text font-19 gray-desc center">{{c.description}}</p>
+     
+      </div>
+    </ion-row> -->
+    <!--  <div *ngIf="content.videos_list.length > 0" class="row center padding" *ngFor="let i of content.videos_list">
+      <iframe class="row" width="560" height="315" *ngIf="i.$link" src="{{i.$link}}" title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen></iframe>
+
+      <p class="pre_text font-20 gray-desc center">{{i.description}}</p>
+    </div> -->
     <ion-button
       (click)="setOpen(true,'connectModal')"
       color="success"

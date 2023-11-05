@@ -7,6 +7,14 @@
 <ion-content>
   <ion-list>
     <ion-item>
+      <div (click)="selectImage()" class="upload-img">
+        <p *ngIf="!user.$image_url" class="title-uploadimg">
+          <ion-icon name="camera-outline"></ion-icon> صورة شخصية
+        </p>
+        <img style="height: 128px; width: 128px;border-radius: 50%;" [src]="user.$image_url" />
+      </div>
+    </ion-item>
+    <ion-item>
       <ion-input
         [clearInput]="true"
         label="الإسم الأول"
@@ -48,14 +56,14 @@
           *ngFor="let country of countriesList"
           value="{{country.id}}"
         >
-        {{country.name_ar}} - {{country.country_code}}
-         <!--  <img src="{{country.image_url}}" />
+          {{country.name_ar}} - {{country.country_code}}
+          <!--  <img src="{{country.image_url}}" />
           <ion-avatar> <img src="{{country.image_url}}" /></ion-avatar>
           <ion-img width="80" height="80" src="{{country.image_url}}"></ion-img> -->
         </ion-select-option>
       </ion-select>
     </ion-item>
-    
+
     <ion-item>
       <ion-input
         [clearInput]="true"
@@ -88,14 +96,10 @@
     </ion-item>
   </ion-list>
   <p class="center red font-20">{{user.$error}}</p>
-  <ion-button
-       (click)="addUser(user)"
-        expand="block"
-        color="secondary"
-      >
-        <ion-icon name="person-add-outline"></ion-icon>
-        <ion-label>إنشاء حساب جديد</ion-label>
-      </ion-button>
+  <ion-button (click)="addUser(user)" expand="block" color="secondary">
+    <ion-icon name="person-add-outline"></ion-icon>
+    <ion-label>إنشاء حساب جديد</ion-label>
+  </ion-button>
   <p class="font-18 center">
     المستخدم موجود <a (click)="login()" class="underline-hover">تسجيل الآن</a>
   </p>

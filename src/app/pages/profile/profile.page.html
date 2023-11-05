@@ -1,0 +1,31 @@
+
+<ion-header class="main-padding">
+  <ion-toolbar>
+    <ion-title></ion-title>
+  </ion-toolbar>
+</ion-header>
+ 
+<ion-content class="main" >
+  <div class="content-ad">
+    <p>xxxxxxxxxxxxxxxxxxxxxxxxxxxxx</p>
+    <div class="bg-ad">
+    
+      <h3
+        class="darkgray font-20 center"
+        *ngIf="user.followers_list.length > 0"
+      >
+        {{user.followers_list.length}} متابع
+      </h3>
+      <h3
+        class="darkgray font-20 center"
+        *ngIf="user.followers_list.length < 1"
+      >
+        لا يوجد متابعين
+      </h3>
+
+      <h2 class="user-name-stlye black font-25 userPrint center">
+        {{user.email}}
+      </h2>
+    </div>
+  </div>
+</ion-content>
