@@ -7,7 +7,7 @@ ion-toolbar {
     text-decoration: none;
 
     p {
-      font-size: 22px;
+      font-size: 21px;
       color: #009688;
       font-weight: bold;
       float: right;
@@ -22,6 +22,45 @@ ion-toolbar {
       float: left;
     }
   }
+}
+
+.powered-a {
+  margin: 0px 15px 0px 1px;
+  position: relative;
+}
+
+.header-category-row {
+  background: #009688;
+  position: fixed;
+}
+
+.header-category-col {
+  font-size: 20px;
+  margin-right: 5px;
+}
+
+.bagde-msg {
+  font-size: medium;
+  background: #009688;
+}
+.xx-large{
+  font-size: xx-large;
+}
+
+.large {
+  font-size: large;
+}
+
+.header-category-a {
+  color: white;
+  font-weight: bold;
+  text-wrap: nowrap;
+}
+
+.powered-p {
+  font-size: 19px !important;
+
+  margin-top: 7px !important;
 }
 
 .clock-area span {

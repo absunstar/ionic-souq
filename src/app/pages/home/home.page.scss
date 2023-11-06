@@ -3,7 +3,7 @@
 }
 
 .main-content {
-  margin-top: 45px;
+  margin-top: 110px;
 }
 
 .category-name {
@@ -70,7 +70,7 @@
     align-items: stretch;
     justify-items: stretch;
     position: relative;
-    width: 90px;
+    width: 100px;
   }
 
   img {
@@ -88,6 +88,7 @@
     text-align: center;
     color: #009688;
     font-weight: bold;
+    text-wrap: nowrap;
   }
 }
 
@@ -102,6 +103,7 @@
   padding: 10px;
   display: block;
   text-decoration: none;
+  
 }
 
 .tag span {
@@ -109,6 +111,7 @@
   font-size: 16px;
   color: var(--theme-color);
   text-align: center;
+  
 }
 
 ion-scroll[scrollX] {

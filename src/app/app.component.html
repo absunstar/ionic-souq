@@ -20,6 +20,25 @@
         <ion-icon name="person-circle-outline"></ion-icon>
       </ion-button>
     </ion-toolbar>
+    <ion-toolbar>
+      <ion-grid>
+        <ion-row class="scroll header-category-row">
+          <ion-col
+            class="header-category-col"
+            *ngFor="let header_category of header_category_list"
+          >
+            <a class="header-category-a">{{ header_category.name_ar }}</a>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <!--  <ion-item class="">
+        <ion-col>
+          <a>الرئيسية</a>
+          <a *ngFor="let header_category of header_category_list">{{ header_category.name_ar }}</a>
+        
+        </ion-col>
+      </ion-item> -->
+    </ion-toolbar>
     <ion-toolbar class="secound-toolbar">
       <!-- <span id="time1"> </span> -->
       <span class="clock-area">
@@ -38,11 +57,11 @@
             last_name: isite.db.userSession.last_name
           }"
           *ngIf="isite.db.userSession && isite.db.userSession.id"
+          class="xx-large"
         >
-       
-            <ion-icon name="person-circle-outline"></ion-icon>
+          <ion-icon  name="person-circle-outline"></ion-icon>
         </ion-button>
-        <ion-menu-button autoHide="false"></ion-menu-button>
+        <ion-menu-button class="xx-large" autoHide="false"></ion-menu-button>
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
@@ -192,10 +211,11 @@
           id="vat_link"
           href="https://wa.me/{{ isite.db.setting.powered_whatsapp }}"
           target="_blank"
+          class="powered-a"
           rel="noopener noreferrer"
         >
           <img src="{{ isite.db.setting.powered_logo }}" />
-          <p class="font-19">{{ isite.db.setting.powered_title }}</p>
+          <p class="powered-p">{{ isite.db.setting.powered_title }}</p>
         </a>
       </ion-toolbar>
     </ion-footer>
@@ -212,7 +232,7 @@
       *ngIf="isite.db.userSession && isite.db.userSession.id"
     >
       <ion-icon [routerLink]="['/favorite']" name="heart"></ion-icon>
-      <ion-label>المفضله</ion-label>
+      <ion-label class="large">المفضله</ion-label>
     </ion-tab-button>
     <ion-tab-button
       tab="add"
@@ -223,15 +243,17 @@
         name="add-circle"
         [routerLink]="['/create-ad']"
       ></ion-icon>
+      <ion-label class="large">إضافة إعلان</ion-label>
+
     </ion-tab-button>
 
     <ion-tab-button
       tab="chat"
       *ngIf="isite.db.userSession && isite.db.userSession.id"
     >
-      <ion-icon name="chatbox" (click)="userMessages()"></ion-icon>
-      <ion-label>الرسائل</ion-label>
-      <ion-badge>{{ isite.db.userSession.message_count }}</ion-badge>
+      <ion-icon name="chatbox" [routerLink]="['/message']"></ion-icon>
+      <ion-label class="large">الرسائل</ion-label>
+      <ion-badge class="badge-msg">{{ isite.db.userSession.message_count }}</ion-badge>
     </ion-tab-button>
   </ion-tab-bar>
 </ion-app>

@@ -1,0 +1,99 @@
+<ion-header class="main-content-message">
+  <ion-toolbar> </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="scroll-headmsg" *ngIf="messagesList && messagesList.length > 0">
+    <div class="main-message-div" *ngFor="let m of messagesList">
+      <div
+        [ngClass]="{'user-selected' : m.$isSelected == true}"
+        *ngFor="let u of m.users_list"
+      >
+        <a
+          class="main-message-a pointer user-selected"
+          *ngIf="u.id != this.isite.db.userSession.id"
+          (click)="showMessage(m)"
+        >
+          <p class="main-user-name">
+            {{u.name}} {{u.last_name}}
+            <img class="userad-logo" src="{{u.$image_url}}" alt="" />
+            <span *ngIf="m.$new" class=""></span>
+          </p>
+
+          <p class="ellipsis-txt">
+            {{m.messages_list[m.messages_list.length -1].message}}
+          </p>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="show-message-div" *ngIf="message && message.id">
+    <a
+      class="user-message-a"
+      [routerLink]="['/profile']"
+      [queryParams]="{
+            id: u.id,
+            name: u.name,
+            last_name: u.last_name
+          }"
+      *ngFor="let u of message.users_list"
+    >
+      <p *ngIf="isite.db.userSession && u.id != isite.db.userSession.id">
+        <img class="center userad-logo" src="{{u.$image_url}}" />
+        <span class="main-user-name">{{u.name}} {{u.last_name}} </span>
+      </p>
+    </a>
+
+    <div class="_scroll100">
+      <div class="_scroll messages">
+        <div
+          class="padding msg-parent margin"
+          *ngFor="let m of message.messages_list"
+        >
+          <ion-row
+            class=""
+            [ngClass]="{'reciever-msg' : m.user_id == isite.db.userSession.id,'sender-msg' : m.user_id != isite.db.userSession.id , 'sender' : m.user_id != isite.db.userSession.id
+            , 'reciever' : m.user_id == isite.db.userSession.id}"
+          >
+            <div class="">
+              <p
+                [ngClass]="{'sender' : m.user_id != isite.db.userSession.id}"
+                class="txt-message"
+              >
+                {{m.message}}
+              </p>
+            </div>
+            <div
+              [ngClass]="{'sender' : m.user_id != isite.db.userSession.id}"
+              class="padding margin time-publish"
+            >
+              <ion-icon
+                *ngIf="m.show && m.user_id == isite.db.userSession.id"
+                name="eye-outline"
+              ></ion-icon>
+
+              <i class="fa-solid fa-clock margin-10">
+                {{m.date | date : 'dd/MM/yyyy - hh:mm'}}
+              </i>
+            </div>
+          </ion-row>
+        </div>
+      </div>
+
+      <ion-item>
+        <ion-textarea
+          [(ngModel)]="message.$msg_sender"
+          placeholder="أكتب سؤالك للمعلن هنا"
+          [autoGrow]="true"
+        ></ion-textarea>
+      </ion-item>
+      <p class="errors" *ngIf="message.$error">{{message.$error}}</p>
+      <div class="margin-bottom-msg">
+        <ion-button expand="block" (click)="sendMessage(message)">
+          <ion-icon name="send-outline"></ion-icon>
+          إرسال
+        </ion-button>
+      </div>
+    </div>
+  </div>
+</ion-content>

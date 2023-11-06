@@ -246,7 +246,6 @@ export class ContentDetailsPage implements OnInit {
             if (this.content.videos_list) {              
               this.content.videos_list.forEach((_c) => {
                 _c.$link = this.sanitizer.bypassSecurityTrustResourceUrl(_c.$link);
-                console.log(_c.$link);
                 
               });
             }

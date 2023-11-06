@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
+  <ion-list *ngIf="contentList && contentList.length > 0">
     <ion-item button *ngFor="let content of contentList">
       <ion-avatar
         slot="start"
@@ -31,4 +31,5 @@
       </ion-button>
     </ion-item>
   </ion-list>
+  <p class="favorite-label" *ngIf="!contentList ||contentList.length < 1">لا يوجد مفضلات</p>
 </ion-content>

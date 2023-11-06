@@ -19,6 +19,8 @@ import { timeout } from 'rxjs';
   ],
 })
 export class AppComponent {
+  header_category_list: [header_category_list];
+
   constructor(
     public isite: IsiteService,
     private modalCtrl: ModalController,
@@ -26,7 +28,8 @@ export class AppComponent {
     private alertController: AlertController,
     private router: Router
   ) {
-    this.startTime()
+    this.startTime();
+    this.getCategories();
   }
 
   async logout() {
@@ -66,6 +69,32 @@ export class AppComponent {
     await alert.present();
 
     const { role } = await alert.onDidDismiss();
+  }
+
+  getCategories() {
+    if (this.header_category_list && this.header_category_list.length > 0) {
+      return false;
+    }
+    this.isite
+      .api({
+        url: '/api/main_categories/all',
+        body: {
+          where: {
+            status: 'active', 
+            top_parent_id: { $exists: false }
+          },
+          select : {
+            id : 1, name_ar : 1 , name_en : 1 , image_url : 1 
+          },
+          limit : 8
+        },
+      })
+      .subscribe((res: any) => {
+        if (res.done) {
+          this.header_category_list = res.list;
+          
+        }
+      });
   }
 
   startTime() {
@@ -233,4 +262,10 @@ export class AppComponent {
   async gotoHome(){
     this.router.navigateByUrl('/home?time=' + Date.now(), { replaceUrl: true });
   }
+}
+export interface header_category_list {
+  id: number;
+  image_url: string;
+  name_ar: string;
+  name_en: string;
 }

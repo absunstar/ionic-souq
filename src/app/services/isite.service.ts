@@ -26,7 +26,7 @@ import { get } from 'http';
 export class IsiteService {
   busy: boolean = false;
   accessToken: string = null;
-  baseURL: string = 'https://harajtmor.com';
+  baseURL: string = 'http://127.0.0.1';
   loader: HTMLIonLoadingElement = null;
   browser: InAppBrowserObject = null;
   constructor(
