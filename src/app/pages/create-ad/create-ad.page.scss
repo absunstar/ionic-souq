@@ -50,6 +50,9 @@
   border-radius: 10px;
   margin-bottom: 5px;
 }
+.ad-row {
+  display: contents !important;
+}
 .errors {
 	color: #fff;
 	background: var(--ion-color-danger);
@@ -57,6 +60,7 @@
 	padding-top: 5px;
 	padding-bottom: 5px;
   text-align: center;
+  border-radius: 5px;
 }
 .border-table-col{
   border-right: 1px solid #009688;

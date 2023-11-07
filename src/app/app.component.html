@@ -57,7 +57,7 @@
             last_name: isite.db.userSession.last_name
           }"
           *ngIf="isite.db.userSession && isite.db.userSession.id"
-          class="xx-large"
+          class="x-large"
         >
           <ion-icon  name="person-circle-outline"></ion-icon>
         </ion-button>
@@ -113,7 +113,7 @@
         color="light"
         *ngIf="isite.db.userSession && isite.db.userSession.id"
         expand="block"
-        (click)="userManage()"
+        [routerLink]="['/user-manage']"
       >
         <ion-icon name="settings-outline"></ion-icon>
         <ion-label>إدارة حسابك الشخصي</ion-label>

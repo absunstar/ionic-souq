@@ -87,6 +87,7 @@
       </ion-button>
     </ion-buttons>
     <ion-item>
+      <ion-label>الدولة</ion-label>
       <ion-select
         label="الدولة"
         placeholder="إختر دولتك"
@@ -104,6 +105,7 @@
       </ion-select>
     </ion-item>
     <ion-item>
+      <ion-label>المحافظة</ion-label>
       <ion-select
         label="المحافظة"
         placeholder="إختر محافظتك"
@@ -118,6 +120,7 @@
       </ion-select>
     </ion-item>
     <ion-item>
+      <ion-label>المدينة</ion-label>
       <ion-select
         label="المدينة"
         placeholder="إختر مدينتك"
@@ -132,6 +135,7 @@
       </ion-select>
     </ion-item>
     <ion-item>
+      <ion-label>المنطقة</ion-label>
       <ion-select
         label="المنطقة"
         placeholder="إختر منطقتك"
@@ -146,6 +150,8 @@
       </ion-select>
     </ion-item>
     <ion-item>
+      <ion-label>العنوان تفصيلي</ion-label>
+
       <ion-textarea
         [(ngModel)]="content.address.detailed_address"
         placeholder="العنوان تفصيلي"
@@ -345,9 +351,9 @@
     <ion-item>
       <ion-input
         [clearInput]="true"
-        label="عنوان العنوان"
+        label="عنوان الإعلان"
         labelPlacement="floating"
-        placeholder="عنوان العنوان"
+        placeholder="عنوان الإعلان"
         [(ngModel)]="content.name"
       ></ion-input>
     </ion-item>

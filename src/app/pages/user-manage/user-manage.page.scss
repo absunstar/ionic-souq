@@ -1,0 +1,41 @@
+.main-content {
+    margin-top: 110px;
+}
+
+.button-manage {
+    background: #009688;
+    color: white;
+    border-radius: 5px;
+    padding: 1px;
+}
+
+.margin-save {
+    margin: 10px 0px 60px 10px;
+}
+
+.max-width {
+    max-width: none;
+}
+
+.max-width-item {
+    display: contents;
+}
+
+.main-buttons {
+    flex-flow: row-reverse;
+    margin: 0px 10px 15px 0px;
+}
+
+.error-item {
+    display: contents;
+}
+
+.errors {
+    color: #fff;
+    background: var(--ion-color-danger);
+    padding-left: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+    border-radius: 5px;
+}
