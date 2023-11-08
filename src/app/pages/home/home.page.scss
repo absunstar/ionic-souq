@@ -3,7 +3,7 @@
 }
 
 .main-content {
-  margin-top: 110px;
+  margin-top: 100px;
 }
 
 .category-name {
@@ -50,6 +50,7 @@
   img {
     width: 95px;
     height: 70px;
+    left: 3px;
     top: 0px;
     border-radius: 5px;
     position: absolute;
@@ -64,6 +65,7 @@
   a {
     height: 113px;
     text-decoration: none;
+    
     display: grid;
     align-content: initial;
     justify-content: space-between;

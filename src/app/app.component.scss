@@ -5,7 +5,7 @@ ion-toolbar {
 
   a {
     text-decoration: none;
-
+    unicode-bidi: plaintext;
     p {
       font-size: 21px;
       color: #009688;
@@ -31,7 +31,11 @@ ion-toolbar {
 
 .header-category-row {
   background: #009688;
-  position: fixed;
+  overflow: auto;
+  direction: rtl;
+  white-space: nowrap;
+  display: block;
+  height: 40px;
 }
 
 .header-category-col {
@@ -58,6 +62,9 @@ ion-toolbar {
   color: white;
   font-weight: bold;
   text-wrap: nowrap;
+  position: sticky;
+  top: 10px;
+  
 }
 
 .powered-p {
@@ -110,9 +117,11 @@ ion-toolbar {
   position: inherit;
 }
 
-.secound-toolbar {
+.third-toolbar {
   background: #f1f1f1;
   box-shadow: 2px 12px 20px -14px #000;
+  display: flex;
+  bottom: 20px;
 }
 
 .main-title {

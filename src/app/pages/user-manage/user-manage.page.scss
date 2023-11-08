@@ -1,5 +1,5 @@
 .main-content {
-    margin-top: 110px;
+    margin-top: 125px;
 }
 
 .button-manage {
@@ -8,11 +8,30 @@
     border-radius: 5px;
     padding: 1px;
 }
-
+.center {
+    text-align: center;
+}
+.x-large {
+    font-size: x-large;
+}
+.table-tr {
+    border: 1px solid #009688;
+    text-align: center;
+    font-size: small;
+  }
+  .table-hr {
+  
+    text-align: center;
+    background-color: #009688;
+    color: white;
+    border-radius: 5px;
+  }
 .margin-save {
     margin: 10px 0px 60px 10px;
 }
-
+.main-color {
+    color: #009688;
+  }
 .max-width {
     max-width: none;
 }
@@ -23,11 +42,18 @@
 
 .main-buttons {
     flex-flow: row-reverse;
-    margin: 0px 10px 15px 0px;
+    margin: 5px 10px 15px 0px;
 }
 
 .error-item {
     display: contents;
+}
+
+.no-ads-text {
+    font-size: x-large;
+    text-align: center;
+    font-weight: bold;
+    color: #009688;
 }
 
 .errors {

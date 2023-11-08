@@ -1,10 +1,14 @@
-<ion-header>
-  <ion-toolbar> </ion-toolbar>
+<ion-header class="main-content">
+  <ion-toolbar>
+    <ion-buttons class="main-color" slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-toolbar
-    class="row border text-right main-padding"
+    class="row border text-right main-padding-create"
     *ngIf="!content.$accept"
   >
     <p class="bold font-29 main-color">إتفاقية العمولة</p>
@@ -43,7 +47,7 @@
     </ion-button>
   </ion-toolbar>
   <ion-toolbar
-    class="border text-right main-padding"
+    class="border text-right main-padding-create"
     *ngIf="content.$show_category"
   >
     <div class="category-list h-bg-green">
@@ -57,7 +61,7 @@
       </div>
     </div>
   </ion-toolbar>
-  <ion-toolbar *ngIf="content.$show_choose_address">
+  <ion-toolbar  *ngIf="content.$show_choose_address">
     <div class="category-list h-bg-green">
       <ion-buttons end>
         <ion-button

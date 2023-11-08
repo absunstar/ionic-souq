@@ -53,13 +53,15 @@ export class UserManagePage implements OnInit {
       $new_password: '',
       $re_password: '',
       mobile: '',
+      $mobile: false,
       profile: {},
       gender: {},
       $personal: false,
       $password: false,
       $myAds: false,
       $address: false,
-      $mobile: false,
+      $other_mobile: '',
+      mobile_list : [],
     };
     this.getUser();
     this.loadMyAds();
@@ -243,7 +245,7 @@ export class UserManagePage implements OnInit {
         .subscribe((res: any) => {
           if (res.done) {
             this.isite.getUserSession(() => {
-              this.router.navigateByUrl('/home', { replaceUrl: true });
+              this.router.navigateByUrl('/user-manage', { replaceUrl: true });
             });
             /* this.user = res.doc;
             this.user.profile.$cover =
@@ -418,6 +420,14 @@ export class UserManagePage implements OnInit {
         }
       });
   }
+
+  addMobilesList() {
+    if (this.user.$other_mobile) {
+      this.user.mobile_list = this.user.mobile_list || [];
+      this.user.mobile_list.push(this.user.$other_mobile);
+      this.user.$other_mobile = '';
+    }
+  }
 }
 export interface content {
   id: number;
@@ -445,8 +455,10 @@ export interface user {
   $password: boolean;
   $myAds: boolean;
   $address: boolean;
+  $other_mobile: string;
   $mobile: boolean;
   $genderList: any[];
+  mobile_list : any[];
   gender: any;
 }
 export interface countries_list {

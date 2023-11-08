@@ -1,5 +1,9 @@
 <ion-header class="main-content">
-  <ion-toolbar> </ion-toolbar>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button class="main-color"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
@@ -262,6 +266,71 @@
       <ion-label>حفظ العنوان</ion-label>
     </ion-button>
   </ion-row>
+  <ion-row class="error-item" *ngIf="user.$mobile">
+    <ion-item>
+      <ion-label>رقم الجوال</ion-label>
+      <ion-input
+        [clearInput]="true"
+        label="رقم الجوال"
+        labelPlacement="floating"
+        type="tel"
+        placeholder="888-888-8888"
+        [(ngModel)]="user.mobile"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>جوالات أخرى</ion-label>
+      <ion-input
+        [clearInput]="true"
+        label="رقم الجوال"
+        labelPlacement="floating"
+        type="tel"
+        placeholder="888-888-8888"
+        [(ngModel)]="user.$other_mobile"
+      ></ion-input>
+      <ion-button expand="end" color="secondary" (click)="addMobilesList()">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        <ion-label> إضافة الجوال</ion-label>
+      </ion-button>
+    </ion-item>
+  
+   
+
+    <ion-grid>
+      <ion-row class="table-hr center">
+        <ion-col size="auto">
+          <div style="width: 70px">حذف</div>
+        </ion-col>
+        <ion-col>الجوال</ion-col>
+      </ion-row>
+      <ion-row
+        class="table-tr"
+        *ngFor="let mobile of user.mobile_list; let i = index"
+      >
+        <ion-col class="border-table-col" size="auto">
+          <div style="width: 60px">
+            <ion-button
+              color="danger"
+              expand="end"
+              (click)="user.mobile_list.splice(i,1)"
+            >
+              <ion-icon name="trash-outline"></ion-icon>
+            </ion-button>
+          </div>
+        </ion-col>
+        <ion-col class="border-table-col x-large">{{mobile}}</ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-button
+      class="margin-save"
+      color="warning"
+      expand="block"
+      (click)="editPersonalInfoUser('mobile')"
+    >
+      <ion-icon name="save-outline"></ion-icon>
+      <ion-label>حفظ الجوال</ion-label>
+    </ion-button>
+  </ion-row>
   <ion-row class="error-item" *ngIf="user.$myAds">
     <ion-list *ngIf="contentList && contentList.length > 0">
       <ion-item button *ngFor="let content of contentList">
@@ -292,6 +361,6 @@
     <ion-item class="error-item">
       <ion-label *ngIf="user.$error" class="errors">{{user.$error}}</ion-label>
     </ion-item>
-    <p class="favorite-label" *ngIf="!contentList ||contentList.length < 1">لا يوجد إعلانات</p>
+    <p class="no-ads-text" *ngIf="!contentList ||contentList.length < 1">لا يوجد إعلانات</p>
   </ion-row>
 </ion-content>

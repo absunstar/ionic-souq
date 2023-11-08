@@ -1,6 +1,8 @@
 <ion-header class="main-padding">
   <ion-toolbar>
-    <ion-title></ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button class="main-color"></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -41,7 +43,7 @@
         <ion-icon name="calendar-outline"></ion-icon>
       </p>
     </div>
-    <ion-list>
+    <ion-list class="my-content">
       <ion-item button *ngFor="let content of contentList">
         <ion-avatar
           slot="start"

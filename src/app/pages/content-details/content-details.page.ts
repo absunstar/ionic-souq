@@ -8,12 +8,13 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
   selector: 'app-content-details',
   templateUrl: './content-details.page.html',
   styleUrls: ['./content-details.page.scss'],
-  
 })
-
 export class ContentDetailsPage implements OnInit {
   activity: activity;
   connectModal: false;
+  messageModal: false;
+  message: string;
+  userMessage: any;
   content: content;
   userAd: userAd;
   user: user;
@@ -26,6 +27,8 @@ export class ContentDetailsPage implements OnInit {
     private route: ActivatedRoute
   ) {
     this.connectModal = false;
+    this.messageModal = false;
+    this.message = '';
     this.content = {
       id: 0,
       name: '',
@@ -56,10 +59,20 @@ export class ContentDetailsPage implements OnInit {
 
       date: new Date(),
     };
-
+    this.userMessage = {
+      id: 0,
+      name: '',
+      last_name: '',
+      image_url: '',
+      email: '',
+    };
     this.userAd = {
       id: 0,
-      profile: {},
+      email: '',
+      name: '',
+      last_name: '',
+      image_url: '',
+      $image_url: '',
     };
     this.activity = {
       busy: false,
@@ -85,8 +98,30 @@ export class ContentDetailsPage implements OnInit {
 
   ngOnInit() {}
 
-  setOpen(type, id) {
+  setOpen(type, id, user) {
+    if (user) {
+      this.message = '';
+      this.userMessage = user;
+    }
     this[id] = type;
+  }
+
+  sendMessage() {
+    if(!this.message) {
+     return;
+    }
+    let data = { receiver: this.userMessage, message: this.message };
+    this.isite
+      .api({
+        url: '/api/messages/update',
+        body: data,
+      })
+      .subscribe((resUser: any) => {
+        if (resUser.done) {
+          this.message = '';
+          this.userMessage = {};
+        }
+      });
   }
 
   showReportReply(code) {
@@ -111,9 +146,15 @@ export class ContentDetailsPage implements OnInit {
       })
       .subscribe((resUser: any) => {
         if (resUser.done) {
-          resUser.doc.profile.image_url =
-            this.isite.baseURL + resUser.doc.profile.image_url;
-          this.userAd = resUser.doc;
+          this.userAd = {
+            id: resUser.doc.id,
+            email: resUser.doc.email,
+            name: resUser.doc.profile.name,
+            last_name: resUser.doc.profile.last_name,
+            $image_url: this.isite.baseURL + resUser.doc.profile.image_url,
+            image_url:  resUser.doc.profile.image_url,
+          };
+          
         }
       });
   }
@@ -243,10 +284,11 @@ export class ContentDetailsPage implements OnInit {
                     _f.type && _f.ad && _f.type.id == 2 && _f.ad.id == params.id
                 );
             }
-            if (this.content.videos_list) {              
+            if (this.content.videos_list) {
               this.content.videos_list.forEach((_c) => {
-                _c.$link = this.sanitizer.bypassSecurityTrustResourceUrl(_c.$link);
-                
+                _c.$link = this.sanitizer.bypassSecurityTrustResourceUrl(
+                  _c.$link
+                );
               });
             }
             this.getSetting();
@@ -338,9 +380,10 @@ export class ContentDetailsPage implements OnInit {
           if (type == 'comment' && this.isite.db.userSession) {
             this.content.comment_list.push({
               user: {
-                name: this.isite.db.userSession.name,
                 id: this.isite.db.userSession.id,
+                name: this.isite.db.userSession.name,
                 last_name: this.isite.db.userSession.last_name,
+                email: this.isite.db.userSession.email,
                 image_url: this.isite.db.userSession.image_url,
               },
               comment_type: this.activity.comment_type,
@@ -357,9 +400,11 @@ export class ContentDetailsPage implements OnInit {
                 _c.reply_list = _c.reply_list || [];
                 _c.reply_list.push({
                   user: {
+                    id: this.isite.db.userSession.id,
                     name: this.isite.db.userSession.name,
                     last_name: this.isite.db.userSession.last_name,
                     image_url: this.isite.db.userSession.image_url,
+                    email: this.isite.db.userSession.email,
                   },
                   comment_type: this.activity.comment_type,
                   comment: this.activity.$comment,
@@ -396,9 +441,7 @@ export class ContentDetailsPage implements OnInit {
         }
         this.activity.busy = false;
       });
-      
   }
-  
 }
 
 export interface content {
@@ -444,7 +487,11 @@ export interface warning_message {
 }
 export interface userAd {
   id: number;
-  profile: any;
+  email: string;
+  name: string;
+  last_name: string;
+  image_url: string;
+  $image_url: string;
 }
 export interface userSession {
   id: number;

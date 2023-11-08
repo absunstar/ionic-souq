@@ -21,16 +21,26 @@
       </ion-button>
     </ion-toolbar>
     <ion-toolbar>
-      <ion-grid>
-        <ion-row class="scroll header-category-row">
-          <ion-col
-            class="header-category-col"
-            *ngFor="let header_category of header_category_list"
+      <ion-row scrollX="true" class="scroll header-category-row">
+        <ion-col class="header-category-col" [routerLink]="['/home']">
+          <a class="header-category-a">الرئيسية</a>
+        </ion-col>
+        <ion-col
+          class="header-category-col"
+          *ngFor="let header_category of header_category_list"
+        >
+          <a
+            class="header-category-a"
+            [routerLink]="['/home']"
+            [queryParams]="{
+              id: header_category.id,
+              name_ar: header_category.name_ar,
+              name_en: header_category.name_en
+            }"
+            >{{ header_category.name_ar }}</a
           >
-            <a class="header-category-a">{{ header_category.name_ar }}</a>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+        </ion-col>
+      </ion-row>
       <!--  <ion-item class="">
         <ion-col>
           <a>الرئيسية</a>
@@ -39,7 +49,7 @@
         </ion-col>
       </ion-item> -->
     </ion-toolbar>
-    <ion-toolbar class="secound-toolbar">
+    <ion-toolbar class="third-toolbar">
       <!-- <span id="time1"> </span> -->
       <span class="clock-area">
         <span> {{ isite.db.time.time1 }}</span>
@@ -59,7 +69,7 @@
           *ngIf="isite.db.userSession && isite.db.userSession.id"
           class="x-large"
         >
-          <ion-icon  name="person-circle-outline"></ion-icon>
+          <ion-icon name="person-circle-outline"></ion-icon>
         </ion-button>
         <ion-menu-button class="xx-large" autoHide="false"></ion-menu-button>
       </ion-buttons>
@@ -244,7 +254,6 @@
         [routerLink]="['/create-ad']"
       ></ion-icon>
       <ion-label class="large">إضافة إعلان</ion-label>
-
     </ion-tab-button>
 
     <ion-tab-button
@@ -253,7 +262,9 @@
     >
       <ion-icon name="chatbox" [routerLink]="['/message']"></ion-icon>
       <ion-label class="large">الرسائل</ion-label>
-      <ion-badge class="badge-msg">{{ isite.db.userSession.message_count }}</ion-badge>
+      <ion-badge class="badge-msg">{{
+        isite.db.userSession.message_count
+      }}</ion-badge>
     </ion-tab-button>
   </ion-tab-bar>
 </ion-app>
