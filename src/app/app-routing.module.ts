@@ -64,6 +64,10 @@ const routes: Routes = [
   {
     path: 'message',
     loadChildren: () => import('./pages/message/message.module').then( m => m.MessagePageModule)
+  },
+  {
+    path: 'commission',
+    loadChildren: () => import('./pages/commission/commission.module').then( m => m.CommissionPageModule)
   }
 
 

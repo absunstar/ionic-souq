@@ -1,0 +1,74 @@
+<ion-header class="main-padding-commission">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button class="main-color"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="content-commission-bg">
+  <ion-label class="commission-main-title"
+    >{{isite.db.setting.commission_main_title}}</ion-label
+  >
+  <ion-label class="commission-main-description"
+    >{{isite.db.setting.commission_description}}</ion-label
+  >
+  <img class="cover" [src]="isite.db.setting.commission_logo" />
+  <ion-card class="commission-card-main">
+    <ion-card-content>
+      <ion-item>
+        <ion-label class="bold font-22 main-color">حساب العمولة</ion-label>
+      </ion-item>
+      <ion-label>أدخل سعر البيع</ion-label>
+      <ion-item>
+        <ion-input
+          class="center"
+          [clearInput]="true"
+          type="number"
+          label="المبلغ"
+          (ionChange)="calc()"
+          labelPlacement="floating"
+          placeholder="المبلغ"
+          [(ngModel)]="price"
+        >
+        </ion-input>
+      </ion-item>
+      <ion-label class="gray-desc">العمولة المستحقة</ion-label>
+      <ion-item>
+        <ion-label class="main-color">
+          <span *ngIf="isite.db.setting.currency"
+            >{{isite.db.setting.currency.name_ar}}</span
+          >
+          {{commission_due}}
+        </ion-label>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card
+    *ngFor="let bankAcc of isite.db.setting.bank_account_list"
+    class="commission-card-main"
+  >
+    <ion-card-content class="bank-account">
+      <ion-grid>
+        <ion-row class="table-hr">
+          <ion-col size="" class="col-left">
+            <img class="" loading="lazy" src="{{bankAcc.image_url}}" />
+            <p class="userPrint bank-account-name">{{bankAcc.name}}</p>
+          </ion-col>
+          <ion-col size="" class="col-right">
+            <p class="">رقم الحساب</p>
+            <p class="userPrint account-number bold">
+              {{bankAcc.account_number}}
+            </p>
+            <p class="">آيبان</p>
+            <p class="userPrint iban bold">{{bankAcc.iban}}</p>
+            <p class="userPrint darkgray font-20">
+              {{bankAcc.bank_name}} - {{bankAcc.country.name_ar}}
+            </p>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

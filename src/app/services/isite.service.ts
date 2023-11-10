@@ -26,7 +26,7 @@ import { get } from 'http';
 export class IsiteService {
   busy: boolean = false;
   accessToken: string = null;
-  baseURL: string = 'https://harajtmor.com';
+  baseURL: string = 'http://127.0.0.1';
   loader: HTMLIonLoadingElement = null;
   browser: InAppBrowserObject = null;
   constructor(
@@ -150,9 +150,16 @@ export class IsiteService {
         this.db.setting.powered_whatsapp = res.doc.powered_whatsapp || '';
         this.db.setting.powered_logo = res.doc.powered_logo || '';
         this.db.setting.powered_title = res.doc.powered_title || '';
+        this.db.setting.currency = res.doc.currency || {};        
         this.db.setting.phone = res.doc.phone || '';
         this.db.setting.email = res.doc.email || '';
         this.db.setting.logo = this.baseURL + this.db.setting.logo;
+        this.db.setting.commission_logo = this.baseURL + this.db.setting.commission_logo;
+        if (this.db.setting.bank_account_list && this.db.setting.bank_account_list.length > 0) {
+          this.db.setting.bank_account_list.forEach(element => {
+            element.image_url = this.baseURL + element.image_url;
+          });
+        }
         if (this.db.setting.powered_logo) {
           this.db.setting.powered_logo =
             this.baseURL + this.db.setting.powered_logo;

@@ -6,25 +6,36 @@ ion-toolbar {
   a {
     text-decoration: none;
     unicode-bidi: plaintext;
+
     p {
-      font-size: 21px;
-      color: #009688;
+      background-image: linear-gradient(to left, #009688, gold, #009688, gold);
+      -webkit-background-clip: text;
+      color: transparent;
+      font-size: 25px;
       font-weight: bold;
       float: right;
-      margin-top: 15px;
+      margin-top: 0px;
+      width: 55%;
+      text-wrap: pretty;
+      font-family: monospace;
+      text-align: right;
     }
 
     img {
-      width: 90px;
-      height: 50px;
+      width: 45%;
+      height: 62px;
       display: inline;
       border-radius: 5px;
       float: left;
     }
   }
 }
+
 .card-icon-menu {
   color: #656565;
+}
+.main-header {
+  height: 175px;
 }
 .card-label-menu {
   display: block;
@@ -32,10 +43,12 @@ ion-toolbar {
   font-weight: bold;
   color: #009688;
 }
+
 .card-menu {
   margin: inherit;
   direction: rtl;
 }
+
 .powered-a {
   margin: 0px 15px 0px 1px;
   position: relative;
@@ -59,10 +72,12 @@ ion-toolbar {
   font-size: medium;
   background: #009688;
 }
-.xx-large{
+
+.xx-large {
   font-size: xx-large;
 }
-.x-large{
+
+.x-large {
   font-size: x-large;
 }
 
@@ -76,13 +91,12 @@ ion-toolbar {
   text-wrap: nowrap;
   position: sticky;
   top: 10px;
-  
+
 }
 
 .powered-p {
-  font-size: 19px !important;
-
-  margin-top: 9px !important;
+  color: #00786d !important;
+  font-size: 20px !important;
 }
 
 .clock-area span {

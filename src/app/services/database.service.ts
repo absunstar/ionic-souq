@@ -7,8 +7,8 @@ import { PhotoService } from './photo.service';
 export class DatabaseService {
   setting: setting;
   time: time;
-  userSession : userSession;
-  content : content;
+  userSession: userSession;
+  content: content;
   contentList: [content];
   constructor(public photoService: PhotoService) {
     this.setting = {
@@ -28,6 +28,11 @@ export class DatabaseService {
       phone: '',
       email: '',
       logo: '../assets/images/logo.png',
+      commission_description: '',
+      commission_main_title: '',
+      commission_logo: '',
+      bank_account_list : [],
+      currency: {},
     };
   }
 }
@@ -40,8 +45,11 @@ export interface time {
 }
 export interface setting {
   site_name: string;
-  tax_number_show :boolean;
-  commercial_registration_no_show :boolean;
+  commission_description: string;
+  commission_main_title: string;
+  commission_logo: string;
+  tax_number_show: boolean;
+  commercial_registration_no_show: boolean;
   commercial_registration_no: string;
   tax_number: string;
   you_tube_accouunt: string;
@@ -49,6 +57,8 @@ export interface setting {
   twitter_accouunt: string;
   facebook_account: string;
   phone: string;
+  currency: any;
+  bank_account_list : any[];
   content: any;
   powered_whatsapp: string;
   powered_logo: string;
@@ -66,15 +76,14 @@ export interface userSession {
   image_url: string;
   mobile: string;
   feedback_list: any[];
-
 }
 export interface content {
   id: number;
   image_url: string;
-  name : string;
+  name: string;
   address: any;
   set_price: string;
   quantity_list: any[];
   store: any;
-  $time : string;
+  $time: string;
 }

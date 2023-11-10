@@ -33,9 +33,9 @@
   border-bottom: 2px solid #039789;
   display: flow-root;
 }
-/* .content-items:nth-child(2n) {
-  background-color: #ebfaf6;
-} */
+ .content-items:nth-child(odd) {
+  background-color: #80ceb9;
+} 
 .ellipsis-txt {
   white-space: nowrap;
   margin-right: 5px !important;
