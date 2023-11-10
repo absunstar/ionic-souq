@@ -2,15 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { IsiteService } from '../../services/isite.service';
 import { ActivatedRoute } from '@angular/router';
 import { LoginPage } from '../login/login.page';
-import { ActionSheetController, ModalController } from '@ionic/angular';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import {
+  ModalController,
+  LoadingController
+} from '@ionic/angular';
 @Component({
   selector: 'app-content-details',
   templateUrl: './content-details.page.html',
   styleUrls: ['./content-details.page.scss'],
-  
 })
-
 export class ContentDetailsPage implements OnInit {
   activity: activity;
   connectModal: false;
@@ -23,7 +24,8 @@ export class ContentDetailsPage implements OnInit {
     public isite: IsiteService,
     private modalCtrl: ModalController,
     private sanitizer: DomSanitizer,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public loadingCtrl: LoadingController
   ) {
     this.connectModal = false;
     this.content = {
@@ -78,9 +80,8 @@ export class ContentDetailsPage implements OnInit {
       id: 0,
       profile: {},
     };
-    setTimeout(() => {
-      this.getContent();
-    }, 1000);
+
+    this.getContent();
   }
 
   ngOnInit() {}
@@ -173,14 +174,19 @@ export class ContentDetailsPage implements OnInit {
       });
   }
 
-  getContent() {
-    this.route.queryParams.subscribe((params) => {
+ async getContent() {
+    this.route.queryParams.subscribe(async (params) => {
+      const loading = await this.loadingCtrl.create({
+        message: 'جارى التحميل',
+      });
+      await loading.present();
       this.isite
         .api({
           url: '/api/contents/view',
           body: { id: params.id, display: true },
         })
         .subscribe((res: any) => {
+          loading.dismiss();
           if (res.done) {
             res.doc.image_url = this.isite.baseURL + res.doc.image_url;
             res.doc.$warning_message = { name: '', image_url: '' };
@@ -243,11 +249,12 @@ export class ContentDetailsPage implements OnInit {
                     _f.type && _f.ad && _f.type.id == 2 && _f.ad.id == params.id
                 );
             }
-            if (this.content.videos_list) {              
+            if (this.content.videos_list) {
               this.content.videos_list.forEach((_c) => {
-                _c.$link = this.sanitizer.bypassSecurityTrustResourceUrl(_c.$link);
+                _c.$link = this.sanitizer.bypassSecurityTrustResourceUrl(
+                  _c.$link
+                );
                 console.log(_c.$link);
-                
               });
             }
             this.getSetting();
@@ -397,9 +404,7 @@ export class ContentDetailsPage implements OnInit {
         }
         this.activity.busy = false;
       });
-      
   }
-  
 }
 
 export interface content {
