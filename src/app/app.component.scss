@@ -15,15 +15,27 @@ ion-toolbar {
     }
 
     img {
-      width: 100px;
-      height: 62px;
+      width: 90px;
+      height: 50px;
       display: inline;
       border-radius: 5px;
       float: left;
     }
   }
 }
-
+.card-icon-menu {
+  color: #656565;
+}
+.card-label-menu {
+  display: block;
+  font-size: 17px;
+  font-weight: bold;
+  color: #009688;
+}
+.card-menu {
+  margin: inherit;
+  direction: rtl;
+}
 .powered-a {
   margin: 0px 15px 0px 1px;
   position: relative;
@@ -70,7 +82,7 @@ ion-toolbar {
 .powered-p {
   font-size: 19px !important;
 
-  margin-top: 7px !important;
+  margin-top: 9px !important;
 }
 
 .clock-area span {

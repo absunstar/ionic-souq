@@ -4,7 +4,7 @@ import { LoginPage } from './pages/login/login.page';
 import { IsiteService } from './services/isite.service';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
-
+import { menuController } from '@ionic/core';
 import {
   NavController,
   MenuController,
@@ -81,7 +81,9 @@ export class AppComponent {
 
     const { role } = await alert.onDidDismiss();
   }
-
+ async hideMenu() {
+     await menuController.toggle();
+  }
   getCategories() {
     if (this.header_category_list && this.header_category_list.length > 0) {
       return false;

@@ -289,6 +289,7 @@ export class UserManagePage implements OnInit {
         },
       ],
     });
+    await alert.present();
   }
 
   loadMyAds() {
