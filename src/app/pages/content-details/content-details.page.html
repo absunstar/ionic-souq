@@ -1,7 +1,7 @@
 <ion-header class="main-padding">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-back-button class="main-color"></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -14,14 +14,12 @@
         [routerLink]="['/profile']"
         [queryParams]="{
         id: userAd.id,
-        name: userAd.profile.name,
-        last_name: userAd.profile.last_name
+        name: userAd.name,
+        last_name: userAd.last_name
       }"
       >
-        <span class="userName"
-          >{{userAd.profile.name}} {{userAd.profile.last_name}}</span
-        >
-        <img [src]="userAd.profile.image_url" class="userImage" />
+        <span class="userName">{{userAd.name}} {{userAd.last_name}}</span>
+        <img [src]="userAd.$image_url" class="userImage" />
       </a>
       <p class="time-publish">
         {{content.$time}} <ion-icon name="time-outline"></ion-icon>
@@ -130,7 +128,8 @@
       <p class="pre_text font-20 gray-desc center">{{i.description}}</p>
     </div> -->
     <ion-button
-      (click)="setOpen(true,'connectModal')"
+    *ngIf="!isite.db.userSession || userAd.id != isite.db.userSession.id"
+      (click)="setOpen(true,'connectModal',null)"
       color="success"
       size="default"
       >التواصل
@@ -142,7 +141,7 @@
           <ion-toolbar>
             <ion-title>التواصل مع المعلن</ion-title>
             <ion-buttons slot="end">
-              <ion-button (click)="setOpen(false,'connectModal')"
+              <ion-button (click)="setOpen(false,'connectModal',null)"
                 >Close</ion-button
               >
             </ion-buttons>
@@ -157,7 +156,7 @@
                   name="mail-outline"
                 ></ion-icon>
               </ion-avatar>
-              <ion-label>
+              <ion-label (click)="setOpen(true,'messageModal',userAd)">
                 <h2 class="main main-color bold">الرسائل الخاصة</h2>
               </ion-label>
             </ion-item>
@@ -197,23 +196,54 @@
       </ng-template>
     </ion-modal>
 
+    <ion-modal style="top: 330px; height: 50%" [isOpen]="messageModal">
+      <ng-template>
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>رسالة سريعة إلى</ion-title>
+            <ion-buttons slot="end">
+              <ion-button (click)="setOpen(false,'messageModal',null)"
+                >Close</ion-button
+              >
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding">
+          <p class="center font-22 main-color">{{userMessage.name}} {{userMessage.last_name}}</p>
+
+          <ion-item>
+            <ion-label>أكتب رسالتك هنا</ion-label>
+            <ion-textarea
+              [(ngModel)]="message"
+              placeholder="أكتب رسالتك هنا"
+              [autoGrow]="true"
+            ></ion-textarea>
+          </ion-item>
+          <ion-button color="success" (click)="sendMessage()" expand="block"
+            >إرسال
+            <ion-icon name="send-outline"></ion-icon>
+          </ion-button>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+
     <div class="ad-code">
       <span class="ad-code-text"
         ><span class="select-all">{{content.code}}</span>#</span
       >
     </div>
 
-    <ion-row *ngIf="userAd.id != user.id" style="place-content: center">
+    <ion-row *ngIf="isite.db.userSession && userAd.id != isite.db.userSession.id" style="place-content: center">
       <div class="btn-group">
         <a class="center"><ion-icon name="flag-outline"></ion-icon> </a>
         <a class="center"><ion-icon name="share-social-outline"></ion-icon> </a>
-        <a class="center" (click)="showMessage(userAd)"
+        <a class="center" *ngIf="userAd.id != isite.db.userSession.id" (click)="setOpen(true,'messageModal',userAd)"
           ><ion-icon name="mail-unread-outline"></ion-icon>
         </a>
         <a
           class="center"
           (click)="updateFeedback('favorite','true',null)"
-          *ngIf="!activity.favorite"
+          *ngIf="!activity.favorite && userAd.id != isite.db.userSession.id"
           ><ion-icon name="heart-outline"></ion-icon>
         </a>
 
@@ -269,7 +299,7 @@
         >إرسال
         <ion-icon name="send-outline"></ion-icon>
       </ion-button>
-      <p class="center red">{{activity.$error}}</p>
+      <p class="errors" *ngIf="activity.$error">{{activity.$error}}</p>
     </div>
 
     <div *ngIf="!content.disable_replies_feature">
@@ -282,7 +312,7 @@
             class="icon-message"
             name="mail-outline"
             *ngIf="isite.db.userSession && isite.db.userSession.id != c.user.id"
-            (click)="showMessage(c.user)"
+            (click)="setOpen(true,'messageModal',c.user)"
           ></ion-icon>
           <a
             href="/profile/{{c.user.id}}/{{c.user.name}}/{{c.user.last_name}}"
@@ -348,7 +378,7 @@
                   class="icon-message"
                   name="mail-outline"
                   *ngIf="isite.db.userSession && isite.db.userSession.id != r.user.id"
-                  (click)="showMessage(r.user)"
+                  (click)="setOpen(true,'messageModal',r.user)"
                 ></ion-icon>
                 <a
                   [routerLink]="['/profile']"

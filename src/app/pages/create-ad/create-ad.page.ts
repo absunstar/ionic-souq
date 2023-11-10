@@ -435,7 +435,6 @@ export class CreateAdPage implements OnInit {
       });
   }
   getGoves(country) {
-    console.log(typeof country);
 
     this.isite
       .api({

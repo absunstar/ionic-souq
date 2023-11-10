@@ -57,7 +57,15 @@ const routes: Routes = [
   {
     path: 'profile',
     loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule)
+  },  {
+    path: 'user-manage',
+    loadChildren: () => import('./pages/user-manage/user-manage.module').then( m => m.UserManagePageModule)
+  },
+  {
+    path: 'message',
+    loadChildren: () => import('./pages/message/message.module').then( m => m.MessagePageModule)
   }
+
 
 
 ];

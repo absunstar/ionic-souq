@@ -132,65 +132,69 @@ export class HomePage implements OnInit {
   doRefresh(event: Event) {}
 
   async loadPosts(options: any) {
-
     const loader = await this.loadingCtrl.create({
       message: ' انتظر قليلا - جاري التحميل',
     });
     await loader.present();
-
-    if (options.more) {
-      this.page_number = this.page_number + 1;
-    } else {
-      this.page_number = 0;
-    }
-
-    this.isite
-      .api({
-        url: '/api/contents/all',
-        body: {
-          post: true,
-          page_limit: 10,
-          page_number: this.page_number,
-          where: { category_id: options.category_id },
-        },
-      })
-      .subscribe((res: any) => {
-        loader.dismiss();
-    if (res.done) {
-          res.list.forEach((ad) => {
-            ad.image_url = this.isite.baseURL + ad.image_url;
-            ad.address = ad.address || {};
-            ad.address = {
-              detailed_address: ad.address.detailed_address || '',
-              country: ad.address.country || {
-                name_ar: '',
-                name_en: '',
-                id: 0,
-              },
-              gov: ad.address.gov || { name_ar: '', name_en: '', id: 0 },
-              city: ad.address.city || { name_ar: '', name_en: '', id: 0 },
-              area: ad.address.area || { name_ar: '', name_en: '', id: 0 },
-            };
-            if (ad.quantity_list) {
-              ad.quantity_list.forEach((_c) => {
-                _c.net_value = _c.net_value || 0;
-                _c.currency = _c.currency || {};
-                _c.price = _c.price || 0;
-                _c.unit = _c.unit || {};
-                _c.discount = _c.discount || 0;
-                _c.discount_type = _c.discount_type || '';
-              });
-            }
-          });
-          if (options.more) {
-            res.list.forEach((element) => {
-              this.isite.db.contentList.push(element);
+    this.route.queryParams.subscribe((params) => {
+      if (options.more) {
+        this.page_number = this.page_number + 1;
+      } else {
+        this.page_number = 0;
+      }
+      let where = { category_id: options.category_id, 'ad_status.id': 1 };
+      if (params.id && !options.category_id) {
+        where.category_id = Number(params.id) ;
+      }
+      
+      this.isite
+        .api({
+          url: '/api/contents/all',
+          body: {
+            post: true,
+            page_limit: 10,
+            page_number: this.page_number,
+            where,
+          },
+        })
+        .subscribe((res: any) => {
+          loader.dismiss();
+          if (res.done) {
+            res.list.forEach((ad) => {
+              ad.image_url = this.isite.baseURL + ad.image_url;
+              ad.address = ad.address || {};
+              ad.address = {
+                detailed_address: ad.address.detailed_address || '',
+                country: ad.address.country || {
+                  name_ar: '',
+                  name_en: '',
+                  id: 0,
+                },
+                gov: ad.address.gov || { name_ar: '', name_en: '', id: 0 },
+                city: ad.address.city || { name_ar: '', name_en: '', id: 0 },
+                area: ad.address.area || { name_ar: '', name_en: '', id: 0 },
+              };
+              if (ad.quantity_list) {
+                ad.quantity_list.forEach((_c) => {
+                  _c.net_value = _c.net_value || 0;
+                  _c.currency = _c.currency || {};
+                  _c.price = _c.price || 0;
+                  _c.unit = _c.unit || {};
+                  _c.discount = _c.discount || 0;
+                  _c.discount_type = _c.discount_type || '';
+                });
+              }
             });
-          } else {
-            this.isite.db.contentList = res.list;
+            if (options.more) {
+              res.list.forEach((element) => {
+                this.isite.db.contentList.push(element);
+              });
+            } else {
+              this.isite.db.contentList = res.list;
+            }
           }
-        }
-      });
+        });
+    });
   }
 }
 export interface top_category_list {

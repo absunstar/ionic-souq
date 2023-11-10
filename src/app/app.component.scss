@@ -5,9 +5,9 @@ ion-toolbar {
 
   a {
     text-decoration: none;
-
+    unicode-bidi: plaintext;
     p {
-      font-size: 22px;
+      font-size: 21px;
       color: #009688;
       font-weight: bold;
       float: right;
@@ -15,13 +15,74 @@ ion-toolbar {
     }
 
     img {
-      width: 100px;
-      height: 62px;
+      width: 90px;
+      height: 50px;
       display: inline;
       border-radius: 5px;
       float: left;
     }
   }
+}
+.card-icon-menu {
+  color: #656565;
+}
+.card-label-menu {
+  display: block;
+  font-size: 17px;
+  font-weight: bold;
+  color: #009688;
+}
+.card-menu {
+  margin: inherit;
+  direction: rtl;
+}
+.powered-a {
+  margin: 0px 15px 0px 1px;
+  position: relative;
+}
+
+.header-category-row {
+  background: #009688;
+  overflow: auto;
+  direction: rtl;
+  white-space: nowrap;
+  display: block;
+  height: 40px;
+}
+
+.header-category-col {
+  font-size: 20px;
+  margin-right: 5px;
+}
+
+.bagde-msg {
+  font-size: medium;
+  background: #009688;
+}
+.xx-large{
+  font-size: xx-large;
+}
+.x-large{
+  font-size: x-large;
+}
+
+.large {
+  font-size: large;
+}
+
+.header-category-a {
+  color: white;
+  font-weight: bold;
+  text-wrap: nowrap;
+  position: sticky;
+  top: 10px;
+  
+}
+
+.powered-p {
+  font-size: 19px !important;
+
+  margin-top: 9px !important;
 }
 
 .clock-area span {
@@ -68,9 +129,11 @@ ion-toolbar {
   position: inherit;
 }
 
-.secound-toolbar {
+.third-toolbar {
   background: #f1f1f1;
   box-shadow: 2px 12px 20px -14px #000;
+  display: flex;
+  bottom: 20px;
 }
 
 .main-title {

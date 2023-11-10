@@ -25,6 +25,7 @@ export class FavoritePage implements OnInit {
   ngOnInit() {}
 
   loadFavorites() {
+    
     if (this.isite.db.userSession && this.isite.db.userSession.id) {
       this.isite
         .api({

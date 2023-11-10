@@ -2,8 +2,16 @@ import { Component } from '@angular/core';
 import { ActionSheetController, ModalController } from '@ionic/angular';
 import { LoginPage } from './pages/login/login.page';
 import { IsiteService } from './services/isite.service';
-import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { menuController } from '@ionic/core';
+import {
+  NavController,
+  MenuController,
+  AlertController,
+  ToastController,
+  LoadingController,
+} from '@ionic/angular';
 import {
   InAppBrowser,
   InAppBrowserObject,
@@ -19,14 +27,20 @@ import { timeout } from 'rxjs';
   ],
 })
 export class AppComponent {
+  header_category_list: [header_category_list];
+  page_number: number = 0;
+
   constructor(
     public isite: IsiteService,
     private modalCtrl: ModalController,
     public iab: InAppBrowser,
     private alertController: AlertController,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute,
+    public loadingCtrl: LoadingController
   ) {
-    this.startTime()
+    this.startTime();
+    this.getCategories();
   }
 
   async logout() {
@@ -52,9 +66,9 @@ export class AppComponent {
                 }
                 if (resUser.done) {
                   this.isite.db.userSession = null;
-                  this.isite.getUserSession(()=>{
+                  this.isite.getUserSession(() => {
                     this.router.navigateByUrl('/', { replaceUrl: true });
-                  })
+                  });
                 } else {
                 }
               });
@@ -66,6 +80,36 @@ export class AppComponent {
     await alert.present();
 
     const { role } = await alert.onDidDismiss();
+  }
+ async hideMenu() {
+     await menuController.toggle();
+  }
+  getCategories() {
+    if (this.header_category_list && this.header_category_list.length > 0) {
+      return false;
+    }
+    this.isite
+      .api({
+        url: '/api/main_categories/all',
+        body: {
+          where: {
+            status: 'active',
+            top_parent_id: { $exists: false },
+          },
+          select: {
+            id: 1,
+            name_ar: 1,
+            name_en: 1,
+            image_url: 1,
+          },
+          limit: 8,
+        },
+      })
+      .subscribe((res: any) => {
+        if (res.done) {
+          this.header_category_list = res.list;
+        }
+      });
   }
 
   startTime() {
@@ -79,16 +123,16 @@ export class AppComponent {
     let s = riyadh.getSeconds();
     m = this.checkTime(m);
     s = this.checkTime(s);
-    this.isite.db.time.time1 = h + ":" + m + ":" + s; 
-     /* document.getElementById("time1").innerHTML = h + ":" + m + ":" + s; */ 
+    this.isite.db.time.time1 = h + ':' + m + ':' + s;
+    /* document.getElementById("time1").innerHTML = h + ":" + m + ":" + s; */
     setTimeout(() => {
       this.startTime();
     }, 1000);
   }
 
-   checkTime(i) {
+  checkTime(i) {
     if (i < 10) {
-      i = "0" + i;
+      i = '0' + i;
     }
     return i;
   }
@@ -100,7 +144,6 @@ export class AppComponent {
     });
     await modal.present();
   }
-
 
   userMessages() {
     this.iab
@@ -168,17 +211,15 @@ export class AppComponent {
     }
   }
 
-  
-
   userManage() {
     if (this.isite.db.userSession) {
       this.iab
         .create(
           this.isite.baseURL +
-          '/manage_user' +
-          '?access-token=' +
-          this.isite.accessToken,
-        '_self',
+            '/manage_user' +
+            '?access-token=' +
+            this.isite.accessToken,
+          '_self',
           {
             location: 'no', //Or 'no'
             hidden: 'yes', //Or  'yes'
@@ -230,7 +271,13 @@ export class AppComponent {
       .show();
   }
 
-  async gotoHome(){
+  async gotoHome() {
     this.router.navigateByUrl('/home?time=' + Date.now(), { replaceUrl: true });
   }
+}
+export interface header_category_list {
+  id: number;
+  image_url: string;
+  name_ar: string;
+  name_en: string;
 }

@@ -1,0 +1,366 @@
+<ion-header class="main-content">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button class="main-color"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-buttons class="main-buttons">
+    <ion-button (click)="showContent('personal')" class="button-manage">
+      <ion-label>معلومات شخصية</ion-label>
+    </ion-button>
+    <ion-button (click)="showContent('password')" class="button-manage">
+      <ion-label>كلمة المرور</ion-label>
+    </ion-button>
+    <ion-button (click)="showContent('mobile')" class="button-manage">
+      <ion-label>الجوال</ion-label>
+    </ion-button>
+    <ion-button (click)="showContent('address')" class="button-manage">
+      <ion-label>عناويني</ion-label>
+    </ion-button>
+    <ion-button (click)="showContent('myAds')" class="button-manage">
+      <ion-label>إعلاناتي</ion-label>
+    </ion-button>
+  </ion-buttons>
+  <ion-row *ngIf="user.$personal">
+    <ion-item>
+      <div (click)="selectImage('cover')" class="upload-img">
+        <p class="title-uploadimg-createAd">
+          <ion-icon name="camera-outline"></ion-icon> صورة الغلاف
+        </p>
+        <img
+          style="height: 128px; width: 128px; border-radius: 50%"
+          [src]="user.profile.$cover"
+        />
+      </div>
+    </ion-item>
+    <ion-item>
+      <div (click)="selectImage('logo')" class="upload-img">
+        <p class="title-uploadimg-createAd">
+          <ion-icon name="camera-outline"></ion-icon> صورة شخصية
+        </p>
+        <img
+          style="height: 128px; width: 128px; border-radius: 50%"
+          [src]="user.profile.$image_url"
+        />
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-label>الإسم الأول</ion-label>
+      <ion-input
+        class="max-width"
+        [clearInput]="true"
+        label="الإسم الأول"
+        labelPlacement="floating"
+        placeholder="أدخل الإسم الأول"
+        [(ngModel)]="user.profile.name"
+      >
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>الإسم الثاني</ion-label>
+      <ion-input
+        class="max-width"
+        [clearInput]="true"
+        label="الإسم الثاني"
+        labelPlacement="floating"
+        placeholder="أدخل الإسم الثاني أو إسم العائلة"
+        [(ngModel)]="user.profile.last_name"
+      >
+      </ion-input>
+    </ion-item>
+    <ion-item class="max-width-item">
+      <ion-label>نبذة عني</ion-label>
+      <ion-textarea
+        [(ngModel)]="user.profile.about_me"
+        placeholder="أكتب نبذة بسيطة عنك"
+        [autoGrow]="true"
+      ></ion-textarea>
+    </ion-item>
+    <ion-item class="max-width-item">
+      <ion-select
+        label="النوع"
+        placeholder="إختر النوع"
+        okText="إختيار"
+        cancelText="إغلاق"
+        [(ngModel)]="user.$gender"
+      >
+        <ion-select-option
+          *ngFor="let gender of user.$genderList"
+          value="{{gender.name}}"
+        >
+          {{gender.ar}}
+        </ion-select-option>
+      </ion-select>
+      <ion-button
+        slot="end"
+        color="warning"
+        (click)="editPersonalInfoUser('gender')"
+      >
+        <ion-icon name="save-outline"></ion-icon>
+        <ion-label>حفظ النوع</ion-label>
+      </ion-button>
+    </ion-item>
+    <ion-item>
+      <ion-label>بريد المستخدم</ion-label>
+      <ion-input
+        class="max-width"
+        [clearInput]="true"
+        label="بريد المستخدم"
+        labelPlacement="floating"
+        placeholder="بريد المستخدم"
+        [(ngModel)]="user.email"
+      >
+      </ion-input>
+      <ion-button
+        color="warning"
+        expand="block"
+        (click)="editPersonalInfoUser('email')"
+      >
+        <ion-icon name="save-outline"></ion-icon>
+        <ion-label>حفظ البريد</ion-label>
+      </ion-button>
+    </ion-item>
+
+    <ion-button
+      class="margin-save"
+      color="warning"
+      expand="block"
+      (click)="editPersonalInfoUser('first_name')"
+    >
+      <ion-icon name="save-outline"></ion-icon>
+      <ion-label>حفظ التغييرات</ion-label>
+    </ion-button>
+  </ion-row>
+  <ion-row *ngIf="user.$password">
+    <ion-item>
+      <ion-label>كلمة السر الحالية</ion-label>
+      <ion-input
+        class="max-width"
+        [clearInput]="true"
+        label="كلمة السر"
+        labelPlacement="floating"
+        placeholder="كلمة السر"
+        [(ngModel)]="user.$current_password"
+      >
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>كلمة السر الجديدة</ion-label>
+      <ion-input
+        class="max-width"
+        [clearInput]="true"
+        label="كلمة السر الجديدة"
+        labelPlacement="floating"
+        placeholder="كلمة السر الجديدة"
+        [(ngModel)]="user.$new_password"
+      >
+      </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>إعادة كلمة السر</ion-label>
+      <ion-input
+        class="max-width"
+        [clearInput]="true"
+        label="إعادة كتابة كلمة السر"
+        labelPlacement="floating"
+        placeholder="إعادة كتابة كلمة السر"
+        [(ngModel)]="user.$re_password"
+      >
+      </ion-input>
+    </ion-item>
+    <ion-item class="error-item">
+      <ion-label *ngIf="user.$error" class="errors">{{user.$error}}</ion-label>
+    </ion-item>
+    <ion-button
+      class="margin-save"
+      color="warning"
+      expand="block"
+      (click)="editPersonalInfoUser('password')"
+    >
+      <ion-icon name="save-outline"></ion-icon>
+      <ion-label>حفظ كلمة السر</ion-label>
+    </ion-button>
+  </ion-row>
+  <ion-row *ngIf="user.profile && user.$address">
+    <ion-item class="error-item" >
+      <ion-label>المحافظة</ion-label>
+      <ion-select
+        label="الدولة"
+        placeholder="إختر دولتك"
+        okText="إختيار"
+        cancelText="إغلاق"
+        [(ngModel)]="user.profile.main_address.$country"
+        (ionChange)="getGoves(user.profile.main_address.$country)"
+      >
+        <ion-select-option
+          *ngFor="let country of countries_list"
+          value="{{country.id}}"
+        >
+          {{country.name_ar}} - {{country.country_code}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item class="error-item">
+      <ion-label>المحافظة</ion-label>
+      <ion-select
+        label="المحافظة"
+        placeholder="إختر محافظتك"
+        okText="إختيار"
+        cancelText="إغلاق"
+        [(ngModel)]="user.profile.main_address.$gov"
+        (ionChange)="getCities(user.profile.main_address.$gov)"
+      >
+        <ion-select-option *ngFor="let gov of goves_list" value="{{gov.id}}">
+          {{gov.name_ar}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item class="error-item">
+      <ion-label>المدينة</ion-label>
+      <ion-select
+        label="المدينة"
+        placeholder="إختر مدينتك"
+        okText="إختيار"
+        cancelText="إغلاق"
+        [(ngModel)]="user.profile.main_address.$city"
+        (ionChange)="getAreas(user.profile.main_address.$city)"
+      >
+        <ion-select-option *ngFor="let city of cities_list" value="{{city.id}}">
+          {{city.name_ar}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item class="error-item">
+      <ion-label>المنطقة</ion-label>
+      <ion-select
+        label="المنطقة"
+        placeholder="إختر منطقتك"
+        okText="إختيار"
+        cancelText="إغلاق"
+        [(ngModel)]="user.profile.main_address.$area"
+        (ionChange)="getCities(user.profile.main_address.$area)"
+      >
+        <ion-select-option *ngFor="let area of areas_list" value="{{area.id}}">
+          {{area.name_ar}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item class="error-item">
+      <ion-label>العنوان تفصيلي</ion-label>
+      <ion-textarea
+        [(ngModel)]="user.profile.main_address.detailed_address"
+        placeholder="العنوان تفصيلي"
+        [autoGrow]="true"
+      ></ion-textarea>
+    </ion-item>
+    <ion-button
+      class="margin-save"
+      color="warning"
+      expand="block"
+      (click)="editPersonalInfoUser('address')"
+    >
+      <ion-icon name="save-outline"></ion-icon>
+      <ion-label>حفظ العنوان</ion-label>
+    </ion-button>
+  </ion-row>
+  <ion-row class="error-item" *ngIf="user.$mobile">
+    <ion-item>
+      <ion-label>رقم الجوال</ion-label>
+      <ion-input
+        [clearInput]="true"
+        label="رقم الجوال"
+        labelPlacement="floating"
+        type="tel"
+        placeholder="888-888-8888"
+        [(ngModel)]="user.mobile"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>جوالات أخرى</ion-label>
+      <ion-input
+        [clearInput]="true"
+        label="رقم الجوال"
+        labelPlacement="floating"
+        type="tel"
+        placeholder="888-888-8888"
+        [(ngModel)]="user.$other_mobile"
+      ></ion-input>
+      <ion-button expand="end" color="secondary" (click)="addMobilesList()">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        <ion-label> إضافة الجوال</ion-label>
+      </ion-button>
+    </ion-item>
+  
+   
+
+    <ion-grid>
+      <ion-row class="table-hr center">
+        <ion-col size="auto">
+          <div style="width: 70px">حذف</div>
+        </ion-col>
+        <ion-col>الجوال</ion-col>
+      </ion-row>
+      <ion-row
+        class="table-tr"
+        *ngFor="let mobile of user.mobile_list; let i = index"
+      >
+        <ion-col class="border-table-col" size="auto">
+          <div style="width: 60px">
+            <ion-button
+              color="danger"
+              expand="end"
+              (click)="user.mobile_list.splice(i,1)"
+            >
+              <ion-icon name="trash-outline"></ion-icon>
+            </ion-button>
+          </div>
+        </ion-col>
+        <ion-col class="border-table-col x-large m-top10">{{mobile}}</ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-button
+      class="margin-save"
+      color="warning"
+      expand="block"
+      (click)="editPersonalInfoUser('mobile')"
+    >
+      <ion-icon name="save-outline"></ion-icon>
+      <ion-label>حفظ الجوال</ion-label>
+    </ion-button>
+  </ion-row>
+  <ion-row class="error-item" *ngIf="user.$myAds">
+    <ion-list *ngIf="contentList && contentList.length > 0">
+      <ion-item button *ngFor="let content of contentList">
+        <ion-avatar
+          slot="start"
+          [routerLink]="['/content-details']"
+          [queryParams]="{id: content.id}"
+        >
+          <img [src]="content.image_url" />
+        </ion-avatar>
+        <ion-label
+          class="ion-text-wrap"
+          [routerLink]="['/content-details']"
+          [queryParams]="{id: content.id}"
+        >
+          <h3>{{ content.name }}</h3>
+          <p class="time-publish">
+            {{content.$time}} <ion-icon name="time-outline"></ion-icon>
+          </p>
+        </ion-label>
+        <!-- ion-badge -->
+        <ion-button color="danger" (click)="deleteAd(content.id)">
+          <ion-icon name="trash-outline"></ion-icon>
+          <ion-label>إزالة</ion-label>
+        </ion-button>
+      </ion-item>
+    </ion-list>
+    <ion-item class="error-item">
+      <ion-label *ngIf="user.$error" class="errors">{{user.$error}}</ion-label>
+    </ion-item>
+    <p class="no-ads-text" *ngIf="!contentList ||contentList.length < 1">لا يوجد إعلانات</p>
+  </ion-row>
+</ion-content>

@@ -1,5 +1,5 @@
 .main-padding {
-    padding-top: 70px;
+    padding-top: 125px;
 }
 
 .cover {
@@ -11,9 +11,15 @@
     border-radius: 50%;
     height: 100px;
     width: 100px;
-    position: fixed;
-    top: 240px;
+    position: absolute;
+    top: 130px;
     left: 145px;
+}
+.main-color {
+    color: #009688;
+  }
+.my-content {
+    margin: 0px 0px 50px 0px;
 }
 
 .online-badge {

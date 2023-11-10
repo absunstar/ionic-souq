@@ -1,10 +1,14 @@
-<ion-header>
-  <ion-toolbar> </ion-toolbar>
+<ion-header class="main-content">
+  <ion-toolbar>
+    <ion-buttons class="main-color" slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-toolbar
-    class="row border text-right main-padding"
+    class="row border text-right main-padding-create"
     *ngIf="!content.$accept"
   >
     <p class="bold font-29 main-color">إتفاقية العمولة</p>
@@ -43,7 +47,7 @@
     </ion-button>
   </ion-toolbar>
   <ion-toolbar
-    class="border text-right main-padding"
+    class="border text-right main-padding-create"
     *ngIf="content.$show_category"
   >
     <div class="category-list h-bg-green">
@@ -57,7 +61,7 @@
       </div>
     </div>
   </ion-toolbar>
-  <ion-toolbar *ngIf="content.$show_choose_address">
+  <ion-toolbar  *ngIf="content.$show_choose_address">
     <div class="category-list h-bg-green">
       <ion-buttons end>
         <ion-button
@@ -87,6 +91,7 @@
       </ion-button>
     </ion-buttons>
     <ion-item>
+      <ion-label>الدولة</ion-label>
       <ion-select
         label="الدولة"
         placeholder="إختر دولتك"
@@ -104,6 +109,7 @@
       </ion-select>
     </ion-item>
     <ion-item>
+      <ion-label>المحافظة</ion-label>
       <ion-select
         label="المحافظة"
         placeholder="إختر محافظتك"
@@ -118,6 +124,7 @@
       </ion-select>
     </ion-item>
     <ion-item>
+      <ion-label>المدينة</ion-label>
       <ion-select
         label="المدينة"
         placeholder="إختر مدينتك"
@@ -132,6 +139,7 @@
       </ion-select>
     </ion-item>
     <ion-item>
+      <ion-label>المنطقة</ion-label>
       <ion-select
         label="المنطقة"
         placeholder="إختر منطقتك"
@@ -146,6 +154,8 @@
       </ion-select>
     </ion-item>
     <ion-item>
+      <ion-label>العنوان تفصيلي</ion-label>
+
       <ion-textarea
         [(ngModel)]="content.address.detailed_address"
         placeholder="العنوان تفصيلي"
@@ -230,7 +240,7 @@
             </ion-button>
           </div>
         </ion-col>
-        <ion-col class="border-table-col">{{image.description}}</ion-col>
+        <ion-col class="border-table-col"><p>{{image.description}}</p></ion-col>
         <ion-col class="border-table-col">
           <img class="image-list" [src]="image.$image_url" />
         </ion-col>
@@ -345,9 +355,9 @@
     <ion-item>
       <ion-input
         [clearInput]="true"
-        label="عنوان العنوان"
+        label="عنوان الإعلان"
         labelPlacement="floating"
-        placeholder="عنوان العنوان"
+        placeholder="عنوان الإعلان"
         [(ngModel)]="content.name"
       ></ion-input>
     </ion-item>
