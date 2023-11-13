@@ -71,4 +71,105 @@
       </ion-grid>
     </ion-card-content>
   </ion-card>
+  <ion-card class="commission-card-main">
+    <ion-card-content>
+      <ion-label class="bold font-22 main-color">نموذج تحويل العمولة</ion-label>
+      <ion-label class="transfer-form"
+        >{{isite.db.setting.transfer_form_text}}</ion-label
+      >
+      <ion-item>
+        <ion-label class="left-label">إسم المستخدم</ion-label>
+        <ion-label *ngIf="isite.db.userSession && isite.db.userSession.id"
+          >{{commission.user_name}}</ion-label
+        >
+        <ion-input
+          *ngIf="!isite.db.userSession || !isite.db.userSession.id"
+          [clearInput]="true"
+          label="إسم المستخدم"
+          labelPlacement="floating"
+          placeholder="إسم المستخدم"
+          [(ngModel)]="commission.user_name"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>مبلغ التحويل</ion-label>
+        <ion-input
+          [clearInput]="true"
+          type="number"
+          label="مبلغ التحويل"
+          labelPlacement="floating"
+          placeholder="مبلغ التحويل"
+          [(ngModel)]="commission.commission_amount"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label cl>إسم المحول</ion-label>
+        <ion-input
+          [clearInput]="true"
+          label="إسم المحول"
+          labelPlacement="floating"
+          placeholder="إسم المحول"
+          [(ngModel)]="commission.adapter_name"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class="left-label">رقم الجوال</ion-label>
+        <ion-label *ngIf="isite.db.userSession && isite.db.userSession.id"
+          >{{commission.mobile}}</ion-label
+        >
+        <ion-input
+          *ngIf="!isite.db.userSession || !isite.db.userSession.id"
+          [clearInput]="true"
+          type="tel"
+          label="رقم الجوال المرتبط بعضويتك"
+          labelPlacement="floating"
+          placeholder="رقم الجوال المرتبط بعضويتك"
+          [(ngModel)]="commission.mobile"
+        ></ion-input>
+      </ion-item>
+      <ion-label class="left-label bold">تاريخ التحويل</ion-label>
+      <ion-item>
+        <ion-datetime [(ngModel)]="commission.$transfer_date"></ion-datetime>
+        <!--  <ion-button id="open-modal">Open Datetime Modal</ion-button>
+        <ion-modal [initialBreakpoint]="0.5" trigger="open-modal">
+          <ng-template>
+            <ion-content>
+              <ion-datetime [(ngModel)]="commission.transfer_date"></ion-datetime>
+            </ion-content>
+          </ng-template>
+        </ion-modal> -->
+        <!--  <ion-datetime-button datetime="datetime"></ion-datetime-button>
+
+        <ion-modal [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime [(ngModel)]="commission.transfer_date" id="datetime"></ion-datetime>
+          </ng-template>
+        </ion-modal> -->
+      </ion-item>
+      <ion-item>
+        <ion-label>إسم كود الإعلان</ion-label>
+        <ion-input
+          [clearInput]="true"
+          label="إسم كود الإعلان"
+          labelPlacement="floating"
+          placeholder="إسم كود الإعلان"
+          [(ngModel)]="commission.ad_code"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>ملاحظات</ion-label>
+        <ion-textarea
+          [(ngModel)]="commission.notes"
+          placeholder="ملاحظات"
+          [autoGrow]="true"
+        ></ion-textarea>
+      </ion-item>
+      <p class="errors" *ngIf="commission.$error">{{commission.$error}}</p>
+
+      <ion-button expand="block" color="success" (click)="sendCommission()">
+        <ion-icon name="send-outline"></ion-icon>
+        <ion-label> إرسال</ion-label>
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

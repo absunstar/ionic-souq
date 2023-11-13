@@ -143,6 +143,7 @@ export class IsiteService {
         this.db.setting.commercial_registration_no =
           res.doc.commercial_registration_no || '';
         this.db.setting.tax_number = res.doc.tax_number || '';
+        this.db.setting.transfer_form_text = res.doc.transfer_form_text || '';
         this.db.setting.you_tube_accouunt = res.doc.you_tube_accouunt || '';
         this.db.setting.instagram_accouunt = res.doc.instagram_accouunt || '';
         this.db.setting.twitter_accouunt = res.doc.twitter_accouunt || '';

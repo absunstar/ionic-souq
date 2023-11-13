@@ -116,7 +116,7 @@
     <!-- <ion-row *ngIf="content.videos_list.length > 0">
       <div class="center" *ngFor="let c of content.videos_list">
         <p class="pre_text font-19 gray-desc center">{{c.description}}</p>
-     
+
       </div>
     </ion-row> -->
     <!--  <div *ngIf="content.videos_list.length > 0" class="row center padding" *ngFor="let i of content.videos_list">
@@ -127,6 +127,7 @@
 
       <p class="pre_text font-20 gray-desc center">{{i.description}}</p>
     </div> -->
+
     <ion-button
     *ngIf="!isite.db.userSession || userAd.id != isite.db.userSession.id"
       (click)="setOpen(true,'connectModal',null)"
@@ -135,7 +136,8 @@
       >التواصل
       <ion-icon name="call" slot="start"></ion-icon>
     </ion-button>
-    <ion-modal [isOpen]="connectModal">
+
+    <ion-modal class="half-modal" [isOpen]="connectModal">
       <ng-template>
         <ion-header>
           <ion-toolbar>
@@ -196,7 +198,7 @@
       </ng-template>
     </ion-modal>
 
-    <ion-modal style="top: 330px; height: 50%" [isOpen]="messageModal">
+    <ion-modal class="half-modal" [isOpen]="messageModal">
       <ng-template>
         <ion-header>
           <ion-toolbar>

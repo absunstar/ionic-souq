@@ -19,6 +19,7 @@ export class DatabaseService {
       content: {},
       tax_number: '',
       you_tube_accouunt: '',
+      transfer_form_text:'',
       instagram_accouunt: '',
       twitter_accouunt: '',
       facebook_account: '',
@@ -53,6 +54,7 @@ export interface setting {
   commercial_registration_no: string;
   tax_number: string;
   you_tube_accouunt: string;
+  transfer_form_text : string;
   instagram_accouunt: string;
   twitter_accouunt: string;
   facebook_account: string;

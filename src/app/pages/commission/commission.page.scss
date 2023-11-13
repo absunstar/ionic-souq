@@ -11,7 +11,9 @@
     margin: 7px;
     font-weight: bold;
 }
-
+.left-label {
+    text-align-last: left;
+}
 .commission-main-description {
     font-size: larger;
     text-align: center;
@@ -20,11 +22,28 @@
     margin: 5px;
 }
 
+.transfer-form {
+    padding: 5px;
+    display: block;
+    margin: 5px;
+    font-size: 18px;
+    text-align: center;
+    color: #949494;
+}
+
 .commission-card-main {
     text-align-last: center;
     border-radius: 40px;
 }
-
+.errors {
+	color: #fff;
+	background: var(--ion-color-danger);
+	padding-left: 15px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+  text-align: center;
+  border-radius: 5px;
+}
 .bold {
     font-weight: bold;
 }
@@ -53,12 +72,15 @@
     height: 200px;
     border-radius: 10px;
 }
+
 .col-left {
     text-align-last: left
 }
+
 .col-right {
     text-align-last: right
 }
+
 .bank-account img {
     height: 30px;
     width: 50px;
