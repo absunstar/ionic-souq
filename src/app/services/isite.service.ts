@@ -136,6 +136,7 @@ export class IsiteService {
   async getSetting() {
     this.api('/api/default_setting/get').subscribe((res: any) => {
       if (res.done) {
+     
         this.db.setting = res.doc;
         this.db.setting.tax_number_show = res.doc.tax_number_show || false;
         this.db.setting.commercial_registration_no_show =

@@ -1,5 +1,10 @@
 <ion-app class="main-content">
   <ion-content>
+    <ion-icon
+      (click)="setOpen(true, 'filterModal')"
+      class="filter main-color"
+      name="color-filter-outline"
+    ></ion-icon>
     <div class="tags">
       <ion-item class="tag-list">
         <ion-col *ngFor="let top_category of top_category_list">
@@ -88,6 +93,84 @@
         </ion-label>
       </ion-item>
     </ion-list>
+    <ion-modal [isOpen]="filterModal">
+      <ng-template>
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>تصفية</ion-title>
+            <ion-buttons slot="end">
+              <ion-button (click)="setOpen(false, 'filterModal')"
+                >Close</ion-button
+              >
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding">
+          <ion-item>
+            <ion-label class="text-right">جديد فقط</ion-label>
+            <ion-checkbox slot="end" [(ngModel)]="filter.new"></ion-checkbox>
+          </ion-item>
+          <ion-item>
+            <ion-label class="text-right">إعلانات قريبة</ion-label>
+            <ion-checkbox slot="end" [(ngModel)]="filter.near"></ion-checkbox>
+          </ion-item>
+          <ion-item>
+            <ion-label class="text-right">إعلانات مرفقة بصور فقط</ion-label>
+            <ion-checkbox
+              slot="end"
+              [(ngModel)]="filter.with_photos"
+            ></ion-checkbox>
+          </ion-item>
+          <ion-item>
+            <ion-radio-group [(ngModel)]="filter.price" value="price">
+              <ion-item>
+                <ion-label>أقل سعر</ion-label>
+                <ion-radio slot="end" value="lowest"></ion-radio>
+              </ion-item>
+
+              <ion-item>
+                <ion-label>أعلى سعر</ion-label>
+                <ion-radio slot="end" value="highest"></ion-radio>
+              </ion-item>
+            </ion-radio-group>
+          </ion-item>
+          <ion-item>
+            <ion-row>
+              <ion-col>
+                <ion-input
+                  class="center border-table-col"
+                  [clearInput]="true"
+                  type="number"
+                  label="أقصى حد"
+                  labelPlacement="floating"
+                  placeholder="أقصى حد"
+                  [(ngModel)]="filter.price_to"
+                >
+                  <ion-label>أقصى حد</ion-label>
+                </ion-input>
+              </ion-col>
+              <ion-col>
+                <ion-input
+                  class="center"
+                  [clearInput]="true"
+                  type="number"
+                  label="أقل حد"
+                  labelPlacement="floating"
+                  placeholder="أقل حد"
+                  [(ngModel)]="filter.price_from"
+                >
+                  <ion-label>أقل حد</ion-label>
+                </ion-input>
+              </ion-col>
+            </ion-row>
+          </ion-item>
+          <ion-button expand="block" (click)="setOpen(false, 'filterModal');loadPosts({more : false })">
+            <ion-icon name="log-in-outline"></ion-icon>
+            <ion-label>بحث</ion-label>
+          </ion-button>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
     <!-- <iframe src="../../app.footer.html"></iframe> -->
     <!--  <object type="text/html" data="../../app.footer.html"></object> -->
     <ion-infinite-scroll (ionInfinite)="loadMore($event)">

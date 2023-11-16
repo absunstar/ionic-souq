@@ -39,6 +39,7 @@ export class AppComponent {
     private route: ActivatedRoute,
     public loadingCtrl: LoadingController
   ) {
+   
     this.startTime();
     this.getCategories();
   }
@@ -81,9 +82,12 @@ export class AppComponent {
 
     const { role } = await alert.onDidDismiss();
   }
- async hideMenu() {
-     await menuController.toggle();
+  async hideMenu() {
+    await menuController.toggle();
   }
+
+
+
   getCategories() {
     if (this.header_category_list && this.header_category_list.length > 0) {
       return false;
@@ -281,3 +285,5 @@ export interface header_category_list {
   name_ar: string;
   name_en: string;
 }
+
+

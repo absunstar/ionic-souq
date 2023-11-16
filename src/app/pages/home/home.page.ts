@@ -24,6 +24,8 @@ export class HomePage implements OnInit {
   contentList: [];
   top_category_list: [top_category_list];
   page_number: number = 0;
+  filterModal: boolean = false;
+  filter: filter;
 
   constructor(
     public isite: IsiteService,
@@ -32,6 +34,14 @@ export class HomePage implements OnInit {
     public loadingCtrl: LoadingController,
     private route: ActivatedRoute
   ) {
+    this.filter = {
+      new: false,
+      near: false,
+      with_photos: false,
+      price: 'lowest',
+      price_to: 0,
+      price_from: 0,
+    };
     this.route.queryParams.subscribe((params) => {
       if (!this.isite.accessToken) {
         this.isite.getUserSession(() => {
@@ -44,7 +54,11 @@ export class HomePage implements OnInit {
       }
     });
   }
-
+  setOpen(type, id) {
+    this.filter.price_to = this.filter.price_to || 500000;
+    this.filter.price_from = this.filter.price_from || 0;
+    this[id] = type;
+  }
   async menu() {
     const modal = await this.modalCtrl.create({
       component: MenuPage,
@@ -142,9 +156,13 @@ export class HomePage implements OnInit {
       } else {
         this.page_number = 0;
       }
-      let where = { category_id: options.category_id, 'ad_status.id': 1 };
+      let where = {
+        category_id: options.category_id,
+        'ad_status.id': 1,
+        ...this.filter,
+      };
       if (params.id && !options.category_id) {
-        where.category_id = Number(params.id) ;
+        where.category_id = Number(params.id);
       }
       
       this.isite
@@ -152,7 +170,7 @@ export class HomePage implements OnInit {
           url: '/api/contents/all',
           body: {
             post: true,
-            page_limit: 10,
+            page_limit: 20,
             page_number: this.page_number,
             where,
           },
@@ -202,4 +220,13 @@ export interface top_category_list {
   image_url: string;
   name_ar: string;
   name_en: string;
+}
+
+export interface filter {
+  new: boolean;
+  near: boolean;
+  with_photos: boolean;
+  price: string;
+  price_to: number;
+  price_from: number;
 }

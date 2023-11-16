@@ -11,6 +11,7 @@ export class DatabaseService {
   content: content;
   contentList: [content];
   constructor(public photoService: PhotoService) {
+
     this.setting = {
       site_name: '',
       tax_number_show: false,
