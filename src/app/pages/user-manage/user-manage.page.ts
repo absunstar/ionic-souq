@@ -279,8 +279,6 @@ export class UserManagePage implements OnInit {
               })
               .subscribe((res: any) => {
                 if (res.done) {
-                  console.log('xxxxxxxxxxxxxxx');
-
                   this.loadMyAds();
                 } else {
                 }

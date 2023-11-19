@@ -1822,7 +1822,6 @@
                           data: options,
                         },
                         (res) => {
-                          console.log(res);
                         },
                         (err) => {
                           console.log(err);
@@ -2306,7 +2305,6 @@
                   $scope.id2 = Math.random().toString().replace(".", "_");
                 }
                 $scope.log = function (msg) {
-                  console.log(msg);
                 };
               },
               template: `<div id="categories_{{id2}}" class="row">

@@ -33,7 +33,6 @@ export class PagesContentPage implements OnInit {
 
   getPageImplement() {
     this.route.queryParams.subscribe(async (params) => {
-      console.log(params.type);
 
       this.isite
         .api({
@@ -46,7 +45,6 @@ export class PagesContentPage implements OnInit {
           if (res.done) {
             this.page_content = res.doc;
             document.getElementById('content').innerHTML = this.page_content.content;
-            console.log(this.page_content);
           }
         });
     });

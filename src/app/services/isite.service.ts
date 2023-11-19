@@ -177,7 +177,6 @@ export class IsiteService {
         type: 'post',
       };
     }
-    console.log(' [ API ] ', options);
 
     options.headers = options.headers || {};
     options.headers['Access-Token'] = this.accessToken || '';
