@@ -31,8 +31,9 @@ import {
 })
 export class RegisterPage implements OnInit {
   user: user;
+  mailer: mailer;
   countriesList: [countriesList];
-
+  mailer_code: string = '';
   constructor(
     private modalCtrl: ModalController,
     public isite: IsiteService,
@@ -44,6 +45,8 @@ export class RegisterPage implements OnInit {
     this.user = {
       $error: '',
       $busy: false,
+      $deal: false,
+      $showContent: false,
       id: 0,
       first_name: '',
       last_name: '',
@@ -53,6 +56,18 @@ export class RegisterPage implements OnInit {
       re_password: '',
       image_url: '',
       $image_url: '',
+      $country: '',
+      country: {},
+    };
+    this.mailer = {
+      id: 0,
+      $send_code : false,
+      $error: '',
+      $country: '',
+      type: '',
+      $busy: false,
+      mobile: '',
+      code: '',
       country: {},
     };
     this.getCountriesList();
@@ -118,7 +133,9 @@ export class RegisterPage implements OnInit {
         return;
       }
       if (user.password === user.re_password) {
-        let country = this.countriesList.find((a) => a.id == user.country);
+        let country = this.countriesList.find(
+          (a) => a.id == Number(user.$country)
+        );
 
         let obj = {
           email: user.email,
@@ -174,6 +191,9 @@ export class RegisterPage implements OnInit {
         },
       })
       .subscribe((res: any) => {
+        if (!this.isite.db.setting.enable_sending_messages_mobile_taqnyat) {
+          this.user.$showContent = true;
+        }
         if (res.done && res.list.length > 0) {
           for (let i = 0; i < res.list.length; i++) {
             const element = res.list[i];
@@ -188,6 +208,107 @@ export class RegisterPage implements OnInit {
       });
   }
 
+  resendCode() {
+    if (this.mailer.$busy) {
+      return;
+    }
+
+    this.mailer.$busy = true;
+
+    this.isite
+      .api({
+        url: '/api/mailer/add',
+        body: { type: 'mobile', mobile: this.mailer.mobile },
+      })
+      .subscribe((res: any) => {
+        this.mailer.$busy = false;
+        if (res.done) {
+          this.mailer = res.doc;
+          this.mailer.$send_code = true;
+          this.mailer.$error = 'تم إرسال الكود مرة أخرى';
+          setTimeout(() => {
+            this.mailer.$error = '';
+          }, 2000);
+        } else {
+          this.mailer.$error = res.error;
+        }
+      });
+  }
+
+  registerMailer() {
+    if (this.mailer.$busy) {
+      return;
+    }
+
+    this.mailer.$error = '';
+    this.mailer.country = this.countriesList.find(
+      (a) => a.id == Number(this.mailer.$country)
+    );
+    let regex = /^\d*(\.\d+)?$/;
+    if (this.mailer.country.length_mobile && this.mailer.mobile.match(regex)) {
+      if (
+        this.mailer.mobile.toString().length !=
+        this.mailer.country.length_mobile
+      ) {
+        this.mailer.$error = 'يجب كتابة رقم صالح';
+        return;
+      }
+    } else {
+      this.mailer.$error = 'يجب كتابة رقم صالح';
+      return;
+    }
+    this.mailer.type = 'mobile';
+    this.mailer.$busy = true;
+
+    this.isite
+      .api({
+        url: '/api/mailer/add',
+        body: this.mailer,
+      })
+      .subscribe((res: any) => {
+        this.mailer.$busy = false;
+        if (res.done) {
+          this.mailer = res.doc;
+          this.mailer.$send_code = true;
+
+          this.user.country = this.mailer.country;
+          this.user.mobile = this.mailer.mobile;
+        } else {
+          this.mailer.$error = res.error;
+        }
+      });
+  }
+
+  checkSecretCode() {
+    if (this.mailer.$busy) {
+      return;
+    }
+    if(!this.mailer_code) {
+      this.mailer.$error = 'يجب كتابة الرمز';
+      return;
+    }
+    this.mailer.$error = '';
+
+    this.mailer.$busy = true;
+
+    this.isite
+      .api({
+        url: '/api/mailer/check_code',
+        body: { id: this.mailer.id, code: this.mailer_code },
+      })
+      .subscribe((res: any) => {
+        this.mailer.$busy = false;
+        if (res.done) {
+          this.mailer = res.doc;
+          this.user.mobile = this.mailer.mobile;
+          this.user.$country = this.mailer.country.id.toString();
+          this.user.$showContent = true;
+        } else {
+          this.mailer.$error = res.error;
+        }
+      });
+  }
+
   async login() {
     const modal = await this.modalCtrl.create({
       component: LoginPage,
@@ -196,9 +317,22 @@ export class RegisterPage implements OnInit {
     await modal.present();
   }
 }
+export interface mailer {
+  id: number;
+  type: string;
+  $send_code : boolean;
+  $busy: boolean;
+  $error: string;
+  mobile: string;
+  $country: string;
+  country: any;
+  code: string;
+}
 export interface user {
   id: number;
+  $deal: boolean;
   $busy: boolean;
+  $showContent: boolean;
   image_url: string;
   $image_url: string;
   $error: string;
@@ -208,6 +342,7 @@ export interface user {
   email: string;
   password: string;
   re_password: string;
+  $country: string;
   country: any;
 }
 export interface countriesList {

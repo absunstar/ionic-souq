@@ -15,6 +15,7 @@ export class DatabaseService {
     this.setting = {
       site_name: '',
       tax_number_show: false,
+      enable_sending_messages_mobile_taqnyat: false,
       commercial_registration_no_show: false,
       commercial_registration_no: '',
       content: {},
@@ -51,6 +52,7 @@ export interface setting {
   commission_main_title: string;
   commission_logo: string;
   tax_number_show: boolean;
+  enable_sending_messages_mobile_taqnyat : boolean;
   commercial_registration_no_show: boolean;
   commercial_registration_no: string;
   tax_number: string;

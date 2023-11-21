@@ -1,24 +1,39 @@
 <ion-header>
-	<ion-toolbar color="primary">
-		<ion-title>تسجيل دخول</ion-title>
-	</ion-toolbar>
+  <ion-toolbar color="primary">
+    <ion-title>تسجيل دخول</ion-title>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
-	<div>
-		<div class="input-group">
-			<ion-item>
-				<ion-input type="email" [(ngModel)]="user.email" placeholder="Email" ></ion-input>
-			</ion-item>
-			<ion-item>
-				<ion-input type="password" [(ngModel)]="user.password" placeholder="Password" ></ion-input>
-			</ion-item>
-		</div>
-		<p class="errors" *ngIf="user.$error">{{user.$error}}</p>
-		<ion-button (click)="loginUser(user)" type="submit" expand="block">دخول</ion-button>
-		<ion-button (click)="close()" type="button" expand="block" color="light" fill="clear"
-			>Not yet a member? Sign up!
-		</ion-button>
-
-	</div>
+  <div>
+    <div class="input-group">
+      <ion-item>
+        <ion-input
+          type="email"
+          [(ngModel)]="user.email"
+          placeholder="Email"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input
+          type="password"
+          [(ngModel)]="user.password"
+          placeholder="Password"
+        ></ion-input>
+      </ion-item>
+    </div>
+    <p class="errors" *ngIf="user.$error">{{user.$error}}</p>
+    <ion-button (click)="loginUser(user)" type="submit" expand="block"
+      >دخول</ion-button
+    >
+    <!-- <ion-button
+      (click)="close()"
+      type="button"
+      expand="block"
+      color="light"
+      fill="clear"
+    >
+      <ion-label class="main-color"> نسيت كلمة المرور </ion-label>
+    </ion-button> -->
+  </div>
 </ion-content>
