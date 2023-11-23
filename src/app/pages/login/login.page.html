@@ -26,14 +26,15 @@
     <ion-button (click)="loginUser(user)" type="submit" expand="block"
       >دخول</ion-button
     >
-    <!-- <ion-button
-      (click)="close()"
+    <ion-button
+    (click)="close()"
+    [routerLink]="['/forget-password']"
       type="button"
       expand="block"
       color="light"
       fill="clear"
     >
       <ion-label class="main-color"> نسيت كلمة المرور </ion-label>
-    </ion-button> -->
+    </ion-button>
   </div>
 </ion-content>

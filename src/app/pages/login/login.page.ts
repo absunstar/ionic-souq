@@ -59,6 +59,7 @@ export class LoginPage implements OnInit {
     this.modalCtrl.dismiss();
   }
 }
+
 export interface user {
   email: string;
   password: string;
