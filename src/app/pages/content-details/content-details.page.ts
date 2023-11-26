@@ -77,6 +77,7 @@ export class ContentDetailsPage implements OnInit {
       last_name: '',
       image_url: '',
       $image_url: '',
+      $mobile : '',
     };
     this.activity = {
       busy: false,
@@ -156,6 +157,7 @@ export class ContentDetailsPage implements OnInit {
             last_name: resUser.doc.profile.last_name,
             $image_url: this.isite.baseURL + resUser.doc.profile.image_url,
             image_url:  resUser.doc.profile.image_url,
+            $mobile : resUser.doc.country_code + this.content.mobile,
           };
 
         }
@@ -500,6 +502,7 @@ export interface userAd {
   last_name: string;
   image_url: string;
   $image_url: string;
+  $mobile : string;
 }
 export interface userSession {
   id: number;

@@ -55,6 +55,7 @@ export class ProfilePage implements OnInit {
       $last_seen: '',
       image_url: '',
       mobile: '',
+      $mobile: '',
       profile: {},
       mobile_list: [],
       feedback_list: [],
@@ -143,6 +144,7 @@ export class ProfilePage implements OnInit {
             this.user.feedback_list = this.user.feedback_list || [];
             this.user.followers_list = this.user.followers_list || [];
             this.user.mobile_list = this.user.mobile_list || [];
+            this.user.$mobile = res.doc.country_code + this.user.mobile;
             this.showAds = true;
             this.loadMyAds(this.user.id);
           }
@@ -302,6 +304,7 @@ export interface user {
   last_name: string;
   image_url: string;
   mobile: string;
+  $mobile: string;
   $created_date: string;
   profile: any;
   mobile_list: any[];

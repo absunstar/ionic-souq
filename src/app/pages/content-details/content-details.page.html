@@ -8,7 +8,7 @@
 <ion-content class="main">
   <div class="content-ad">
     <p class="contentName">{{content.name}}</p>
-    <div class="bg-ad">
+    <div class="bg-ad padding-7">
       <a
         class=""
         [routerLink]="['/profile']"
@@ -165,7 +165,7 @@
 
             <ion-item class="underline-hover">
               <ion-avatar slot="end">
-                <a href="tel:{{content.mobile}}">
+                <a href="tel:{{userAd.$mobile}}">
                   <ion-icon
                     class="icon-message bold"
                     name="call-outline"
@@ -173,14 +173,14 @@
                 </a>
               </ion-avatar>
               <ion-label>
-                <a href="tel:{{content.mobile}}">
-                  <h2 class="main main-color bold">{{content.mobile}}</h2>
+                <a target="_blank" href="tel:{{userAd.$mobile}}">
+                  <h2 class="main main-color bold">{{userAd.$mobile}}</h2>
                 </a>
               </ion-label>
             </ion-item>
             <ion-item class="underline-hover">
               <ion-avatar slot="end">
-                <a href="https://wa.me/{{content.mobile}}">
+                <a target="_blank" href="https://wa.me/{{userAd.$mobile}}">
                   <ion-icon
                     class="icon-message bold"
                     name="logo-whatsapp"
@@ -188,7 +188,7 @@
                 </a>
               </ion-avatar>
               <ion-label>
-                <a href="https://wa.me/{{content.mobile}}">
+                <a target="_blank" href="https://wa.me/{{userAd.$mobile}}">
                   <h2 class="main main-color bold">مراسلة عبر واتساب</h2>
                 </a>
               </ion-label>
