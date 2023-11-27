@@ -21,12 +21,11 @@ import { get } from 'http';
 @Injectable({
   providedIn: 'root',
 })
-/* https://harajtmor.com */
-/* http://127.0.0.1 */
+
 export class IsiteService {
   busy: boolean = false;
   accessToken: string = null;
-  baseURL: string = 'http://harajtmor.com';
+  baseURL: string = 'https://harajtmor.com';
   loader: HTMLIonLoadingElement = null;
   browser: InAppBrowserObject = null;
   constructor(
@@ -40,7 +39,7 @@ export class IsiteService {
   ) {
     let ii = setInterval(() => {
       if (this.accessToken) {
-        
+
         clearInterval(ii);
         this.getSetting();
       }
@@ -108,7 +107,7 @@ export class IsiteService {
         this.accessToken = resUserSession.session.accessToken;
         Preferences.set({ key: 'accessToken', value: this.accessToken });
       }
-      
+
       if (resUserSession.done) {
         if (resUserSession.session.user) {
         this.updateVisit();
@@ -136,7 +135,7 @@ export class IsiteService {
   async getSetting() {
     this.api('/api/default_setting/get').subscribe((res: any) => {
       if (res.done) {
-     
+
         this.db.setting = res.doc;
         this.db.setting.tax_number_show = res.doc.tax_number_show || false;
         this.db.setting.enable_sending_messages_mobile_taqnyat = res.doc.enable_sending_messages_mobile_taqnyat || false;
@@ -153,7 +152,7 @@ export class IsiteService {
         this.db.setting.powered_whatsapp = res.doc.powered_whatsapp || '';
         this.db.setting.powered_logo = res.doc.powered_logo || '';
         this.db.setting.powered_title = res.doc.powered_title || '';
-        this.db.setting.currency = res.doc.currency || {};        
+        this.db.setting.currency = res.doc.currency || {};
         this.db.setting.phone = res.doc.phone || '';
         this.db.setting.email = res.doc.email || '';
         this.db.setting.logo = this.baseURL + this.db.setting.logo;

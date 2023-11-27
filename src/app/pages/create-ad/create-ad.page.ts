@@ -107,6 +107,12 @@ export class CreateAdPage implements OnInit {
   ngOnInit() {}
 
   async selectImage(type) {
+    await Camera.checkPermissions().then((permissions) => {
+      if (permissions.photos !== 'granted') {
+        Camera.requestPermissions();
+      }
+    });
+ 
     const image = await Camera.getPhoto({
       quality: 90,
       allowEditing: false,
@@ -216,7 +222,7 @@ export class CreateAdPage implements OnInit {
       this.content.$show_images = true;
     } else if (type == 'done_video') {
       this.content.$show_finish = true;
-    }  else if (type == 'done_images_list') {
+    } else if (type == 'done_images_list') {
       this.content.$show_videos_link = true;
     }
   }
@@ -435,7 +441,6 @@ export class CreateAdPage implements OnInit {
       });
   }
   getGoves(country) {
-
     this.isite
       .api({
         url: '/api/goves/all',
