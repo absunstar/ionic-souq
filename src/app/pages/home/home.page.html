@@ -1,10 +1,10 @@
 <ion-app class="main-content">
   <ion-content>
-    <ion-icon
-      (click)="setOpen(true, 'filterModal')"
-      class="filter main-color"
-      name="color-filter-outline"
-    ></ion-icon>
+    <ion-button class="button-filter" fill="outline" id="open-filter">
+      <ion-icon name="stats-chart-outline"></ion-icon>
+      <ion-label>تصفية</ion-label>
+    </ion-button>
+
     <div class="tags">
       <ion-item class="tag-list">
         <ion-col *ngFor="let top_category of top_category_list">
@@ -36,7 +36,7 @@
           [routerLink]="['/content-details']"
           [queryParams]="{id: content.id,name :content.name}"
         >
-          <p class="ellipsis-txt font-18 main-color bold">{{ content.name }}</p>
+          <p class="ellipsis-txt font-17 main-color bold">{{ content.name }}</p>
           <p class="time-publish">
             {{content.$time}} <ion-icon name="time-outline"></ion-icon>
           </p>
@@ -93,15 +93,13 @@
         </ion-label>
       </ion-item>
     </ion-list>
-    <ion-modal [isOpen]="filterModal">
+    <ion-modal #modal trigger="open-filter">
       <ng-template>
         <ion-header>
           <ion-toolbar>
             <ion-title>تصفية</ion-title>
             <ion-buttons slot="end">
-              <ion-button (click)="setOpen(false, 'filterModal')"
-                >Close</ion-button
-              >
+              <ion-button (click)="modal.dismiss()">إغلاق</ion-button>
             </ion-buttons>
           </ion-toolbar>
         </ion-header>
@@ -122,7 +120,11 @@
             ></ion-checkbox>
           </ion-item>
           <ion-item>
-            <ion-radio-group [(ngModel)]="filter.price" value="price">
+            <ion-radio-group
+              [(ngModel)]="filter.price"
+              class="filter-price"
+              value="price"
+            >
               <ion-item>
                 <ion-label>أقل سعر</ion-label>
                 <ion-radio slot="end" value="lowest"></ion-radio>
@@ -164,7 +166,12 @@
               </ion-col>
             </ion-row>
           </ion-item>
-          <ion-button expand="block" (click)="setOpen(false, 'filterModal');loadPosts({more : false })">
+          <ion-button
+            expand="block"
+            class="filter-search"
+            color="success"
+            (click)="setOpen(false, 'filterModal');loadPosts({more : false })"
+          >
             <ion-icon name="log-in-outline"></ion-icon>
             <ion-label>بحث</ion-label>
           </ion-button>

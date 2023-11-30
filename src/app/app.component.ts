@@ -83,6 +83,7 @@ export class AppComponent {
     const { role } = await alert.onDidDismiss();
   }
   async hideMenu() {
+    
     await menuController.toggle();
   }
 

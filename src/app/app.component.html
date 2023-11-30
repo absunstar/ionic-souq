@@ -4,7 +4,9 @@
       <ion-title class="main-title">
         <a (click)="gotoHome()">
           <img [src]="isite.db.setting.logo" />
-          <p class="company-title">{{ isite.db.setting.site_name }}</p>
+          <p class="company-title">
+            {{ isite.db.setting.site_name }}
+          </p>
         </a>
       </ion-title>
       <ion-button
@@ -72,6 +74,16 @@
           <ion-icon class="main-color" name="person-circle-outline"></ion-icon>
         </ion-button>
 
+        <ion-button
+        (click)="login()"
+        fill="outline"
+          size="small"
+          *ngIf="!isite.db.userSession || !isite.db.userSession.id"
+          class="large bold main-color"
+        >
+        <ion-icon  class="main-color" name="add-outline"></ion-icon>
+        <ion-label  class="main-color">أضف إعلانك</ion-label>
+        </ion-button>
         <ion-menu-button
           class="xx-large main-color"
           autoHide="false"
@@ -164,11 +176,12 @@
     </ion-footer>
     <ion-card class="card-menu">
       <ion-card-content (click)="hideMenu()">
-        <ion-label class="card-label-menu"
-        [routerLink]="['/pages-content']"
-        [queryParams]="{
-          type: 'register'
-        }"
+        <ion-label
+          class="card-label-menu"
+          [routerLink]="['/pages-content']"
+          [queryParams]="{
+            type: 'register'
+          }"
           ><ion-icon class="card-icon-menu" name="people-outline"></ion-icon>
           تسجيل</ion-label
         >
@@ -176,19 +189,21 @@
           ><ion-icon class="card-icon-menu" name="cash-outline"></ion-icon> حساب
           و سداد عمولة الموقع</ion-label
         >
-        <ion-label class="card-label-menu"
-        [routerLink]="['/pages-content']"
-        [queryParams]="{
-          type: 'premium-ads'
-        }"
+        <ion-label
+          class="card-label-menu"
+          [routerLink]="['/pages-content']"
+          [queryParams]="{
+            type: 'premium-ads'
+          }"
           ><ion-icon class="card-icon-menu" name="star-outline"></ion-icon>
           الإعلانات المميزة</ion-label
         >
-        <ion-label class="card-label-menu"
-        [routerLink]="['/pages-content']"
-        [queryParams]="{
-          type: 'services-membership'
-        }"
+        <ion-label
+          class="card-label-menu"
+          [routerLink]="['/pages-content']"
+          [queryParams]="{
+            type: 'services-membership'
+          }"
           ><ion-icon class="card-icon-menu" name="wallet-outline"></ion-icon>
           سداد رسوم السلع و الخدمات المكررة</ion-label
         >
@@ -204,62 +219,69 @@
           ></ion-icon>
           إتفاقية الإستخدام</ion-label
         >
-        <ion-label class="card-label-menu"
-        [routerLink]="['/pages-content']"
-        [queryParams]="{
-          type: 'verify'
-        }"
+        <ion-label
+          class="card-label-menu"
+          [routerLink]="['/pages-content']"
+          [queryParams]="{
+            type: 'verify'
+          }"
           ><ion-icon class="card-icon-menu" name="card-outline"></ion-icon>
           توثيق العضوية و إضافة التراخيص</ion-label
         >
-        <ion-label class="card-label-menu"
-        [routerLink]="['/pages-content']"
-        [queryParams]="{
-          type: 'rating'
-        }"
+        <ion-label
+          class="card-label-menu"
+          [routerLink]="['/pages-content']"
+          [queryParams]="{
+            type: 'rating'
+          }"
           ><ion-icon class="card-icon-menu" name="star-half-outline"></ion-icon>
           نظام التقييم</ion-label
         >
-        <ion-label class="card-label-menu"
-        [routerLink]="['/pages-content']"
-        [queryParams]="{
-          type: 'discount'
-        }"
+        <ion-label
+          class="card-label-menu"
+          [routerLink]="['/pages-content']"
+          [queryParams]="{
+            type: 'discount'
+          }"
           ><ion-icon class="card-icon-menu" name="cut-outline"></ion-icon> نظام
           الخصم</ion-label
         >
-        <ion-label class="card-label-menu"
-        [routerLink]="['/pages-content']"
-        [queryParams]="{
-          type: 'checkAcc'
-        }"
+        <ion-label
+          class="card-label-menu"
+          [routerLink]="['/pages-content']"
+          [queryParams]="{
+            type: 'checkAcc'
+          }"
           ><ion-icon
             class="card-icon-menu"
             name="notifications-off-outline"
           ></ion-icon>
           القائمة السوداء و إرشادات التعامل</ion-label
         >
-        <ion-label class="card-label-menu"
-        [routerLink]="['/pages-content']"
-        [queryParams]="{
-          type: 'forbiddenContents'
-        }"
+        <ion-label
+          class="card-label-menu"
+          [routerLink]="['/pages-content']"
+          [queryParams]="{
+            type: 'forbiddenContents'
+          }"
           ><ion-icon class="card-icon-menu" name="hand-left-outline"></ion-icon>
           قائمة السلع و الإعلانات الممنوعة</ion-label
         >
-        <ion-label class="card-label-menu"
-        [routerLink]="['/pages-content']"
-        [queryParams]="{
-          type: 'faq'
-        }"
+        <ion-label
+          class="card-label-menu"
+          [routerLink]="['/pages-content']"
+          [queryParams]="{
+            type: 'faq'
+          }"
           ><ion-icon class="card-icon-menu" name="help-circle"></ion-icon>
           الأسئلة الشائعة</ion-label
         >
-        <ion-label class="card-label-menu"
-        [routerLink]="['/pages-content']"
-        [queryParams]="{
-          type: 'contact'
-        }"
+        <ion-label
+          class="card-label-menu"
+          [routerLink]="['/pages-content']"
+          [queryParams]="{
+            type: 'contact'
+          }"
           ><ion-icon class="card-icon-menu" name="call-sharp"></ion-icon> إتصل
           بنا</ion-label
         >

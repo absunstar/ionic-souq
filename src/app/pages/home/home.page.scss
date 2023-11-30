@@ -29,18 +29,30 @@
   flex-direction: row-reverse;
   align-content: space-around;
 }
-.content-items{
+.content-items {
   border-bottom: 2px solid #039789;
   display: flow-root;
 }
  .content-items:nth-child(odd) {
-  background-color: #80ceb9;
+  background-color: #08dea5;
 } 
+.filter-price {
+  display: inline-flex;
+}
+.filter-search {
+  margin-top: 2vh !important;
+  width: inherit !important;
+}
+.button-filter {
+  margin: 21px -5px -20px 0px !important;
+  float: right;
+  padding: 15px;
+  color: #009688;
+}
 .ellipsis-txt {
   white-space: nowrap;
-  margin-right: 5px !important;
+  width: fit-content;
   overflow: hidden;
-  margin-left: 7px !important;
   text-overflow: ellipsis;
 }
 .filter {
@@ -72,7 +84,6 @@
   a {
     height: 113px;
     text-decoration: none;
-    
     display: grid;
     align-content: initial;
     justify-content: space-between;
@@ -97,7 +108,7 @@
     text-align: center;
     color: #009688;
     font-weight: bold;
-    text-wrap: nowrap;
+    /* text-wrap: nowrap; */
   }
 }
 

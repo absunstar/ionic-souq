@@ -7,8 +7,6 @@ ion-toolbar {
     text-decoration: none;
     unicode-bidi: plaintext;
 
-
-
     img {
       width: 45%;
       height: 62px;
@@ -22,7 +20,7 @@ ion-toolbar {
   background-image: linear-gradient(to left, #009688, gold, #009688, gold);
   -webkit-background-clip: text;
   color: transparent;
-  font-size: 25px;
+  font-size: 24px;
   font-weight: bold;
   float: right;
   margin-top: 0px;
@@ -92,7 +90,6 @@ ion-toolbar {
   text-wrap: nowrap;
   position: sticky;
   top: 10px;
-
 }
 
 .powered-p {
@@ -105,7 +102,7 @@ ion-toolbar {
 
 .clock-area span {
   position: fixed;
-  padding-left: 6px;
+  padding-left: 5px;
   padding-top: 43px;
   color: white;
   font-weight: bold;
@@ -155,7 +152,7 @@ ion-toolbar {
 }
 
 .main-title {
-  display: contents
+  display: contents;
 }
 
 .right {
