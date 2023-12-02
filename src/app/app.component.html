@@ -362,7 +362,7 @@
       *ngIf="isite.db.userSession && isite.db.userSession.id"
     >
       <ion-icon [routerLink]="['/favorite']" name="heart"></ion-icon>
-      <ion-label class="large">المفضله</ion-label>
+      <ion-label class="large" [routerLink]="['/favorite']">المفضله</ion-label>
     </ion-tab-button>
     <ion-tab-button
       tab="add"
@@ -373,7 +373,7 @@
         name="add-circle"
         [routerLink]="['/create-ad']"
       ></ion-icon>
-      <ion-label class="large">إضافة إعلان</ion-label>
+      <ion-label class="large" [routerLink]="['/create-ad']">إضافة إعلان</ion-label>
     </ion-tab-button>
 
     <ion-tab-button
@@ -381,7 +381,7 @@
       *ngIf="isite.db.userSession && isite.db.userSession.id"
     >
       <ion-icon name="chatbox" [routerLink]="['/message']"></ion-icon>
-      <ion-label class="large">الرسائل</ion-label>
+      <ion-label [routerLink]="['/message']" class="large">الرسائل</ion-label>
       <ion-badge class="badge-msg">{{
         isite.db.userSession.message_count
       }}</ion-badge>
