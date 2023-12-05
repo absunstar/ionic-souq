@@ -16,14 +16,14 @@
         <ion-input
           type="email"
           [(ngModel)]="user.email"
-          placeholder="Email"
+          placeholder="البريد الإلكتروني أو الجوال"
         ></ion-input>
       </ion-item>
       <ion-item>
         <ion-input
           type="password"
           [(ngModel)]="user.password"
-          placeholder="Password"
+          placeholder="كلمة المرور"
         ></ion-input>
       </ion-item>
     </div>
@@ -40,6 +40,16 @@
       fill="clear"
     >
       <ion-label class="main-color"> نسيت كلمة المرور </ion-label>
+    </ion-button>
+    <ion-button
+    (click)="close()"
+    [routerLink]="['/register']"
+      type="button"
+      expand="block"
+      color="light"
+      fill="clear"
+    >
+      <ion-label class="main-color"> تسجيل حساب جديد </ion-label>
     </ion-button>
   </div>
 </ion-content>

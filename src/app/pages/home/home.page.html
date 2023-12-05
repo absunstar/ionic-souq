@@ -1,6 +1,6 @@
 <ion-app class="main-content">
   <ion-content>
-    <ion-button class="button-filter" fill="outline" id="open-filter">
+    <ion-button class="button-filter" color="light" id="open-filter">
       <ion-icon name="stats-chart-outline"></ion-icon>
       <ion-label>تصفية</ion-label>
     </ion-button>
@@ -36,7 +36,7 @@
           [routerLink]="['/content-details']"
           [queryParams]="{id: content.id,name :content.name}"
         >
-          <p class="ellipsis-txt font-17 main-color bold">{{ content.name }}</p>
+          <p class="font-16 main-color bold">{{ content.name }}</p>
           <p class="time-publish">
             {{content.$time}} <ion-icon name="time-outline"></ion-icon>
           </p>
