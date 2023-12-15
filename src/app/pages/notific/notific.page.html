@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>الإشعارات</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="notificList && notificList.length > 0">
+    <ion-item
+      class="content-items"
+      button
+      *ngFor="let notific of notificList"
+    >
+      <!-- <ion-avatar slot="start" class="avatar-content">
+        <img
+          [src]="notific.image_url"
+          [routerLink]="['/notific-details']"
+          [queryParams]="{id: notific.id,name :notific.name}"
+        />
+      </ion-avatar> -->
+
+      <ion-label
+        class="ion-text-wrap"
+        [routerLink]="['/notific-details']"
+        [queryParams]="{id: notific.id,name :notific.name}"
+      >
+        <p class="font-16 main-color bold" *ngIf="notific.type == 'comments_my_ads'">تعليق جديد على {{ notific.name }}</p>
+        <p class="time-publish">
+          {{notific.$time}} <ion-icon name="time-outline"></ion-icon>
+        </p>
+      </ion-label>
+      <!-- ion-badge -->
+      <ion-label slot="end">
+        <p
+          class="time-publish text-right"
+          [routerLink]="['/profile']"
+          [queryParams]="{
+          id: notific.user_action.id,
+          name: notific.user_action.name,
+          last_name: notific.user_action.last_name
+        }"
+        >
+          {{ notific.user_action.name }}
+          <ion-icon name="person-outline"></ion-icon>
+        </p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+ 
+  <p class="favorite-label" *ngIf="!notificList ||notificList.length < 1">
+    لا يوجد إشعارات
+  </p>
+</ion-content>

@@ -286,8 +286,8 @@ export class ContentDetailsPage implements OnInit {
                 }
               });
             }
-
-            if (this.isite.db.userSession) {
+            
+            if (this.isite.db.userSession && this.isite.db.userSession.feedback_list) {
               this.activity.favorite =
                 this.isite.db.userSession.feedback_list.some(
                   (_f) =>

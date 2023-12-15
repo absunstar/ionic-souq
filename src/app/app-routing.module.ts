@@ -76,6 +76,10 @@ const routes: Routes = [
   {
     path: 'forget-password',
     loadChildren: () => import('./pages/forget-password/forget-password.module').then( m => m.ForgetPasswordPageModule)
+  },
+  {
+    path: 'notific',
+    loadChildren: () => import('./pages/notific/notific.module').then( m => m.NotificPageModule)
   }
 
 

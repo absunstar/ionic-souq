@@ -8,19 +8,20 @@ ion-toolbar {
     unicode-bidi: plaintext;
 
     img {
-      width: 45%;
+      width: 100px;
+      object-fit: cover;
       height: 62px;
       display: inline;
       border-radius: 5px;
       float: left;
-    }
+  }
   }
 }
 .company-title {
   background-image: linear-gradient(to left, #009688, gold, #009688, gold);
   -webkit-background-clip: text;
   color: transparent;
-  font-size: 23px;
+  font-size: 24px;
   font-weight: bold;
   float: right;
   margin-top: 15px;

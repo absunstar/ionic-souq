@@ -34,16 +34,18 @@ export class CommissionPage implements OnInit {
       $error: '',
       notes: '',
     };
-  }
-
-  ngOnInit() {
     this.commission.$transfer_date = new Date().toISOString();
-
+    
     if (this.isite.db.userSession && this.isite.db.userSession.id) {
       this.commission.user_name =
         this.isite.db.userSession.name + this.isite.db.userSession.last_name;
+        
       this.commission.mobile = this.isite.db.userSession.mobile;
     }
+  }
+
+  ngOnInit() {
+   
   }
 
   calc() {
