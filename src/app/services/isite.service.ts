@@ -21,11 +21,11 @@ import { get } from 'http';
 @Injectable({
   providedIn: 'root',
 })
-
+// 'https://harajtmor.com'
 export class IsiteService {
   busy: boolean = false;
   accessToken: string = null;
-  baseURL: string = 'https://harajtmor.com';
+  baseURL: string = 'http://localhost';
   loader: HTMLIonLoadingElement = null;
   browser: InAppBrowserObject = null;
   constructor(
