@@ -315,13 +315,16 @@ export class CreateAdPage implements OnInit {
     if (this.content.$busy) {
       return;
     }
+    this.content.$busy = true;
     this.content.$error = '';
     if (!this.content.name) {
       this.content.$error = 'يجب كتابة عنوان الإعلان';
+      this.content.$busy = false;
       return;
     } else if (!this.content.description) {
       this.content.$error = 'يجب كتابة تفاصيل الإعلان';
-      return;
+      this.content.$busy = false;
+return;
     }
     if (this.content.$country) {
       this.content.address.country = this.countries_list.find(
@@ -360,7 +363,6 @@ export class CreateAdPage implements OnInit {
         }
       }
     }
-    this.content.$busy = true;
     this.isite
       .api({
         url: '/api/contents/add',

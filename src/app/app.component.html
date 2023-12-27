@@ -75,14 +75,14 @@
         </ion-button>
 
         <ion-button
-        (click)="login()"
-        fill="outline"
+          (click)="login()"
+          fill="outline"
           size="small"
           *ngIf="!isite.db.userSession || !isite.db.userSession.id"
           class="large bold main-color"
         >
-        <ion-icon  class="main-color" name="add-outline"></ion-icon>
-        <ion-label  class="main-color">أضف إعلانك</ion-label>
+          <ion-icon class="main-color" name="add-outline"></ion-icon>
+          <ion-label class="main-color">أضف إعلانك</ion-label>
         </ion-button>
         <ion-menu-button
           class="xx-large main-color"
@@ -357,6 +357,17 @@
     slot="bottom"
     *ngIf="isite.db.userSession && isite.db.userSession.id"
   >
+  <ion-tab-button
+      tab="chat"
+      *ngIf="isite.db.userSession && isite.db.userSession.id"
+    >
+      <ion-icon name="notifications-outline" [routerLink]="['/notific']"></ion-icon>
+      <ion-label [routerLink]="['/notific']" class="large">الإشعارات</ion-label>
+      <ion-badge class="badge-msg">{{
+        isite.db.userSession.notific_count
+      }}</ion-badge>
+    </ion-tab-button>
+
     <ion-tab-button
       id="open-modal"
       *ngIf="isite.db.userSession && isite.db.userSession.id"
@@ -364,18 +375,7 @@
       <ion-icon [routerLink]="['/favorite']" name="heart"></ion-icon>
       <ion-label class="large" [routerLink]="['/favorite']">المفضله</ion-label>
     </ion-tab-button>
-    <ion-tab-button
-      tab="add"
-      *ngIf="isite.db.userSession && isite.db.userSession.id"
-    >
-      <ion-icon
-        class="add-ads"
-        name="add-circle"
-        [routerLink]="['/create-ad']"
-      ></ion-icon>
-      <ion-label class="large" [routerLink]="['/create-ad']">إضافة إعلان</ion-label>
-    </ion-tab-button>
-
+    
     <ion-tab-button
       tab="chat"
       *ngIf="isite.db.userSession && isite.db.userSession.id"
@@ -385,6 +385,20 @@
       <ion-badge class="badge-msg">{{
         isite.db.userSession.message_count
       }}</ion-badge>
+    </ion-tab-button>
+
+    <ion-tab-button
+      tab="add"
+      *ngIf="isite.db.userSession && isite.db.userSession.id"
+    >
+      <ion-icon
+        class="add-ads"
+        name="add-circle"
+        [routerLink]="['/create-ad']"
+      ></ion-icon>
+      <ion-label class="large" [routerLink]="['/create-ad']"
+        >إضافة إعلان</ion-label
+      >
     </ion-tab-button>
   </ion-tab-bar>
 </ion-app>
