@@ -1,0 +1,395 @@
+<ion-header class="main-padding">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button class="main-color"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="main">
+  <div class="content-ad">
+    <div class="bg-ad">
+      <img class="cover" [src]="user.profile.$cover" />
+      <img class="profile-img" [src]="user.profile.$image_url" />
+      <span
+        class="online-badge"
+        [ngClass]="{'offline-badge' : !user.$isOnline}"
+      ></span>
+      <ion-button
+        class="follow-button"
+        *ngIf="!user.$is_follow && !user.$same_email && isite.db.userSession && isite.db.userSession.id"
+        fill="outline"
+        (click)="updateFollow(user,true)"
+      >
+        <ion-label> متابعة</ion-label>
+      </ion-button>
+      <ion-button
+        class="follow-button"
+        *ngIf="user.$is_follow && !user.$same_email && isite.db.userSession && isite.db.userSession.id"
+        fill="outline"
+        (click)="updateFollow(user,false)"
+      >
+        <ion-label> إلغاء متابعة</ion-label>
+      </ion-button>
+      <h3
+        class="follow"
+        *ngIf="user.followers_list && user.followers_list.length > 0"
+      >
+        متابع {{user.followers_list.length}}
+      </h3>
+      <h3
+        class="follow"
+        *ngIf="!user.followers_list || user.followers_list.length < 1"
+      >
+        لا يوجد متابعين
+      </h3>
+
+      <h2 class="user-name-stlye black font-25 userPrint center">
+        {{user.email}}
+      </h2>
+      <p *ngIf="!user.$isOnline" class="margin darkgray font-16 padding center">
+        آخر ظهور {{user.$last_seen}}
+      </p>
+      <p *ngIf="user.$isOnline" class="margin green font-18 padding center">
+        متصل
+      </p>
+      <p class="main-color">
+        {{user.$created_date ||'Not set'}}
+        <ion-icon name="calendar-outline"></ion-icon>
+      </p>
+      <ion-label class="about-me"> {{user.profile.about_me}} </ion-label>
+      <div class="center pointer" (click)="isShowOther('rate')">
+        <ion-icon [ngClass]="{'gold' : rate > 10}" name="star-outline">
+        </ion-icon>
+        <ion-icon [ngClass]="{'gold' : rate > 30}" name="star-outline">
+        </ion-icon>
+        <ion-icon [ngClass]="{'gold' : rate > 50}" name="star-outline">
+        </ion-icon>
+        <ion-icon [ngClass]="{'gold' : rate > 70}" name="star-outline">
+        </ion-icon>
+        <ion-icon [ngClass]="{'gold' : rate > 90}" name="star-outline">
+        </ion-icon>
+
+        <h2
+          class="main-color bold center"
+          (click)="isShowOther('rate')"
+          *ngIf="ratingList && ratingList.length > 0"
+        >
+          {{ratingList.length}} تقييم
+        </h2>
+        <h2
+          class="darkgreen bold center"
+          (click)="isShowOther('rate')"
+          *ngIf="!ratingList || ratingList.length < 1"
+        >
+          لا يوجد تقييم
+        </h2>
+      </div>
+      <ion-grid>
+        <ion-row class="table-hr">
+          <ion-col size="">
+            <ion-button
+              *ngIf="isite.db.userSession && user.id != isite.db.userSession.id"
+              (click)="setOpen(true,'messageModal',user)"
+              color="light"
+              size="default"
+              expand="block"
+            >
+              محادثة
+              <ion-icon name="chatbubbles-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+          <ion-col size="">
+            <ion-button
+              *ngIf="!isite.db.userSession || user.id != isite.db.userSession.id"
+              (click)="setOpen(true,'connectModal',null)"
+              color="light"
+              size="default"
+              expand="block"
+            >
+              التواصل
+              <ion-icon name="call" slot="start"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <ion-modal class="half-modal" [isOpen]="connectModal">
+      <ng-template>
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>التواصل</ion-title>
+            <ion-buttons slot="end">
+              <ion-button (click)="setOpen(false,'connectModal',null)"
+                >Close</ion-button
+              >
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding">
+          <ion-list>
+            <ion-item class="underline-hover">
+              <ion-avatar slot="end">
+                <a href="tel:{{user.$mobile}}">
+                  <ion-icon
+                    class="icon-message bold"
+                    name="call-outline"
+                  ></ion-icon>
+                </a>
+              </ion-avatar>
+              <ion-label>
+                <a href="tel:{{user.$mobile}}">
+                  <h2 class="main main-color bold">{{user.$mobile}}</h2>
+                </a>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+          <ion-list *ngFor="let m of user.mobile_list">
+            <ion-item class="underline-hover">
+              <ion-avatar slot="end">
+                <a href="tel:{{m}}">
+                  <ion-icon
+                    class="icon-message bold"
+                    name="call-outline"
+                  ></ion-icon>
+                </a>
+              </ion-avatar>
+              <ion-label>
+                <a href="tel:{{m}}">
+                  <h2 class="main main-color bold">{{m}}</h2>
+                </a>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+
+    <ion-modal class="half-modal" [isOpen]="messageModal">
+      <ng-template>
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>رسالة سريعة إلى</ion-title>
+            <ion-buttons slot="end">
+              <ion-button (click)="setOpen(false,'messageModal',null)"
+                >Close</ion-button
+              >
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding">
+          <p class="center font-22 main-color">
+            {{userMessage.name}} {{userMessage.last_name}}
+          </p>
+
+          <ion-item>
+            <ion-label>أكتب رسالتك هنا</ion-label>
+            <ion-textarea
+              [(ngModel)]="message"
+              placeholder="أكتب رسالتك هنا"
+              [autoGrow]="true"
+            ></ion-textarea>
+          </ion-item>
+          <ion-button color="success" (click)="sendMessage()" expand="block"
+            >إرسال
+            <ion-icon name="send-outline"></ion-icon>
+          </ion-button>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+    <ion-modal [isOpen]="rateModal">
+      <ng-template>
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>تقييم</ion-title>
+            <ion-buttons slot="end">
+              <ion-button (click)="setOpen(false,'rateModal',null)"
+                >Close</ion-button
+              >
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding">
+          <ion-item>
+            <ion-label>كيف كانت تجربتك</ion-label>
+            <ion-textarea
+              [(ngModel)]="rating.notes"
+              placeholder="أذكر تفاصيل التقييم"
+              [autoGrow]="true"
+            ></ion-textarea>
+          </ion-item>
+          <p class="green font-22 center">
+            يجب ذكر تفاصيل التقييم مع ذكر نوع السلعه
+          </p>
+          <ion-item>
+            <ion-label>هل تنصح بالتعامل معه ؟</ion-label>
+            <ion-radio-group [(ngModel)]="rating.recommend" value="yes">
+              <ion-item>
+                <ion-label>نعم</ion-label>
+                <ion-radio slot="end" value="yes"></ion-radio>
+              </ion-item>
+
+              <ion-item>
+                <ion-label>لا</ion-label>
+                <ion-radio slot="end" value="no"></ion-radio>
+              </ion-item>
+            </ion-radio-group>
+          </ion-item>
+          <ion-item>
+            <ion-label>هل قمت بالشراء من العضو ؟</ion-label>
+            <ion-radio-group [(ngModel)]="rating.buy" value="yes">
+              <ion-item>
+                <ion-label>نعم</ion-label>
+                <ion-radio slot="end" value="yes"></ion-radio>
+              </ion-item>
+
+              <ion-item>
+                <ion-label>لا</ion-label>
+                <ion-radio slot="end" value="no"></ion-radio>
+              </ion-item>
+            </ion-radio-group>
+          </ion-item>
+          <p class="errors" *ngIf="rating.$error">{{rating.$error}}</p>
+
+          <ion-button color="success" (click)="addRating()" expand="block"
+            >إرسال التقييم
+            <ion-icon name="send-outline"></ion-icon>
+          </ion-button>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+
+    <div *ngIf="showRate" class="my-content">
+      <ion-label class="ads-label" (click)="isShowOther('ads')">
+        <ion-icon name="return-down-back-outline"></ion-icon>
+        الإعلانات
+      </ion-label>
+      <ion-button
+        *ngIf="isite.db.userSession && isite.db.userSession.id != user.id"
+        expand="block"
+        color="secondary"
+        (click)="setOpen(true,'rateModal',null)"
+        >أضف تقييم
+        <ion-icon name="star-half-outline"></ion-icon>
+      </ion-button>
+      <ion-grid>
+        <ion-row class="table-hr">
+          <ion-col> تقييم سلبي </ion-col>
+          <ion-col>تقييم إيجابي</ion-col>
+          <ion-col>عدد التقييمات</ion-col>
+        </ion-row>
+        <ion-row class="table-tr">
+          <ion-col class="center">
+            <ion-button
+              [disabled]="true"
+              color="light"
+              class="center"
+              type="button"
+            >
+              <ion-icon
+                class="font-23 red"
+                name="thumbs-down-outline"
+              ></ion-icon>
+              <ion-label class="font-20 red">{{negative}}</ion-label>
+            </ion-button></ion-col
+          >
+          <ion-col class="center">
+            <ion-button
+              [disabled]="true"
+              color="light"
+              class="center"
+              type="button"
+            >
+              <ion-icon
+                class="font-23 green"
+                name="thumbs-up-outline"
+              ></ion-icon>
+              <ion-label class="font-20 green">{{positive}}</ion-label>
+            </ion-button></ion-col
+          >
+          <ion-col class="center"
+            ><ion-button [disabled]="true" color="light" class="center">
+              <ion-icon class="font-23 gold" name="star-outline"></ion-icon>
+              <ion-label class="font-20 gold" *ngIf="ratingList">
+                {{ratingList.length || 0}}
+              </ion-label>
+              <ion-label class="font-20 gold" *ngIf="!ratingList">
+                {{0}}
+              </ion-label>
+            </ion-button></ion-col
+          >
+        </ion-row>
+      </ion-grid>
+
+      <div *ngIf="ratingList && ratingList.length">
+        <div
+          class="bg-white comment-ad"
+          *ngFor="let c of ratingList ; let i = index"
+        >
+          <div class="">
+            <ion-button
+              *ngIf="c.recommend == 'yes'"
+              [disabled]="true"
+              color="light"
+              class="center"
+              type="button"
+            >
+              <ion-icon
+                class="font-23 green"
+                name="thumbs-up-outline"
+              ></ion-icon>
+            </ion-button>
+            <ion-button
+              *ngIf="c.recommend == 'no'"
+              [disabled]="true"
+              color="light"
+              class="center"
+              type="button"
+            >
+              <ion-icon
+                class="font-23 red"
+                name="thumbs-down-outline"
+              ></ion-icon>
+            </ion-button>
+
+            <a [routerLink]="['/profile']" [queryParams]="c.sender">
+              <span class="user-name-stlye"
+                >{{c.sender.name}} {{c.sender.last_name}}</span
+              >
+              <img class="userImage" [src]="c.sender.image_url" />
+            </a>
+            <p class="time-publish">
+              {{c.date |date:"dd - MM - yyyy"}}
+              <ion-icon name="time-outline"></ion-icon>
+            </p>
+          </div>
+          <p class="text-comment bold">{{c.notes}}</p>
+        </div>
+      </div>
+    </div>
+
+    <ion-list *ngIf="showAds" class="my-content">
+      <ion-item button *ngFor="let content of contentList">
+        <ion-avatar
+          slot="start"
+          [routerLink]="['/content-details']"
+          [queryParams]="{id: content.id}"
+        >
+          <img [src]="content.image_url" />
+        </ion-avatar>
+        <ion-label
+          class="ion-text-wrap"
+          [routerLink]="['/content-details']"
+          [queryParams]="{id: content.id}"
+        >
+          <h3>{{ content.name }}</h3>
+          <p class="time-publish">
+            {{content.$time}} <ion-icon name="time-outline"></ion-icon>
+          </p>
+        </ion-label>
+        <!-- ion-badge -->
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>

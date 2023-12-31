@@ -1,0 +1,173 @@
+ion-toolbar {
+  --background: var(--theme);
+  height: 65px;
+  --color: #009688;
+
+  a {
+    text-decoration: none;
+    unicode-bidi: plaintext;
+
+    img {
+      width: 45%;
+      height: 62px;
+      display: inline;
+      border-radius: 5px;
+      float: left;
+    }
+  }
+}
+.company-title {
+  background-image: linear-gradient(to left, #009688, gold, #009688, gold);
+  -webkit-background-clip: text;
+  color: transparent;
+  font-size: 23px;
+  font-weight: bold;
+  float: right;
+  margin-top: 15px;
+  width: 55%;
+  text-wrap: pretty;
+  font-family: fangsong;
+  text-align: right;
+}
+
+.card-icon-menu {
+  color: #656565;
+}
+.main-header {
+  height: 175px;
+}
+.card-label-menu {
+  display: block;
+  font-size: 17px;
+  font-weight: bold;
+  color: #009688;
+}
+
+.card-menu {
+  margin: inherit;
+  direction: rtl;
+}
+
+.powered-a {
+  margin: 0px 15px 0px 1px;
+  position: relative;
+}
+
+.header-category-row {
+  background: #009688;
+  overflow: auto;
+  direction: rtl;
+  white-space: nowrap;
+  display: block;
+  height: 40px;
+}
+
+.header-category-col {
+  font-size: 20px;
+  margin-right: 5px;
+}
+
+.bagde-msg {
+  font-size: medium;
+  background: #009688;
+}
+
+.xx-large {
+  font-size: xx-large;
+}
+
+.x-large {
+  font-size: x-large;
+}
+
+.large {
+  font-size: large;
+}
+
+.header-category-a {
+  color: white;
+  font-weight: bold;
+  text-wrap: nowrap;
+  position: sticky;
+  top: 10px;
+}
+
+.powered-p {
+  color: #00786d !important;
+  font-size: 20px !important;
+  font-weight: bold;
+  text-align: right;
+  margin: -10px 3px 0px 0px;
+}
+
+.clock-area span {
+  position: fixed;
+  padding-left: 5px;
+  padding-top: 43px;
+  color: white;
+  font-weight: bold;
+  text-shadow: 1px 1px 5px #000;
+}
+
+.clock-area {
+  display: inline-block;
+  padding-left: 5px;
+}
+
+.menu-toolbar {
+  display: contents;
+}
+
+.footer-title {
+  float: right;
+  color: #009688;
+  font-size: larger;
+  font-weight: bold;
+}
+
+.social-logo {
+  padding: 10px;
+  color: #009688;
+  font-size: xx-large;
+}
+
+.footer-data {
+  color: #8f8f8f;
+  font-size: larger;
+  float: right;
+}
+
+.clock-area img {
+  border-radius: 5px;
+  width: 70px;
+  height: 60px;
+  position: inherit;
+}
+
+.third-toolbar {
+  background: #f1f1f1;
+  box-shadow: 2px 12px 20px -14px #000;
+  display: flex;
+  bottom: 20px;
+}
+
+.main-title {
+  display: contents;
+}
+
+.right {
+  text-align: right;
+}
+
+.right-float {
+  float: right;
+}
+
+ion-menu {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+#main-app-content {
+  margin-top: 15%;
+}

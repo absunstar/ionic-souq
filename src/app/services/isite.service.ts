@@ -15,10 +15,13 @@ import {
   ToastController,
   LoadingController,
 } from '@ionic/angular';
+import { timeout } from 'rxjs';
+import { get } from 'http';
 
 @Injectable({
   providedIn: 'root',
 })
+
 export class IsiteService {
   busy: boolean = false;
   accessToken: string = null;
@@ -34,19 +37,14 @@ export class IsiteService {
     public loadingCtrl: LoadingController,
     public iab: InAppBrowser
   ) {
-    this.start();
     let ii = setInterval(() => {
       if (this.accessToken) {
+
         clearInterval(ii);
-        // this.initBrowser();
-        // this.api('/api/default_setting/get').subscribe((res: any) => {
-        //   if (res.done) {
-        //     this.db.setting = res.doc;
-        //     this.db.setting.logo = this.baseURL + this.db.setting.logo;
-        //   }
-        // });
+        this.getSetting();
       }
     }, 1000);
+    this.start();
   }
 
   alert(title: any, msg: any) {
@@ -79,36 +77,97 @@ export class IsiteService {
       return false;
     }
     this.busy = true;
-
+    this.db.time = {
+      time1: '',
+    };
     const loader = await this.loadingCtrl.create({
-      message: ' انتظر قليلا - جارى التحميل',
+      message: ' انتظر قليلا - جاري التحميل',
     });
-    await loader.present();
 
+    await loader.present();
     if (!this.accessToken) {
       this.accessToken =
         (await (await Preferences.get({ key: 'accessToken' })).value) || null;
     }
-    if (!this.accessToken) {
-      this.http
-        .post(this.baseURL + '/x-api/session', {})
-        .subscribe((res: any) => {
-          if (res.done) {
-            this.accessToken = res.session.accessToken;
-            if (this.accessToken) {
-              Preferences.set({
-                key: 'accessToken',
-                value: this.accessToken,
-              });
-              loader.dismiss();
-              this.busy = false;
-            }
-          }
-        });
-    } else {
+
+    this.getUserSession(() => {
       loader.dismiss();
-      this.busy = false;
-    }
+    });
+  }
+
+  async getUserSession(callback) {
+    this.api({
+      url: '/x-api/session',
+      body: {},
+    }).subscribe((resUserSession: any) => {
+      if (callback) {
+        callback();
+      }
+      if (resUserSession.session.accessToken) {
+        this.accessToken = resUserSession.session.accessToken;
+        Preferences.set({ key: 'accessToken', value: this.accessToken });
+      }
+
+      if (resUserSession.done) {
+        if (resUserSession.session.user) {
+        this.updateVisit();
+
+          this.db.userSession = {
+            id: resUserSession.session.user.id,
+            email: resUserSession.session.user.email,
+            mobile: resUserSession.session.user.mobile,
+            name: resUserSession.session.user.profile.name,
+            last_name: resUserSession.session.user.profile.last_name,
+            image_url: resUserSession.session.user.profile.image_url,
+            feedback_list: resUserSession.session.user.feedback_list,
+            message_count: resUserSession.session.user.message_count,
+            main_address: resUserSession.session.user.profile.main_address,
+          };
+          this.db.userSession.image_url =
+            this.baseURL + this.db.userSession.image_url;
+          /*           this.updateVisit();
+           */
+        }
+      }
+    });
+  }
+
+  async getSetting() {
+    this.api('/api/default_setting/get').subscribe((res: any) => {
+      if (res.done) {
+
+        this.db.setting = res.doc;
+        this.db.setting.tax_number_show = res.doc.tax_number_show || false;
+        this.db.setting.enable_sending_messages_mobile_taqnyat = res.doc.enable_sending_messages_mobile_taqnyat || false;
+        this.db.setting.commercial_registration_no_show =
+          res.doc.commercial_registration_no_show || false;
+        this.db.setting.commercial_registration_no =
+          res.doc.commercial_registration_no || '';
+        this.db.setting.tax_number = res.doc.tax_number || '';
+        this.db.setting.transfer_form_text = res.doc.transfer_form_text || '';
+        this.db.setting.you_tube_accouunt = res.doc.you_tube_accouunt || '';
+        this.db.setting.instagram_accouunt = res.doc.instagram_accouunt || '';
+        this.db.setting.twitter_accouunt = res.doc.twitter_accouunt || '';
+        this.db.setting.facebook_account = res.doc.facebook_account || '';
+        this.db.setting.powered_whatsapp = res.doc.powered_whatsapp || '';
+        this.db.setting.powered_logo = res.doc.powered_logo || '';
+        this.db.setting.powered_title = res.doc.powered_title || '';
+        this.db.setting.currency = res.doc.currency || {};
+        this.db.setting.phone = res.doc.phone || '';
+        this.db.setting.email = res.doc.email || '';
+        this.db.setting.logo = this.baseURL + this.db.setting.logo;
+        this.db.setting.commission_logo = this.baseURL + this.db.setting.commission_logo;
+        if (this.db.setting.bank_account_list && this.db.setting.bank_account_list.length > 0) {
+          this.db.setting.bank_account_list.forEach(element => {
+            element.image_url = this.baseURL + element.image_url;
+          });
+        }
+        if (this.db.setting.powered_logo) {
+          this.db.setting.powered_logo =
+            this.baseURL + this.db.setting.powered_logo;
+        }
+      }
+    });
   }
 
   api(options: any) {
@@ -118,10 +177,9 @@ export class IsiteService {
         type: 'post',
       };
     }
-    console.log(' [ API ] ', options);
 
     options.headers = options.headers || {};
-    options.headers['Access-Token'] = this.accessToken;
+    options.headers['Access-Token'] = this.accessToken || '';
     options.url = this.baseURL + options.url;
     if (options.type == 'get') {
       return this.http.get(options.url, {
@@ -148,13 +206,21 @@ export class IsiteService {
     }, 100);
   }
 
+  updateVisit() {
+    this.api({
+      type: 'get',
+      url: '/api/user/update-visit-date',
+    }).subscribe((res: any) => {
+    });
+  }
+
   initBrowser() {
     let ii = setInterval(() => {
       if (this.accessToken) {
         clearInterval(ii);
         if (!this.browser) {
           this.browser = this.iab.create(
-            this.baseURL + '?access_token=' + this.accessToken,
+            this.baseURL + '/create-ad' + '?access-token=' + this.accessToken,
             '_self',
             {
               location: 'no', //Or 'no'

@@ -1,24 +1,55 @@
 <ion-header>
-	<ion-toolbar color="primary">
-		<ion-title>Login</ion-title>
-	</ion-toolbar>
+  <ion-toolbar color="primary">
+    <ion-title>تسجيل دخول</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()"
+        >إغلاق</ion-button
+      >
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
-	<div>
-		<div class="input-group">
-			<ion-item>
-				<ion-input type="email" placeholder="Email" ></ion-input>
-			</ion-item>
-			<ion-item>
-				<ion-input type="password" placeholder="Password" ></ion-input>
-			</ion-item>
-		</div>
-
-		<ion-button type="submit" expand="block">Log in</ion-button>
-		<ion-button (click)="close()" type="button" expand="block" color="light" fill="clear"
-			>Not yet a member? Sign up!
-		</ion-button>
-
-	</div>
+  <div>
+    <div class="input-group">
+      <ion-item>
+        <ion-input
+          type="email"
+          [(ngModel)]="user.email"
+          placeholder="البريد الإلكتروني أو الجوال"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input
+          type="password"
+          [(ngModel)]="user.password"
+          placeholder="كلمة المرور"
+        ></ion-input>
+      </ion-item>
+    </div>
+    <p class="errors" *ngIf="user.$error">{{user.$error}}</p>
+    <ion-button (click)="loginUser(user)" type="submit" expand="block"
+      >دخول</ion-button
+    >
+    <ion-button
+    (click)="close()"
+    [routerLink]="['/forget-password']"
+      type="button"
+      expand="block"
+      color="light"
+      fill="clear"
+    >
+      <ion-label class="main-color"> نسيت كلمة المرور </ion-label>
+    </ion-button>
+    <ion-button
+    (click)="close()"
+    [routerLink]="['/register']"
+      type="button"
+      expand="block"
+      color="light"
+      fill="clear"
+    >
+      <ion-label class="main-color"> تسجيل حساب جديد </ion-label>
+    </ion-button>
+  </div>
 </ion-content>

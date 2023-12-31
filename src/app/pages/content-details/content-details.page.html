@@ -1,51 +1,445 @@
-<ion-header>
+<ion-header class="main-padding">
   <ion-toolbar>
-    <ion-title>content-details</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button class="main-color"></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
+<ion-content class="main">
+  <div class="content-ad">
+    <p class="contentName">{{content.name}}</p>
+    <div class="bg-ad padding-7">
+      <a
+        class=""
+        [routerLink]="['/profile']"
+        [queryParams]="{
+        id: userAd.id,
+        name: userAd.name,
+        last_name: userAd.last_name
+      }"
+      >
+        <span class="userName">{{userAd.name}} {{userAd.last_name}}</span>
+        <img [src]="userAd.$image_url" class="userImage" />
+      </a>
+      <p class="time-publish">
+        {{content.$time}} <ion-icon name="time-outline"></ion-icon>
+      </p>
+      <p class="time-publish" *ngIf="content.address.country.id">
+        {{content.address.country.name_ar}} {{content.address.gov.name_ar}}
+        {{content.address.city.name_ar}} {{content.address.area.name_ar}}
+        <ion-icon name="navigate-outline"></ion-icon>
+      </p>
+      <p class="time-publish" *ngIf="content.address.detailed_address">
+        {{content.address.detailed_address}}
+        <ion-icon name="location-outline"></ion-icon>
+      </p>
+      <div *ngIf="content.set_price == 'yes'">
+        <ion-item *ngFor="let q of content.quantity_list">
+          <p class="col4 price">
+            <span class="save-money" *ngIf="q.discount > 0">
+              وفر {{q.discount}}
+              <span *ngIf="q.discount_type == 'percent'"> % </span>
+              <span *ngIf="q.discount_type == 'number'"> $ </span>
+            </span>
+            السعر
+            <span class="green"> {{q.net_value}} </span> {{q.currency.name_ar}}
 
-<ion-content>
-<h1> Content Details</h1>
-</ion-content>
+            <span *ngIf="q.discount > 0" class="line-through red"
+              >{{q.price}} {{q.currency.name_ar}}</span
+            >
+            <span *ngIf="q.unit.id"> / {{q.unit.name_ar}} </span>
+          </p>
+        </ion-item>
+      </div>
+    </div>
+    <div class="category">
+      <a
+        *ngFor="let c of category_list"
+        href="/category/{{c.id}}/{{c.name_en}} - {{c.name_ar}}"
+        (click)="selectCategoryHeader(c.id)"
+        class="center bold pointer statistics"
+      >
+        <img class="userad-logo" [src]="c.image_url" />
+        {{c.name_ar}}
+      </a>
+    </div>
+    <img [src]="content.image_url" />
+    <div>
+      <p class="text-comment gray-desc">{{content.description}}</p>
+    </div>
+    <div *ngFor="let c of content.category_require_list">
+      <div class="category bg-ad center" *ngIf="c.type.id == 1">
+        <p class="bold blue padding font-25">{{c.name_ar}}</p>
+        <img [src]="c.image_url" />
+      </div>
+      <ion-row *ngIf="c.type.id != 1">
+        <ion-col size="8">
+          <a *ngFor="let link of c.files" href="{{link}}">
+            <p *ngIf="c.type.id == 4">تنزيل : {{link}}</p>
+          </a>
+          <p class="text-comment" *ngIf="c.type.id == 5">
+            {{c.date |date:"dd / MM / yyyy"}}
+          </p>
+          <p
+            class="text-comment font-19"
+            *ngIf="c.type.id == 2 || c.type.id == 3"
+          >
+            {{c.text}}
+          </p>
+        </ion-col>
+        <ion-col size="4">
+          <p class="bold blue padding font-19">{{c.name_ar}}</p>
+        </ion-col>
+      </ion-row>
+    </div>
+    <ion-row *ngIf="content.images_list.length > 0">
+      <ion-card *ngFor="let c of content.images_list">
+        <ion-card-header class="pre_text font-19 gray-desc center"
+          >{{c.description}}</ion-card-header
+        >
+        <ion-card-content>
+          <img *ngIf="c.image_url" [src]="c.image_url" />
+        </ion-card-content>
+      </ion-card>
+    </ion-row>
+    <ion-row *ngIf="content.videos_list.length > 0">
+      <ion-card class="video-card" *ngFor="let v of content.videos_list">
+        <ion-card-header class="pre_text font-19 gray-desc center">
+          {{v.description}}
+        </ion-card-header>
+        <ion-card-content>
+          <iframe [src]="v.$link" width="”100%”" height="”1000″"></iframe>
+        </ion-card-content>
+      </ion-card>
+    </ion-row>
 
-<ion-tab-bar slot="bottom">
-  <ion-tab-button tab="search">
-    <ion-icon name="search"></ion-icon>
-    <ion-label>بحث</ion-label>
-  </ion-tab-button>
+    <!-- <ion-row *ngIf="content.videos_list.length > 0">
+      <div class="center" *ngFor="let c of content.videos_list">
+        <p class="pre_text font-19 gray-desc center">{{c.description}}</p>
 
-  <ion-tab-button tab="speakers">
-    <ion-icon name="heart"></ion-icon>
-    <ion-label>المفضله</ion-label>
-  </ion-tab-button>
-  <ion-tab-button tab="add" >
-    <ion-icon class="add-ads" name="add-circle"></ion-icon>
-  </ion-tab-button>
+      </div>
+    </ion-row> -->
+    <!--  <div *ngIf="content.videos_list.length > 0" class="row center padding" *ngFor="let i of content.videos_list">
+      <iframe class="row" width="560" height="315" *ngIf="i.$link" src="{{i.$link}}" title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen></iframe>
 
-  <ion-tab-button tab="map">
-    <ion-icon name="map"></ion-icon>
-    <ion-label>خريطه</ion-label>
-  </ion-tab-button>
+      <p class="pre_text font-20 gray-desc center">{{i.description}}</p>
+    </div> -->
 
-  <ion-tab-button tab="chat">
-    <ion-icon name="chatbox"></ion-icon>
-    <ion-label>الرسائل</ion-label>
-    <ion-badge>6</ion-badge>
-  </ion-tab-button>
-</ion-tab-bar>
+    <ion-button
+    *ngIf="!isite.db.userSession || userAd.id != isite.db.userSession.id"
+      (click)="setOpen(true,'connectModal',null)"
+      color="success"
+      size="default"
+      >التواصل
+      <ion-icon name="call" slot="start"></ion-icon>
+    </ion-button>
 
+    <ion-modal class="half-modal" [isOpen]="connectModal">
+      <ng-template>
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>التواصل مع المعلن</ion-title>
+            <ion-buttons slot="end">
+              <ion-button (click)="setOpen(false,'connectModal',null)"
+                >Close</ion-button
+              >
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding">
+          <ion-list>
+            <ion-item class="underline-hover">
+              <ion-avatar slot="end">
+                <ion-icon
+                  class="icon-message bold"
+                  name="mail-outline"
+                ></ion-icon>
+              </ion-avatar>
+              <ion-label (click)="setOpen(true,'messageModal',userAd)">
+                <h2 class="main main-color bold">الرسائل الخاصة</h2>
+              </ion-label>
+            </ion-item>
 
-<ion-menu contentId="main-content" side="end" type="overlay">
-  <div class="menu">
-    <ion-item lines="full">
-      <ion-icon name="star" slot="start"></ion-icon>
-      <ion-label>Top Items</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-avatar slot="start">
-        <img src="/assets/images/logo.png" />
-      </ion-avatar>
-      <ion-label> Avatar Item </ion-label>
-    </ion-item>
+            <ion-item class="underline-hover">
+              <ion-avatar slot="end">
+                <a href="tel:{{userAd.$mobile}}">
+                  <ion-icon
+                    class="icon-message bold"
+                    name="call-outline"
+                  ></ion-icon>
+                </a>
+              </ion-avatar>
+              <ion-label>
+                <a target="_blank" href="tel:{{userAd.$mobile}}">
+                  <h2 class="main main-color bold">{{userAd.$mobile}}</h2>
+                </a>
+              </ion-label>
+            </ion-item>
+            <ion-item class="underline-hover">
+              <ion-avatar slot="end">
+                <a target="_blank" href="https://wa.me/{{userAd.$mobile}}">
+                  <ion-icon
+                    class="icon-message bold"
+                    name="logo-whatsapp"
+                  ></ion-icon>
+                </a>
+              </ion-avatar>
+              <ion-label>
+                <a target="_blank" href="https://wa.me/{{userAd.$mobile}}">
+                  <h2 class="main main-color bold">مراسلة عبر واتساب</h2>
+                </a>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+
+    <ion-modal class="half-modal" [isOpen]="messageModal">
+      <ng-template>
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>رسالة سريعة إلى</ion-title>
+            <ion-buttons slot="end">
+              <ion-button (click)="setOpen(false,'messageModal',null)"
+                >Close</ion-button
+              >
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding">
+          <p class="center font-22 main-color">{{userMessage.name}} {{userMessage.last_name}}</p>
+
+          <ion-item>
+            <ion-label>أكتب رسالتك هنا</ion-label>
+            <ion-textarea
+              [(ngModel)]="message"
+              placeholder="أكتب رسالتك هنا"
+              [autoGrow]="true"
+            ></ion-textarea>
+          </ion-item>
+          <ion-button color="success" (click)="sendMessage()" expand="block"
+            >إرسال
+            <ion-icon name="send-outline"></ion-icon>
+          </ion-button>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+
+    <div class="ad-code">
+      <span class="ad-code-text"
+        ><span class="select-all">{{content.code}}</span>#</span
+      >
+    </div>
+
+    <ion-row *ngIf="isite.db.userSession && userAd.id != isite.db.userSession.id" style="place-content: center">
+      <div class="btn-group">
+        <a class="center"><ion-icon name="flag-outline"></ion-icon> </a>
+        <a class="center"><ion-icon name="share-social-outline"></ion-icon> </a>
+        <a class="center" *ngIf="userAd.id != isite.db.userSession.id" (click)="setOpen(true,'messageModal',userAd)"
+          ><ion-icon name="mail-unread-outline"></ion-icon>
+        </a>
+        <a
+          class="center"
+          (click)="updateFeedback('favorite','true',null)"
+          *ngIf="!activity.favorite && userAd.id != isite.db.userSession.id"
+          ><ion-icon name="heart-outline"></ion-icon>
+        </a>
+
+        <a
+          class="center bg-red"
+          (click)="updateFeedback('favorite','false',null)"
+          *ngIf="activity.favorite"
+          ><ion-icon class="white" name="heart-outline"></ion-icon>
+        </a>
+      </div>
+    </ion-row>
+
+    <ion-row class="user-action">
+      <p class="center bold post-statistics">
+        عدد المفضلات {{content.$number_favorites || 0}}
+        <ion-icon name="heart-half-outline"></ion-icon>
+      </p>
+      <p class="center bold post-statistics">
+        عدد المشاهدات {{content.number_views || 0}}
+        <ion-icon name="eye-outline"></ion-icon>
+      </p>
+      <p class="center bold post-statistics">
+        عدد التعليقات {{content.number_comments || 0}}
+        <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
+      </p>
+    </ion-row>
+    <ion-row
+      class="border warning-message"
+      *ngIf="content.$warning_message.name"
+    >
+      <span class="padding-right">{{content.$warning_message.name}}</span>
+      <img class="userad-logo" [src]="content.$warning_message.image_url" />
+    </ion-row>
+    <br />
+    <div *ngIf="content && content.disable_replies_feature">
+      <div class="border warning_message">
+        <span>قام المعلن بتعطيل ميزة الردود.</span>
+      </div>
+    </div>
+
+    <div class="row" ng-hide="content.disable_replies_feature">
+      <ion-item>
+        <ion-textarea
+          [(ngModel)]="activity.comment"
+          placeholder="أكتب سؤالك للمعلن هنا"
+          [autoGrow]="true"
+        ></ion-textarea>
+      </ion-item>
+      <ion-button
+        color="success"
+        (click)="updateFeedback('comment',null , null)"
+        expand="block"
+        >إرسال
+        <ion-icon name="send-outline"></ion-icon>
+      </ion-button>
+      <p class="errors" *ngIf="activity.$error">{{activity.$error}}</p>
+    </div>
+
+    <div *ngIf="!content.disable_replies_feature">
+      <div
+        class="bg-white comment-ad"
+        *ngFor="let c of content.comment_list ; let i = index"
+      >
+        <div class="">
+          <ion-icon
+            class="icon-message"
+            name="mail-outline"
+            *ngIf="isite.db.userSession && isite.db.userSession.id != c.user.id"
+            (click)="setOpen(true,'messageModal',c.user)"
+          ></ion-icon>
+          <a
+            href="/profile/{{c.user.id}}/{{c.user.name}}/{{c.user.last_name}}"
+            [routerLink]="['/profile']"
+            [queryParams]="{
+            id: c.user.id,
+            name: c.user.name,
+            last_name: c.user.last_name
+          }"
+          >
+            <span class="user-name-stlye"
+              >{{c.user.name}} {{c.user.last_name}}</span
+            >
+            <img class="userImage" [src]="c.user.image_url" />
+          </a>
+
+          <span class="comment-count">
+            <span *ngIf="10 > i + 1">0</span> {{i + 1}}
+          </span>
+          <p class="time-publish">
+            {{c.$time}} <ion-icon name="time-outline"></ion-icon>
+          </p>
+        </div>
+
+        <p class="text-comment bold">{{c.comment}}</p>
+        <a
+          *ngIf="isite.db.userSession &&isite.db.userSession.id"
+          class="pointer reply"
+          (click)="showReplyComment(c)"
+        >
+          <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
+          الرد
+        </a>
+        <a
+          class="left pointer font-20"
+          *ngIf="isite.db.userSession && isite.db.userSession.id != c.user.id"
+          (click)="showReportComment(c.code)"
+        >
+          <i class="fa fa-bars"></i>
+        </a>
+        <div *ngIf="c.$showReply">
+          <ion-item>
+            <ion-textarea
+              [(ngModel)]="c.$reply_comment"
+              placeholder="أكتب تعليقك هنا"
+              [autoGrow]="true"
+            ></ion-textarea>
+          </ion-item>
+
+          <ion-button
+            color="success"
+            (click)="updateFeedback('reply_comment',c.code,c)"
+            size="default"
+            >إرسال
+            <ion-icon name="send-outline"></ion-icon>
+          </ion-button>
+        </div>
+        <div *ngIf="c.reply_list && c.reply_list.length > 0">
+          <div class="" *ngFor="let r of c.reply_list ; let $index = index">
+            <div class="border content-ad">
+              <div class="">
+                <ion-icon
+                  class="icon-message"
+                  name="mail-outline"
+                  *ngIf="isite.db.userSession && isite.db.userSession.id != r.user.id"
+                  (click)="setOpen(true,'messageModal',r.user)"
+                ></ion-icon>
+                <a
+                  [routerLink]="['/profile']"
+                  [queryParams]="{
+                  id: r.user.id,
+                  name: r.user.name,
+                  last_name: r.user.last_name
+                }"
+                >
+                  <span class="user-name-stlye"
+                    >{{r.user.name}} {{r.user.last_name}}</span
+                  >
+                  <img class="userImage" [src]="r.user.image_url" />
+                </a>
+
+                <span class="comment-count">
+                  <span *ngIf="10 > i + 1">0</span> {{i + 1}}
+                </span>
+                <p class="time-publish">
+                  {{r.$time}} <ion-icon name="time-outline"></ion-icon>
+                </p>
+              </div>
+
+              <p class="text-comment bold">{{r.comment}}</p>
+              <!-- <a
+                *ngIf="isite.db.userSession.id"
+                class="pointer reply"
+                (click)="showReplyComment(r.code)"
+              >
+                <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
+                رد
+              </a> -->
+              <a
+                class="left pointer font-20"
+                *ngIf="isite.db.userSession && isite.db.userSession.id != r.user.id"
+                (click)="showReportReply(r.code)"
+              >
+                <i class="fa fa-bars"></i>
+              </a>
+              <div class="row reply-comment" id="reply_{{r.code}}">
+                <ion-item>
+                  <ion-textarea
+                    [(ngModel)]="r.$reply_comment"
+                    placeholder="أكتب تعليقك هنا"
+                    [autoGrow]="true"
+                  ></ion-textarea>
+                </ion-item>
+                <ion-button
+                  class="send-reply-btn center"
+                  (click)="updateFeedback('reply_comment',c.code,r)"
+                >
+                  <i class="fa fa-paper-plane"></i>
+                  إرسال
+                </ion-button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</ion-menu>
+</ion-content>

@@ -1,0 +1,594 @@
+<ion-header class="main-content">
+  <ion-toolbar>
+    <ion-buttons class="main-color" slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-toolbar
+    class="row border text-right main-padding-create"
+    *ngIf="!content.$accept"
+  >
+    <p class="bold font-29 main-color">إتفاقية العمولة</p>
+
+    <p class="deal_1 font-23">بسم الله الرحمن الرحيم</p>
+    <p class="deal_1 font-23">
+      قال الله تعالى :
+      <b class="bold"
+        >" وَأَوْفُواْ بِعَهْدِ اللهِ إِذَا عَاهَدتُّمْ وَلاَ تَنقُضُواْ
+        الأَيْمَانَ بَعْدَ تَوْكِيدِهَا وَقَدْ جَعَلْتُمُ اللهَ عَلَيْكُمْ
+        كَفِيلاً "</b
+      >
+      صدق الله العظيم
+    </p>
+    <div>
+      <p class="bold deal_1 font-23">
+        * اتعهد واقسم بالله أنا المعلن أن أدفع عمولة الموقع وهي 1% من قيمة البيع
+        سواء تم البيع عن طريق الموقع أو بسببه.
+      </p>
+      <p class="bold deal_1 font-23">
+        * كما أتعهد بدفع العمولة خلال 10 أيام من استلام كامل مبلغ المبايعة.
+      </p>
+    </div>
+    <p class="main-color font-21">
+      ملاحظة : عمولة الموقع هي على المعلن ولا تبرأ ذمة المعلن من العمولة إلا في
+      حال دفعها.
+    </p>
+    <div class="row center"></div>
+    <ion-button
+      (click)="selectStep(null,'accept')"
+      color="success"
+      expand="block"
+    >
+      <ion-icon name="checkmark-circle-outline"></ion-icon>
+      موافق
+    </ion-button>
+  </ion-toolbar>
+  <ion-toolbar
+    class="border text-right main-padding-create"
+    *ngIf="content.$show_category"
+  >
+    <div class="category-list h-bg-green">
+      <div
+        class="category"
+        (click)="selectStep('current','choose_address')"
+        *ngFor="let cat of top_category_list"
+      >
+        <img src="{{cat.image_url}}" alt="" />
+        <p class="bold main-color">{{cat.name_ar}}</p>
+      </div>
+    </div>
+  </ion-toolbar>
+  <!-- <ion-toolbar  *ngIf="content.$show_choose_address">
+    <div class="category-list h-bg-green">
+      <ion-buttons end>
+        <ion-button
+          class="font-27"
+          (click)="selectStep(null,'accept')"
+          color="medium"
+        >
+          <ion-icon name="arrow-back-circle-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <div class="category" (click)="selectStep('current','choose_address')">
+        <p class="bold main-color">عنواني الحالي</p>
+      </div>
+      <div class="col3 category" (click)="selectStep('new','choose_address')">
+        <p class="bold main-color">عنوان جديد</p>
+      </div>
+    </div>
+  </ion-toolbar> -->
+  <ion-toolbar class="text-right secound-padding" *ngIf="content.$show_address">
+    <ion-buttons end>
+      <ion-button
+        class="font-27"
+        (click)="selectStep(null,'accept')"
+        color="medium"
+      >
+        <ion-icon name="arrow-back-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-item>
+      <ion-label>الدولة</ion-label>
+      <ion-select
+        label="الدولة"
+        placeholder="إختر دولتك"
+        okText="إختيار"
+        cancelText="إغلاق"
+        [(ngModel)]="content.$country"
+        (ionChange)="getGoves(content.$country)"
+      >
+        <ion-select-option
+          *ngFor="let country of countries_list"
+          value="{{country.id}}"
+        >
+          {{country.name_ar}} - {{country.country_code}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>المحافظة</ion-label>
+      <ion-select
+        label="المحافظة"
+        placeholder="إختر محافظتك"
+        okText="إختيار"
+        cancelText="إغلاق"
+        [(ngModel)]="content.$gov"
+        (ionChange)="getCities(content.$gov)"
+      >
+        <ion-select-option *ngFor="let gov of goves_list" value="{{gov.id}}">
+          {{gov.name_ar}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>المدينة</ion-label>
+      <ion-select
+        label="المدينة"
+        placeholder="إختر مدينتك"
+        okText="إختيار"
+        cancelText="إغلاق"
+        [(ngModel)]="content.$city"
+        (ionChange)="getAreas(content.$city)"
+      >
+        <ion-select-option *ngFor="let city of cities_list" value="{{city.id}}">
+          {{city.name_ar}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>المنطقة</ion-label>
+      <ion-select
+        label="المنطقة"
+        placeholder="إختر منطقتك"
+        okText="إختيار"
+        cancelText="إغلاق"
+        [(ngModel)]="content.$area"
+        (ionChange)="getCities(content.$area)"
+      >
+        <ion-select-option *ngFor="let area of areas_list" value="{{area.id}}">
+          {{area.name_ar}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>العنوان تفصيلي</ion-label>
+
+      <ion-textarea
+        [(ngModel)]="content.address.detailed_address"
+        placeholder="العنوان تفصيلي"
+        [autoGrow]="true"
+      ></ion-textarea>
+    </ion-item>
+    <ion-button expand="block" (click)="selectStep(null,'done_address')">
+      <ion-icon name="play-forward-outline"></ion-icon>
+      <ion-label> إستمرار</ion-label>
+    </ion-button>
+  </ion-toolbar>
+  <ion-toolbar
+    class="border text-right vedio-padding"
+    *ngIf="content.$show_images"
+  >
+    <ion-buttons end>
+      <ion-button
+        class="font-27"
+        (click)="selectStep(null,'choose_address')"
+        color="medium"
+      >
+        <ion-icon name="arrow-back-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-item>
+      <div (click)="selectImage('list')" class="upload-img">
+        <p *ngIf="!content.$image_url_list" class="title-uploadimg-createAd">
+          <ion-icon name="camera-outline"></ion-icon> تحميل صورة
+        </p>
+        <img
+          style="height: 128px; width: 128px; border-radius: 50%"
+          [src]="content.$image_url_list"
+        />
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-textarea
+        [(ngModel)]="content.$image_details"
+        placeholder="وصف الصورة"
+        [autoGrow]="true"
+      ></ion-textarea>
+    </ion-item>
+    <ion-button expand="end" color="secondary" (click)="addImagesLink()">
+      <ion-icon name="add-circle-outline"></ion-icon>
+      <ion-label> إضافة صور متعددة</ion-label>
+    </ion-button>
+
+    <ion-grid>
+      <ion-row class="table-hr">
+        <ion-col size="auto">
+          <div style="width: 70px">حذف</div>
+        </ion-col>
+        <ion-col>الوصف</ion-col>
+        <ion-col>الصورة</ion-col>
+      </ion-row>
+      <ion-row
+        class="table-tr"
+        *ngFor="let image of content.images_list; let i = index"
+      >
+        <ion-col class="border-table-col" size="auto">
+          <div style="width: 60px">
+            <ion-button
+              color="danger"
+              expand="end"
+              (click)="content.images_list.splice(i,1)"
+            >
+              <ion-icon name="trash-outline"></ion-icon>
+            </ion-button>
+            <ion-button
+              (click)="upDownList(content.images_list, 'up',i)"
+              color="medium"
+              *ngIf="i != 0"
+            >
+              <ion-icon name="arrow-up-outline"></ion-icon>
+            </ion-button>
+            <ion-button
+              (click)="upDownList(content.images_list, 'down',i)"
+              color="medium"
+              *ngIf="i != (content.images_list.length - 1) "
+            >
+            <ion-icon name="arrow-down-outline"></ion-icon>
+            </ion-button>
+          </div>
+        </ion-col>
+        <ion-col class="border-table-col"><p>{{image.description}}</p></ion-col>
+        <ion-col class="border-table-col">
+          <img class="image-list" [src]="image.$image_url" />
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-button expand="block" (click)="selectStep(null,'done_images_list')">
+      <ion-icon name="play-forward-outline"></ion-icon>
+      <ion-label> إستمرار</ion-label>
+    </ion-button>
+  </ion-toolbar>
+  <ion-toolbar
+    class="border text-right vedio-padding"
+    *ngIf="content.$show_videos_link"
+  >
+    <ion-buttons end>
+      <ion-button
+        class="font-27"
+        (click)="selectStep(null,'done_address')"
+        color="medium"
+      >
+        <ion-icon name="arrow-back-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-item>
+      <ion-input
+        [clearInput]="true"
+        label="الرابط"
+        labelPlacement="floating"
+        placeholder="رابط الفيديو"
+        [(ngModel)]="content.$video_link"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-textarea
+        [(ngModel)]="content.$video_details"
+        placeholder="وصف الفيديو"
+        [autoGrow]="true"
+      ></ion-textarea>
+    </ion-item>
+    <ion-button expand="end" color="secondary" (click)="addVideosLink()">
+      <ion-icon name="add-circle-outline"></ion-icon>
+      <ion-label> إضافة الفيديو</ion-label>
+    </ion-button>
+
+    <ion-grid>
+      <ion-row class="table-hr">
+        <ion-col size="auto">
+          <div style="width: 70px">حذف</div>
+        </ion-col>
+        <ion-col>الوصف</ion-col>
+        <ion-col>الرابط</ion-col>
+      </ion-row>
+      <ion-row
+        class="table-tr"
+        *ngFor="let video of content.videos_list; let i = index"
+      >
+        <ion-col class="border-table-col" size="auto">
+          <div style="width: 60px">
+            <ion-button
+              color="danger"
+              expand="end"
+              (click)="content.videos_list.splice(i,1)"
+            >
+              <ion-icon name="trash-outline"></ion-icon>
+            </ion-button>
+            <ion-button
+              (click)="upDownList(content.videos_list, 'up',i)"
+              color="medium"
+              *ngIf="i != 0"
+            >
+              <ion-icon name="arrow-up-outline"></ion-icon>
+            </ion-button>
+            <ion-button
+              (click)="upDownList(content.videos_list, 'down',i)"
+              color="medium"
+              *ngIf="i != (content.videos_list.length - 1) "
+            >
+            <ion-icon name="arrow-down-outline"></ion-icon>
+            </ion-button>
+          </div>
+        </ion-col>
+        <ion-col class="border-table-col">{{video.description}}</ion-col>
+        <ion-col class="border-table-col">{{video.link}}</ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-button expand="block" (click)="selectStep(null,'done_video')">
+      <ion-icon name="play-forward-outline"></ion-icon>
+      <ion-label> إستمرار</ion-label>
+    </ion-button>
+  </ion-toolbar>
+  <ion-toolbar
+    class="border text-right finish-padding"
+    *ngIf="content.$show_finish"
+  >
+    <ion-buttons end>
+      <ion-button
+        class="font-27"
+        (click)="selectStep(null,'done_images_list')"
+        color="medium"
+      >
+        <ion-icon name="arrow-back-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-item>
+      <div (click)="selectImage('main')" class="upload-img">
+        <p *ngIf="!content.$image_url_main" class="title-uploadimg-createAd">
+          <ion-icon name="camera-outline"></ion-icon> صورة رئيسية
+        </p>
+        <img style="height: 128px; width: 128px;border-radius: 50%;" [src]="content.$image_url_main" />
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-input
+        [clearInput]="true"
+        label="عنوان الإعلان"
+        labelPlacement="floating"
+        placeholder="عنوان الإعلان"
+        [(ngModel)]="content.name"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-textarea
+        [(ngModel)]="content.description"
+        placeholder="وصف الإعلان"
+        [autoGrow]="true"
+      ></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label class="text-right">تعطيل ميزة الردود</ion-label>
+      <ion-checkbox
+        slot="end"
+        [(ngModel)]="content.disable_replies_feature"
+      ></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label class="text-right">إخفاء رقم الجوال</ion-label>
+      <ion-checkbox slot="end" [(ngModel)]="content.hide_mobile"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-input
+        [clearInput]="true"
+        label="رقم الجوال"
+        labelPlacement="floating"
+        placeholder="رقم الجوال"
+        [(ngModel)]="content.mobile"
+      ></ion-input>
+    </ion-item>
+    <ion-list>
+      <p class="price-tittle">هل تريد تحديد سعر ؟</p>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-radio-group [(ngModel)]="content.set_price" value="set_price">
+              <ion-item>
+                <ion-label>نعم</ion-label>
+                <ion-radio
+                  (click)="changeSetPrice('yes')"
+                  slot="end"
+                  value="yes"
+                ></ion-radio>
+              </ion-item>
+
+              <ion-item>
+                <ion-label>لا</ion-label>
+                <ion-radio
+                  (click)="changeSetPrice('no')"
+                  slot="end"
+                  value="no"
+                ></ion-radio>
+              </ion-item>
+            </ion-radio-group>
+          </ion-col>
+          <ion-col *ngIf="isite.db.setting.content.quantities_can_be_used">
+            <ion-button color="secondary" (click)="addQuantity()">
+              <ion-icon name="add-circle-outline"></ion-icon>
+              <ion-label>إضافة كميات</ion-label>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-list>
+
+    <ion-grid
+      class="grid-quantity"
+      *ngFor="let quantity of content.quantity_list; let i = index"
+    >
+      <ion-row>
+        <ion-col>
+          <ion-select
+            *ngIf="isite.db.setting.content.currencies_can_be_used"
+            class="max-width border-table-col"
+            label="العملة"
+            placeholder="إختر العملة"
+            okText="إختيار"
+            cancelText="إغلاق"
+            [(ngModel)]="quantity.$currency"
+          >
+            <ion-select-option
+              *ngFor="let currency of currencies_list"
+              value="{{currency.id}}"
+            >
+              {{currency.name_ar}}
+            </ion-select-option>
+          </ion-select>
+        </ion-col>
+        <ion-col>
+          <ion-select
+            *ngIf="isite.db.setting.content.quantities_can_be_used"
+            class="max-width"
+            label="الوحدة"
+            placeholder="إختر الوحدة"
+            okText="إختيار"
+            cancelText="إغلاق"
+            [(ngModel)]="quantity.$unit"
+          >
+            <ion-select-option
+              *ngFor="let unit of units_list"
+              value="{{unit.id}}"
+            >
+              {{unit.name_ar}}
+            </ion-select-option>
+          </ion-select>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-input
+            class="center border-table-col"
+            [clearInput]="true"
+            type="number"
+            label="أقصى حد"
+            labelPlacement="floating"
+            placeholder="أقصى حد"
+            [(ngModel)]="quantity.maximum_order"
+          >
+            <ion-label>أقصى حد</ion-label>
+          </ion-input>
+        </ion-col>
+        <ion-col>
+          <ion-input
+            class="center"
+            [clearInput]="true"
+            type="number"
+            label="أقل حد"
+            labelPlacement="floating"
+            placeholder="أقل حد"
+            [(ngModel)]="quantity.minimum_order"
+          >
+            <ion-label>أقل حد</ion-label>
+          </ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-input
+            class="center border-table-col"
+            [clearInput]="true"
+            type="number"
+            label="السعر"
+            labelPlacement="floating"
+            placeholder="السعر"
+            [(ngModel)]="quantity.price"
+            (ionChange)="calcDiscount(quantity)"
+          >
+            <ion-label>السعر</ion-label>
+          </ion-input>
+        </ion-col>
+        <ion-col>
+          <ion-input
+            class="center"
+            [clearInput]="true"
+            type="number"
+            label="الكمية المتاحة"
+            labelPlacement="floating"
+            placeholder="الكمية المتاحة"
+            [(ngModel)]="quantity.available_quantity"
+          >
+            <ion-label>الكمية المتاحة</ion-label>
+          </ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-radio-group
+            [(ngModel)]="quantity.discount_type"
+            value="discount_type"
+          >
+            <ion-item>
+              <ion-label>مبلغ</ion-label>
+              <ion-radio
+                (click)="calcDiscount(quantity)"
+                slot="end"
+                value="number"
+              ></ion-radio>
+            </ion-item>
+
+            <ion-item>
+              <ion-label>نسبة</ion-label>
+              <ion-radio
+                (click)="calcDiscount(quantity)"
+                slot="end"
+                value="percent"
+              ></ion-radio>
+            </ion-item>
+          </ion-radio-group>
+        </ion-col>
+        <ion-col>
+          <ion-input
+            class="center"
+            [clearInput]="true"
+            type="number"
+            label="الخصم"
+            labelPlacement="floating"
+            placeholder="الخصم"
+            [(ngModel)]="quantity.discount"
+            (ionChange)="calcDiscount(quantity)"
+          >
+            <ion-label>الخصم</ion-label>
+          </ion-input>
+          <ion-input
+            class="center"
+            [clearInput]="true"
+            type="number"
+            label="المبلغ المطلوب"
+            [disabled]="true"
+            labelPlacement="floating"
+            placeholder="المبلغ المطلوب"
+            [(ngModel)]="quantity.net_value"
+          >
+            <ion-label>المطلوب</ion-label>
+          </ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="isite.db.setting.content.quantities_can_be_used">
+        <ion-button
+          color="danger"
+          expand="end"
+          (click)="content.quantity_list.splice(i,1)"
+        >
+          <ion-icon name="trash-outline"></ion-icon>
+        </ion-button>
+      </ion-row>
+    </ion-grid>
+
+    <ion-button expand="block" color="success" (click)="addContent()">
+      <ion-icon name="checkmark-done-circle-outline"></ion-icon>
+      <ion-label> نشر الإعلان</ion-label>
+    </ion-button>
+  </ion-toolbar>
+  <p class="errors" *ngIf="content.$error">{{content.$error}}</p>
+</ion-content>

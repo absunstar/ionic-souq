@@ -18,7 +18,7 @@ export class OnlinePage implements OnInit {
       if (this.isite.accessToken) {
         clearInterval(ii);
         this.iab.create(
-          this.isite.baseURL + '?access_token=' + this.isite.accessToken,
+          this.isite.baseURL + '?access-token=' + this.isite.accessToken,
           '_self',
           {
             location: 'no', //Or 'no'

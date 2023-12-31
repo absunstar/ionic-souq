@@ -22,12 +22,11 @@ export class IntroPage implements OnInit {
 
   async start() {
     await Preferences.set({ key: 'intro-seen', value: 'yes' });
-    this.isite.openOnlineSite();
+    /*this.isite.openOnlineSite();*/
+    this.openHomePage();
   }
 
   openHomePage() {
     this.router.navigateByUrl('/home', { replaceUrl: true });
   }
-
-
 }

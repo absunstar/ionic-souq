@@ -1,0 +1,119 @@
+.main-padding {
+    padding-top: 125px;
+}
+
+.cover {
+    height: 170px;
+    width: -webkit-fill-available;
+}
+
+.profile-img {
+    border-radius: 50%;
+    height: 100px;
+    width: 100px;
+    position: absolute;
+    top: 130px;
+    left: 10px;
+}
+
+
+.follow-button {
+    display: inline-grid;
+}
+.center {
+    text-align: center;
+}
+.gold {
+    color: gold;
+}
+
+.darkgreen {
+    color: #828282;
+}
+.half-modal {
+    top: 330px; height: 50%
+}
+.table-hr {
+
+    text-align: center;
+    background-color: #009688;
+    color: white;
+    border-radius: 5px;
+}
+.errors {
+	color: #fff;
+	background: var(--ion-color-danger);
+	padding-left: 15px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+  text-align: center;
+  border-radius: 5px;
+}
+.font-20 {
+    font-size: 20px;
+}
+.font-22 {
+    font-size: 22px;
+}
+.font-23 {
+    font-size: 23px;
+}
+.ads-label {
+    font-size: x-large;
+    font-weight: bold;
+    color: dimgray;
+}
+.red {
+    color: red;
+}
+.green {
+    color: green;
+}
+.follow {
+    color: #919191;
+    font-size: 20px;
+    text-align: center;
+    margin-top: 50px
+}
+
+.about-me {
+    white-space: pre-wrap;
+    font-size: 18px;
+    color: #676565;
+    display: block;
+    padding: 5px;
+    margin: 0px 5px 10px 5px;
+    text-align: center;
+}
+
+.darkGray {
+    color: #919191;
+}
+
+.margin-top50 {
+    margin-top: 50px
+}
+
+.main-color {
+    color: #009688;
+}
+
+.my-content {
+    margin: 0px 0px 50px 0px;
+}
+
+.online-badge {
+    width: 20px;
+    border: 1px solid white;
+    height: 20px;
+    background: #2fdb6b;
+    display: block;
+    position: absolute;
+    margin-top: 25px;
+    margin-left: 0%;
+    border-radius: 50%;
+}
+
+.offline-badge {
+    background: rgb(121, 131, 152) !important;
+}

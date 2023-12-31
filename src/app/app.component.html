@@ -1,3 +1,390 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-header class="main-header">
+    <ion-toolbar>
+      <ion-title class="main-title">
+        <a (click)="gotoHome()">
+          <img [src]="isite.db.setting.logo" />
+          <p class="company-title">
+            {{ isite.db.setting.site_name }}
+          </p>
+        </a>
+      </ion-title>
+      <ion-button
+        size="small"
+        *ngIf="isite.db.userSession && isite.db.userSession.id"
+        [routerLink]="['/profile']"
+        [queryParams]="{
+          id: isite.db.userSession.id,
+          name: isite.db.userSession.name,
+          last_name: isite.db.userSession.last_name
+        }"
+      >
+        <ion-icon name="person-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-toolbar>
+    <ion-toolbar>
+      <ion-row scrollX="true" class="scroll header-category-row">
+        <ion-col class="header-category-col" [routerLink]="['/home']">
+          <a class="header-category-a">الرئيسية</a>
+        </ion-col>
+        <ion-col
+          class="header-category-col"
+          *ngFor="let header_category of header_category_list"
+        >
+          <a
+            class="header-category-a"
+            [routerLink]="['/home']"
+            [queryParams]="{
+              id: header_category.id,
+              name_ar: header_category.name_ar,
+              name_en: header_category.name_en
+            }"
+            >{{ header_category.name_ar }}</a
+          >
+        </ion-col>
+      </ion-row>
+      <!--  <ion-item class="">
+        <ion-col>
+          <a>الرئيسية</a>
+          <a *ngFor="let header_category of header_category_list">{{ header_category.name_ar }}</a>
+        
+        </ion-col>
+      </ion-item> -->
+    </ion-toolbar>
+    <ion-toolbar class="third-toolbar">
+      <!-- <span id="time1"> </span> -->
+      <span class="clock-area">
+        <span> {{ isite.db.time.time1 }}</span>
+        <img src="assets/clock2.png" />
+      </span>
+      <ion-buttons slot="start"> </ion-buttons>
+
+      <ion-buttons slot="end">
+        <ion-button
+          size="small"
+          [routerLink]="['/profile']"
+          [queryParams]="{
+            id: isite.db.userSession.id,
+            name: isite.db.userSession.name,
+            last_name: isite.db.userSession.last_name
+          }"
+          *ngIf="isite.db.userSession && isite.db.userSession.id"
+          class="x-large main-color"
+        >
+          <ion-icon class="main-color" name="person-circle-outline"></ion-icon>
+        </ion-button>
+
+        <ion-button
+        (click)="login()"
+        fill="outline"
+          size="small"
+          *ngIf="!isite.db.userSession || !isite.db.userSession.id"
+          class="large bold main-color"
+        >
+        <ion-icon  class="main-color" name="add-outline"></ion-icon>
+        <ion-label  class="main-color">أضف إعلانك</ion-label>
+        </ion-button>
+        <ion-menu-button
+          class="xx-large main-color"
+          autoHide="false"
+        ></ion-menu-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-menu contentId="main-app-content" side="end" type="overlay">
+    <div class="menu">
+      <ion-item
+        lines="full"
+        *ngIf="isite.db.userSession && isite.db.userSession.id"
+        [routerLink]="['/profile']"
+        [queryParams]="{
+          id: isite.db.userSession.id,
+          name: isite.db.userSession.name,
+          last_name: isite.db.userSession.last_name
+        }"
+      >
+        <ion-avatar slot="end">
+          <img [src]="isite.db.userSession.image_url" />
+        </ion-avatar>
+        <ion-label class="right main-color bold"
+          >{{ isite.db.userSession.name }}
+          {{ isite.db.userSession.last_name }}</ion-label
+        >
+      </ion-item>
+      <!-- <ion-item *ngIf="isite.db.userSession && isite.db.userSession.id">
+        <ion-icon name="mail-outline" class="main-color" slot="end"></ion-icon>
+        <ion-label class="right main-color bold">
+          {{ isite.db.userSession.email }}
+        </ion-label>
+      </ion-item> -->
+      <ion-row style="place-content: center">
+        <ion-button
+          *ngIf="!isite.db.userSession || !isite.db.userSession.id"
+          expand="block"
+          (click)="hideMenu(); login()"
+        >
+          <ion-icon name="log-in-outline"></ion-icon>
+          <ion-label>تسجيل دخول</ion-label>
+        </ion-button>
+        <ion-button
+          (click)="hideMenu()"
+          *ngIf="!isite.db.userSession || !isite.db.userSession.id"
+          [routerLink]="['/register']"
+          expand="block"
+          color="secondary"
+        >
+          <ion-icon name="person-add-outline"></ion-icon>
+          <ion-label>حساب جديد</ion-label>
+        </ion-button>
+
+        <ion-button
+          color="danger"
+          *ngIf="isite.db.userSession && isite.db.userSession.id"
+          (click)="hideMenu(); logout()"
+        >
+          <ion-icon name="log-out-outline"></ion-icon>
+          <ion-label>تسجيل خروج</ion-label>
+        </ion-button>
+        <ion-button
+          (click)="hideMenu()"
+          color="light"
+          *ngIf="isite.db.userSession && isite.db.userSession.id"
+          [routerLink]="['/user-manage']"
+        >
+          <ion-icon name="settings-outline"></ion-icon>
+          <ion-label>إدارة حسابك</ion-label>
+        </ion-button>
+      </ion-row>
+    </div>
+    <ion-footer collapse="fade">
+      <ion-toolbar
+        class="menu-toolbar"
+        *ngIf="isite.db.setting.powered_whatsapp"
+      >
+        <a
+          id="vat_link"
+          href="https://wa.me/{{ isite.db.setting.powered_whatsapp }}"
+          target="_blank"
+          class="powered-a"
+          rel="noopener noreferrer"
+        >
+          <img src="{{ isite.db.setting.powered_logo }}" />
+          <p class="powered-p">{{ isite.db.setting.powered_title }}</p>
+        </a>
+      </ion-toolbar>
+    </ion-footer>
+    <ion-card class="card-menu">
+      <ion-card-content (click)="hideMenu()">
+        <ion-label
+          class="card-label-menu"
+          [routerLink]="['/pages-content']"
+          [queryParams]="{
+            type: 'register'
+          }"
+          ><ion-icon class="card-icon-menu" name="people-outline"></ion-icon>
+          تسجيل</ion-label
+        >
+        <ion-label class="card-label-menu" [routerLink]="['/commission']"
+          ><ion-icon class="card-icon-menu" name="cash-outline"></ion-icon> حساب
+          و سداد عمولة الموقع</ion-label
+        >
+        <ion-label
+          class="card-label-menu"
+          [routerLink]="['/pages-content']"
+          [queryParams]="{
+            type: 'premium-ads'
+          }"
+          ><ion-icon class="card-icon-menu" name="star-outline"></ion-icon>
+          الإعلانات المميزة</ion-label
+        >
+        <ion-label
+          class="card-label-menu"
+          [routerLink]="['/pages-content']"
+          [queryParams]="{
+            type: 'services-membership'
+          }"
+          ><ion-icon class="card-icon-menu" name="wallet-outline"></ion-icon>
+          سداد رسوم السلع و الخدمات المكررة</ion-label
+        >
+        <ion-label
+          class="card-label-menu"
+          [routerLink]="['/pages-content']"
+          [queryParams]="{
+            type: 'terms'
+          }"
+          ><ion-icon
+            class="card-icon-menu"
+            name="document-text-outline"
+          ></ion-icon>
+          إتفاقية الإستخدام</ion-label
+        >
+        <ion-label
+          class="card-label-menu"
+          [routerLink]="['/pages-content']"
+          [queryParams]="{
+            type: 'verify'
+          }"
+          ><ion-icon class="card-icon-menu" name="card-outline"></ion-icon>
+          توثيق العضوية و إضافة التراخيص</ion-label
+        >
+        <ion-label
+          class="card-label-menu"
+          [routerLink]="['/pages-content']"
+          [queryParams]="{
+            type: 'rating'
+          }"
+          ><ion-icon class="card-icon-menu" name="star-half-outline"></ion-icon>
+          نظام التقييم</ion-label
+        >
+        <ion-label
+          class="card-label-menu"
+          [routerLink]="['/pages-content']"
+          [queryParams]="{
+            type: 'discount'
+          }"
+          ><ion-icon class="card-icon-menu" name="cut-outline"></ion-icon> نظام
+          الخصم</ion-label
+        >
+        <ion-label
+          class="card-label-menu"
+          [routerLink]="['/pages-content']"
+          [queryParams]="{
+            type: 'checkAcc'
+          }"
+          ><ion-icon
+            class="card-icon-menu"
+            name="notifications-off-outline"
+          ></ion-icon>
+          القائمة السوداء و إرشادات التعامل</ion-label
+        >
+        <ion-label
+          class="card-label-menu"
+          [routerLink]="['/pages-content']"
+          [queryParams]="{
+            type: 'forbiddenContents'
+          }"
+          ><ion-icon class="card-icon-menu" name="hand-left-outline"></ion-icon>
+          قائمة السلع و الإعلانات الممنوعة</ion-label
+        >
+        <ion-label
+          class="card-label-menu"
+          [routerLink]="['/pages-content']"
+          [queryParams]="{
+            type: 'faq'
+          }"
+          ><ion-icon class="card-icon-menu" name="help-circle"></ion-icon>
+          الأسئلة الشائعة</ion-label
+        >
+        <ion-label
+          class="card-label-menu"
+          [routerLink]="['/pages-content']"
+          [queryParams]="{
+            type: 'contact'
+          }"
+          ><ion-icon class="card-icon-menu" name="call-sharp"></ion-icon> إتصل
+          بنا</ion-label
+        >
+        <ion-label class="card-label-menu">
+          <ion-icon class="card-icon-menu" name="call-outline"></ion-icon> هاتف
+          الدعم
+          <a class="main-color" href="tel:{{ isite.db.setting.phone }}">{{
+            isite.db.setting.phone
+          }}</a>
+        </ion-label>
+        <ion-label class="card-label-menu">
+          <ion-icon class="card-icon-menu" name="mail-outline"></ion-icon> بريد
+          الدعم
+          <a class="main-color" href="mailto:{{ isite.db.setting.email }}">{{
+            isite.db.setting.email
+          }}</a>
+        </ion-label>
+        <ion-label
+          class="card-label-menu"
+          *ngIf="isite.db.setting.tax_number_show"
+        >
+          الرقم الضريبي
+          <a class="main-color">{{ isite.db.setting.tax_number }}</a>
+        </ion-label>
+        <ion-label
+          class="card-label-menu"
+          *ngIf="isite.db.setting.commercial_registration_no_show"
+        >
+          رقم السجل التجاري
+          <a class="main-color">{{
+            isite.db.setting.commercial_registration_no
+          }}</a>
+        </ion-label>
+        <ion-label class="card-label-menu">
+          <p class="center">
+            <a
+              class="social-logo"
+              href="https://www.facebook.com/{{
+                isite.db.setting.facebook_account
+              }}"
+              ><ion-icon name="logo-facebook"></ion-icon
+            ></a>
+            <a
+              class="social-logo"
+              href="https://www.twitter.com/{{
+                isite.db.setting.twitter_accouunt
+              }}"
+              ><ion-icon name="logo-twitter"></ion-icon
+            ></a>
+            <a
+              class="social-logo"
+              href="https://www.instagram.com/{{
+                isite.db.setting.instagram_accouunt
+              }}"
+              ><ion-icon name="logo-instagram"></ion-icon
+            ></a>
+            <a
+              class="social-logo"
+              href="https://www.youtube.com/{{
+                isite.db.setting.you_tube_accouunt
+              }}"
+              ><ion-icon name="logo-youtube"></ion-icon
+            ></a>
+          </p>
+        </ion-label>
+      </ion-card-content>
+    </ion-card>
+  </ion-menu>
+
+  <ion-router-outlet id="main-app-content"></ion-router-outlet>
+
+  <ion-tab-bar
+    slot="bottom"
+    *ngIf="isite.db.userSession && isite.db.userSession.id"
+  >
+    <ion-tab-button
+      id="open-modal"
+      *ngIf="isite.db.userSession && isite.db.userSession.id"
+    >
+      <ion-icon [routerLink]="['/favorite']" name="heart"></ion-icon>
+      <ion-label class="large" [routerLink]="['/favorite']">المفضله</ion-label>
+    </ion-tab-button>
+    <ion-tab-button
+      tab="add"
+      *ngIf="isite.db.userSession && isite.db.userSession.id"
+    >
+      <ion-icon
+        class="add-ads"
+        name="add-circle"
+        [routerLink]="['/create-ad']"
+      ></ion-icon>
+      <ion-label class="large" [routerLink]="['/create-ad']">إضافة إعلان</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button
+      tab="chat"
+      *ngIf="isite.db.userSession && isite.db.userSession.id"
+    >
+      <ion-icon name="chatbox" [routerLink]="['/message']"></ion-icon>
+      <ion-label [routerLink]="['/message']" class="large">الرسائل</ion-label>
+      <ion-badge class="badge-msg">{{
+        isite.db.userSession.message_count
+      }}</ion-badge>
+    </ion-tab-button>
+  </ion-tab-bar>
 </ion-app>

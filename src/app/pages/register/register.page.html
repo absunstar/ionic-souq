@@ -1,9 +1,272 @@
-<ion-header>
+<ion-header class="main-padding-register">
   <ion-toolbar>
-    <ion-title>register</ion-title>
+    <ion-title>تسجيل حساب جديد</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button class="main-color"></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <div class="deal" *ngIf="!user.$deal">
+    <p class="darkGray padding margin font-25 bold">إتفاقية الإستخدام</p>
+    <div class="padding magin">
+      <p class="font-22 bold">مقدمة</p>
+    </div>
+    <br />
+    <div class="padding magin">
+      <p class="darkGray font-16">
+        إن اتفاقية الاستخدام هذه وخصوصية الاستخدام ، والشروط والبنود ، وجميع
+        السياسات التي تم نشرها على مؤسسة موقع حراج تمور للتسويق الإلكتروني وضعت
+        لحماية وحفظ حقوق كل من ( مؤسسة موقع حراج تمور للتسويق الإلكتروني ) و (
+        المستخدم الذي يصل إلى الموقع بتسجيل او من دون تسجيل )أو ( العميل
+        المستفيد من الإعلانات بتسجيل أو من دون تسجيل).
+      </p>
+    </div>
 
+    <br />
+    <div class="padding magin">
+      <b class="darkGray font-16">
+        تخضع البنود والشروط والأحكام والمنازعات القانونية للقوانين والتشريعات
+        والأنظمة المعمول بها في المملكة العربية السعودية.
+      </b>
+    </div>
+    <br />
+    <div class="padding magin">
+      <b class="darkGray font-16">
+        لكونك مستخدم فأنك توافق على الالتزام بكل ما يرد بهذه الاتفاقية في حال
+        استخدامك للموقع او في حال الوصول اليه او في حالة التسجيل في الخدمة. يحق
+        لموقع حراج تمور التعديل على هذه الاتفاقية في أي وقت وتعتبر ملزمة لجميع
+        الأطراف بعد الإعلان عن التحديث في الموقع أو في أي وسيلة آخرى.
+      </b>
+    </div>
+    <br />
+    <div class="padding magin">
+      <b class="green font-22"> تعريف </b>
+    </div>
+    <br />
+    <div class="padding magin">
+      <b class="darkGray font-16">
+        مؤسسة موقع حراج تمور للتسويق الإلكتروني هي الجهة المالكة لموقع حراج تمور
+        ، مؤسسة سعودية ١٠٠ ٪ مقرها الرئيسي الرياض وهي منصة الكترونية تمكن
+        المستخدم (منشئ السجل الإلكتروني ) من فتح محل إلكتروني لتقديم خدماته
+        وإيصالها للعميل المستهدف (مستقبل السجل الإلكتروني ) وفق شروط وضوابط
+        محددة وتحت مسؤوليته. ويشار إليها بهذه الاتفاقية باسم ( مؤسسة موقع حراج
+        تمور للتسويق الإلكتروني ) أو ( نحن ) أو ( لنا ) أو ( موقع حراج تمور ) ،
+        وتمثل هنا الطرف الأول.
+      </b>
+    </div>
+    <br />
+    <div class="padding magin">
+      <b class="darkGray font-16">
+        المستخدم هو ( الفرد او المؤسسة أو الشركة ) المنشئ للسجل الإلكتروني الذي
+        يصل إلى الموقع ويستفيد من خدماته بشكل مباشر أو غير مباشر ، ويشار إليه
+        بالعضو أو الطرف الثاني, ويعتبر هو المسؤول عن محتوى الإعلان مسؤولية كاملة
+        وملتزم بضوابط وشروط المحتوى الموضحة من قبل الموقع ويتحمل تبعات وأضرار
+        محتوى الإعلان.
+      </b>
+    </div>
+    <br />
+    <div class="padding magin">
+      <b class="darkGray font-16">
+        العميل: هو الجهة (الفرد أو المؤسسة أو الشركة) التي ينتهي إليه السجل
+        الإلكتروني ، والمستهدفة من قبل المستخدم (منشئ السجل الإلكتروني ). السجل
+        الإلكتروني: هو البيانات التي تنشأ أو تحفظ أو ترسل من قبل المستخدم ( منشئ
+        السجل الإلكتروني ) وتكون على شكل تقديم خدمة أو طلب خدمة او ردود او رسائل
+        خاصة.
+      </b>
+    </div>
+    <br />
+    <div class="padding magin">
+      <b class="green font-22"> شروط الاستخدام </b>
+    </div>
+    <br />
+
+    <div class="padding magin">
+      <b class="darkGray font-16">
+        بصفتك طرف ثاني في هذه الاتفاقية فإنه بموافقتك على الاستفادة من خدمات
+        الموقع فعليك الالتزام بما يلي :
+      </b>
+    </div>
+    <br />
+    <ion-button (click)="user.$deal = true" expand="block" color="success">
+      <ion-icon name="thumbs-up-outline"></ion-icon>
+      <ion-label>أوافق</ion-label>
+    </ion-button>
+    <ion-button [routerLink]="['/home']" expand="block" color="danger">
+      <ion-icon name="thumbs-down-outline"></ion-icon>
+      <ion-label>لا أوافق</ion-label>
+    </ion-button>
+  </div>
+  <div
+    *ngIf="isite.db.setting.enable_sending_messages_mobile_taqnyat && user.$deal && !user.$showContent"
+  >
+    <div *ngIf="!mailer.$send_code">
+      <ion-list>
+        <ion-item>
+          <ion-select
+            label="الدولة"
+            placeholder="إختر دولتك"
+            okText="إختيار"
+            cancelText="إغلاق"
+            [(ngModel)]="mailer.$country"
+          >
+            <ion-select-option
+              *ngFor="let country of countriesList"
+              value="{{country.id}}"
+            >
+              {{country.name_ar}} - {{country.country_code}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-input
+            [clearInput]="true"
+            label="رقم الجوال"
+            labelPlacement="floating"
+            type="tel"
+            placeholder="888-888-8888"
+            [(ngModel)]="mailer.mobile"
+          ></ion-input>
+        </ion-item>
+      </ion-list>
+
+      <ion-button (click)="registerMailer()" expand="block" color="medium">
+        <ion-icon name="play-forward-outline"></ion-icon>
+        <ion-label>إستمرار</ion-label>
+      </ion-button>
+    </div>
+    <div *ngIf="mailer.$send_code">
+      <ion-list>
+        <ion-item>
+          <ion-label>الرقم السري المرسل لهاتفك</ion-label>
+          <ion-input
+            [clearInput]="true"
+            label="الرقم السري المرسل لهاتفك"
+            labelPlacement="floating"
+            type="tel"
+            placeholder="888-888-8888"
+            [(ngModel)]="mailer_code"
+          ></ion-input>
+        </ion-item>
+      </ion-list>
+
+      <ion-button (click)="checkSecretCode()" expand="block" color="medium">
+        <ion-icon name="play-forward-outline"></ion-icon>
+        <ion-label>إستمرار</ion-label>
+      </ion-button>
+      <ion-button (click)="resendCode()" expand="block" color="warning">
+        <ion-icon name="reload-outline"></ion-icon>
+        <ion-label>إعادة إرسال الرمز</ion-label>
+      </ion-button>
+    </div>
+    <p class="errors" *ngIf="mailer.$error">{{mailer.$error}}</p>
+  </div>
+  <div *ngIf="user.$showContent && user.$deal">
+    <ion-list>
+      <ion-item>
+        <div (click)="selectImage()" class="upload-img">
+          <p *ngIf="!user.$image_url" class="title-uploadimg">
+            <ion-icon name="camera-outline"></ion-icon> صورة شخصية
+          </p>
+          <img
+            style="height: 128px; width: 128px; border-radius: 50%"
+            [src]="user.$image_url"
+          />
+        </div>
+      </ion-item>
+      <ion-item>
+        <ion-input
+          [clearInput]="true"
+          label="الإسم الأول"
+          labelPlacement="floating"
+          placeholder="أدخل الإسم الأول"
+          [(ngModel)]="user.first_name"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input
+          [clearInput]="true"
+          label="الإسم الثاني"
+          labelPlacement="floating"
+          placeholder="أدخل الإسم الثاني أو إسم العائلة"
+          [(ngModel)]="user.last_name"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input
+          [clearInput]="true"
+          label="البريد الإلكتروني"
+          type="email"
+          labelPlacement="floating"
+          helperText="أدخل بريد إلكتروني صالح"
+          errorText="البريد الإلكتروني غير صالح"
+          placeholder="أدخل بريد إلكتروني صالح"
+          [(ngModel)]="user.email"
+        ></ion-input>
+      </ion-item>
+      <ion-item
+        *ngIf="!isite.db.setting.enable_sending_messages_mobile_taqnyat"
+      >
+        <ion-select
+          label="الدولة"
+          placeholder="إختر دولتك"
+          okText="إختيار"
+          cancelText="إغلاق"
+          [(ngModel)]="user.$country"
+        >
+          <ion-select-option
+            *ngFor="let country of countriesList"
+            value="{{country.id}}"
+          >
+            {{country.name_ar}} - {{country.country_code}}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item
+        *ngIf="!isite.db.setting.enable_sending_messages_mobile_taqnyat"
+      >
+        <ion-input
+          [clearInput]="true"
+          label="رقم الجوال"
+          labelPlacement="floating"
+          type="tel"
+          placeholder="888-888-8888"
+          [(ngModel)]="user.mobile"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input
+          [clearInput]="true"
+          label="كلمة السر"
+          labelPlacement="floating"
+          type="password"
+          placeholder="أدخل كلمة سر"
+          [(ngModel)]="user.password"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input
+          [clearInput]="true"
+          label="إعادة كتابة كلمة السر"
+          labelPlacement="floating"
+          type="password"
+          placeholder="كلمة سر متطابقة"
+          [(ngModel)]="user.re_password"
+        ></ion-input>
+      </ion-item>
+    </ion-list>
+    <ion-button (click)="addUser(user)" expand="block" color="secondary">
+      <ion-icon name="person-add-outline"></ion-icon>
+      <ion-label>إنشاء حساب جديد</ion-label>
+    </ion-button>
+  </div>
+  <p class="errors" *ngIf="user.$error">{{user.$error}}</p>
+
+  <p class="font-18 center">
+    المستخدم موجود
+    <a (click)="login()" class="underline-hover">تسجيل دخول الآن</a>
+  </p>
 </ion-content>

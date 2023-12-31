@@ -1,13 +1,189 @@
 :host {
   --theme: #009688;
 }
-ion-toolbar{
+
+.main-content {
+  margin-top: 100px;
+}
+
+.category-name {
+  font-size: 15px;
+  text-align: center;
+}
+
+.tag-list:first-child {
+  justify-content: space-between;
+}
+
+.tag-list {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  list-style-type: none;
+  margin: 0;
+  padding: 5px;
+  width: 100%;
+  overflow-x: auto;
+  text-align: right;
+  gap: 0px;
+  flex-direction: row-reverse;
+  align-content: space-around;
+}
+.content-items {
+  border-bottom: 2px solid #039789;
+  display: flow-root;
+}
+ .content-items:nth-child(odd) {
+  background-color: #08dea5;
+} 
+.filter-price {
+  display: inline-flex;
+}
+.filter-search {
+  margin-top: 2vh !important;
+  width: inherit !important;
+}
+.button-filter {
+  margin: 21px -5px -20px 0px !important;
+  float: right;
+  padding: 15px;
+}
+.ellipsis-txt {
+  white-space: nowrap;
+  width: fit-content;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.filter {
+  
+    margin: 30px 15px 0px 0px;
+    float: right;
+    font-size: xx-large;
+    font-weight: bold;
+}
+
+.avatar-content {
+  width: 23%;
+
+  img {
+    width: 95px;
+    height: 70px;
+    left: 3px;
+    top: 0px;
+    border-radius: 5px;
+    position: absolute;
+  }
+}
+
+.tags {
+  margin: 0 10px;
+  display: initial;
+  justify-content: flex-end;
+
+  a {
+    height: 113px;
+    text-decoration: none;
+    display: grid;
+    align-content: initial;
+    justify-content: space-between;
+    align-items: stretch;
+    justify-items: stretch;
+    position: relative;
+    width: 100px;
+  }
+
+  img {
+    width: inherit;
+    height: 55px;
+    display: inline;
+    border-radius: 5px;
+    float: left;
+    margin: 10px;
+  }
+
+  p {
+    font-size: 16px;
+    margin-top: inherit;
+    text-align: center;
+    color: #009688;
+    font-weight: bold;
+    /* text-wrap: nowrap; */
+  }
+}
+
+.tag {
+  flex: 1;
+  text-align: center;
+  border-radius: 5px;
+  margin: 0 0 0 3px;
+}
+
+.tag a {
+  padding: 10px;
+  display: block;
+  text-decoration: none;
+  
+}
+
+.tag span {
+  display: block;
+  font-size: 16px;
+  color: var(--theme-color);
+  text-align: center;
+  
+}
+
+ion-scroll[scrollX] {
+  white-space: nowrap;
+  height: 120px;
+  overflow: hidden;
+
+  .scroll-item {
+    display: inline-block;
+  }
+
+  .selectable-icon {
+    margin: 10px 20px 10px 20px;
+    color: red;
+    font-size: 100px;
+  }
+
+  ion-avatar img {
+    margin: 10px;
+  }
+}
+
+ion-scroll[scroll-avatar] {
+  height: 60px;
+}
+
+/* Hide ion-content scrollbar */
+::-webkit-scrollbar {
+  display: none;
+}
+
+.top-items {
+  align-items: center;
+  flex-wrap: nowrap;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: overlay;
+  text-align: right;
+  max-width: 1010px;
+  justify-content: flex-end;
+}
+
+ion-toolbar {
   --background: var(--theme);
-  --color : #fff;
-  h1{
+  --color: #fff;
+
+  h1 {
     color: #fff;
     margin: 10px;
   }
+
   img {
     width: 32px;
     height: 32px;
@@ -17,11 +193,28 @@ ion-toolbar{
     margin: 10px;
   }
 }
+
+.price {
+  width: 100% !important;
+  text-align: right;
+  padding: 0;
+  font-size: 12px;
+}
+
+.line-through {
+  text-decoration: line-through;
+}
+
+.save-money {
+  font-size: x-small;
+}
+
 ion-content {
   h1 {
     text-align: center;
     color: #fff;
   }
+
   ion-button {
     display: block;
     margin: 0 auto;
@@ -35,18 +228,22 @@ ion-menu {
   margin-top: 0px;
   margin-bottom: 0px;
 }
+
 ion-avatar img {
   width: 32px;
   height: 32px;
   margin: 0;
 }
+
 ion-list {
   background: transparent;
 }
+
 .add-ads {
   transform: scale(2.5);
   color: var(--theme);
 }
+
 .menu {
   display: block;
   background: #222428;
@@ -60,7 +257,8 @@ ion-list {
 ion-modal {
   --height: 50%;
   --border-radius: 16px;
-  --box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+    0 4px 6px -4px rgb(0 0 0 / 0.1);
 }
 
 ion-modal::part(backdrop) {

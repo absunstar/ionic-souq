@@ -1,141 +1,188 @@
-<ion-app id="main-content">
-  <ion-header>
-    <ion-toolbar>
-      <ion-title>
-        <img [src]="isite.db.setting.logo" />
-        <h1>{{isite.db.setting.site_name}}</h1>
-      </ion-title>
-      <ion-buttons slot="end">
-        <ion-button size="small">
-          <ion-icon name="notifications-outline"></ion-icon>
-        </ion-button>
-        <ion-button size="small">
-          <ion-icon name="search-outline"></ion-icon>
-        </ion-button>
-        <ion-button size="small">
-          <ion-icon name="person-circle-outline"></ion-icon>
-        </ion-button>
-        <ion-menu-button autoHide="true"></ion-menu-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
+<ion-app class="main-content">
+  <ion-content>
+    <ion-button class="button-filter" color="light" id="open-filter">
+      <ion-icon name="stats-chart-outline"></ion-icon>
+      <ion-label>تصفية</ion-label>
+    </ion-button>
 
-  <ion-content fullscreen="true">
+    <div class="tags">
+      <ion-item class="tag-list">
+        <ion-col *ngFor="let top_category of top_category_list">
+          <a
+            (click)="loadPosts({more : false , category_id :top_category.id })"
+          >
+            <img src="{{top_category.image_url}}" />
+            <p>{{top_category.name_ar}}</p>
+          </a>
+        </ion-col>
+      </ion-item>
+    </div>
     <ion-list>
       <ion-item
+        class="content-items"
         button
         *ngFor="let content of isite.db.contentList"
-        [routerLink]="['/content-details' ]"
       >
-        <ion-avatar slot="start">
-          <img [src]="content.image_url" />
+        <ion-avatar slot="start" class="avatar-content">
+          <img
+            [src]="content.image_url"
+            [routerLink]="['/content-details']"
+            [queryParams]="{id: content.id,name :content.name}"
+          />
         </ion-avatar>
 
-        <ion-label class="ion-text-wrap">
-          <h3>{{ content.name }}</h3>
-          <p>{{ content.date | date:'y' }}</p>
+        <ion-label
+          class="ion-text-wrap"
+          [routerLink]="['/content-details']"
+          [queryParams]="{id: content.id,name :content.name}"
+        >
+          <p class="font-16 main-color bold">{{ content.name }}</p>
+          <p class="time-publish">
+            {{content.$time}} <ion-icon name="time-outline"></ion-icon>
+          </p>
         </ion-label>
-
-        <ion-badge slot="end"> 100 </ion-badge>
+        <!-- ion-badge -->
+        <ion-label slot="end">
+          <div
+            *ngIf="content.set_price == 'yes'"
+            [routerLink]="['/content-details']"
+            [queryParams]="{id: content.id,name :content.name}"
+          >
+            <p class="price">
+              <span
+                *ngIf="content.quantity_list[0].discount > 0"
+                class="line-through red"
+                >{{content.quantity_list[0].price}}
+                {{content.quantity_list[0].currency.name_ar}}</span
+              >
+              <span class="green">
+                {{content.quantity_list[0].net_value}}
+              </span>
+              {{content.quantity_list[0].currency.name_ar}}
+              <span *ngIf="content.quantity_list[0].unit.id">
+                / {{content.quantity_list[0].unit.name_ar}}
+              </span>
+            </p>
+            <!--  <p class="save-money" *ngIf="content.quantity_list[0].discount > 0">
+              وفر {{content.quantity_list[0].discount}}
+              <span *ngIf="content.quantity_list[0].discount_type == 'percent'"> % </span>
+              <span *ngIf="content.quantity_list[0].discount_type == 'number'"> $ </span>
+            </p> -->
+          </div>
+          <p
+            class="time-publish text-right"
+            [routerLink]="['/profile']"
+            [queryParams]="{
+            id: content.store.user.id,
+            name: content.store.user.profile.name,
+            last_name: content.store.user.profile.last_name
+          }"
+          >
+            {{ content.store.user.profile.name }}
+            <ion-icon name="person-outline"></ion-icon>
+          </p>
+          <p
+            class="time-publish text-right"
+            *ngIf="content.address.country.id"
+            [routerLink]="['/content-details']"
+            [queryParams]="{id: content.id,name :content.name}"
+          >
+            {{content.address.gov.name_ar}}
+            <ion-icon name="location-outline"></ion-icon>
+          </p>
+        </ion-label>
       </ion-item>
     </ion-list>
+    <ion-modal #modal trigger="open-filter">
+      <ng-template>
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>تصفية</ion-title>
+            <ion-buttons slot="end">
+              <ion-button (click)="modal.dismiss()">إغلاق</ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding">
+          <ion-item>
+            <ion-label class="text-right">جديد فقط</ion-label>
+            <ion-checkbox slot="end" [(ngModel)]="filter.new"></ion-checkbox>
+          </ion-item>
+          <ion-item>
+            <ion-label class="text-right">إعلانات قريبة</ion-label>
+            <ion-checkbox slot="end" [(ngModel)]="filter.near"></ion-checkbox>
+          </ion-item>
+          <ion-item>
+            <ion-label class="text-right">إعلانات مرفقة بصور فقط</ion-label>
+            <ion-checkbox
+              slot="end"
+              [(ngModel)]="filter.with_photos"
+            ></ion-checkbox>
+          </ion-item>
+          <ion-item>
+            <ion-radio-group
+              [(ngModel)]="filter.price"
+              class="filter-price"
+              value="price"
+            >
+              <ion-item>
+                <ion-label>أقل سعر</ion-label>
+                <ion-radio slot="end" value="lowest"></ion-radio>
+              </ion-item>
 
+              <ion-item>
+                <ion-label>أعلى سعر</ion-label>
+                <ion-radio slot="end" value="highest"></ion-radio>
+              </ion-item>
+            </ion-radio-group>
+          </ion-item>
+          <ion-item>
+            <ion-row>
+              <ion-col>
+                <ion-input
+                  class="center border-table-col"
+                  [clearInput]="true"
+                  type="number"
+                  label="أقصى حد"
+                  labelPlacement="floating"
+                  placeholder="أقصى حد"
+                  [(ngModel)]="filter.price_to"
+                >
+                  <ion-label>أقصى حد</ion-label>
+                </ion-input>
+              </ion-col>
+              <ion-col>
+                <ion-input
+                  class="center"
+                  [clearInput]="true"
+                  type="number"
+                  label="أقل حد"
+                  labelPlacement="floating"
+                  placeholder="أقل حد"
+                  [(ngModel)]="filter.price_from"
+                >
+                  <ion-label>أقل حد</ion-label>
+                </ion-input>
+              </ion-col>
+            </ion-row>
+          </ion-item>
+          <ion-button
+            expand="block"
+            class="filter-search"
+            color="success"
+            (click)="setOpen(false, 'filterModal');loadPosts({more : false })"
+          >
+            <ion-icon name="log-in-outline"></ion-icon>
+            <ion-label>بحث</ion-label>
+          </ion-button>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+    <!-- <iframe src="../../app.footer.html"></iframe> -->
+    <!--  <object type="text/html" data="../../app.footer.html"></object> -->
     <ion-infinite-scroll (ionInfinite)="loadMore($event)">
       <ion-infinite-scroll-content loadingSpinner="bubbles">
       </ion-infinite-scroll-content>
     </ion-infinite-scroll>
   </ion-content>
-
-  <ion-menu contentId="main-content" side="end" type="overlay">
-    <div class="menu">
-      <ion-item lines="full">
-        <ion-icon name="star" slot="start"></ion-icon>
-        <ion-label>Top Items</ion-label>
-      </ion-item>
-      <ion-item>
-        <ion-avatar slot="start">
-          <img src="/assets/images/logo.png" />
-        </ion-avatar>
-        <ion-label> Avatar Item </ion-label>
-      </ion-item>
-    </div>
-  </ion-menu>
-
-  <ion-tab-bar slot="bottom">
-    <ion-tab-button (click)="login()">
-      <ion-icon name="search"></ion-icon>
-      <ion-label>بحث</ion-label>
-    </ion-tab-button>
-
-    <ion-tab-button id="open-modal">
-      <ion-icon name="heart"></ion-icon>
-      <ion-label>المفضله</ion-label>
-    </ion-tab-button>
-    <ion-tab-button tab="add">
-      <ion-icon class="add-ads" name="add-circle"></ion-icon>
-    </ion-tab-button>
-
-    <ion-tab-button tab="map">
-      <ion-icon name="map"></ion-icon>
-      <ion-label>خريطه</ion-label>
-    </ion-tab-button>
-
-    <ion-tab-button tab="chat">
-      <ion-icon name="chatbox"></ion-icon>
-      <ion-label>الرسائل</ion-label>
-      <ion-badge>6</ion-badge>
-    </ion-tab-button>
-  </ion-tab-bar>
-
-  <ion-modal #modal trigger="open-modal">
-    <ng-template>
-      <ion-content>
-        <ion-toolbar>
-          <ion-title>Modal</ion-title>
-          <ion-buttons slot="end">
-            <ion-button color="light" (click)="modal.dismiss()">Close</ion-button>
-          </ion-buttons>
-        </ion-toolbar>
-        <ion-list>
-          <ion-item>
-            <ion-avatar slot="start">
-              <ion-img src="https://i.pravatar.cc/300?u=b"></ion-img>
-            </ion-avatar>
-            <ion-label>
-              <h2>Connor Smith</h2>
-              <p>Sales Rep</p>
-            </ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-avatar slot="start">
-              <ion-img src="https://i.pravatar.cc/300?u=a"></ion-img>
-            </ion-avatar>
-            <ion-label>
-              <h2>Daniel Smith</h2>
-              <p>Product Designer</p>
-            </ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-avatar slot="start">
-              <ion-img src="https://i.pravatar.cc/300?u=d"></ion-img>
-            </ion-avatar>
-            <ion-label>
-              <h2>Greg Smith</h2>
-              <p>Director of Operations</p>
-            </ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-avatar slot="start">
-              <ion-img src="https://i.pravatar.cc/300?u=e"></ion-img>
-            </ion-avatar>
-            <ion-label>
-              <h2>Zoey Smith</h2>
-              <p>CEO</p>
-            </ion-label>
-          </ion-item>
-        </ion-list>
-      </ion-content>
-    </ng-template>
-  </ion-modal>
-
 </ion-app>
