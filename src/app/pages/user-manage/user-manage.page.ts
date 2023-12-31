@@ -57,11 +57,12 @@ export class UserManagePage implements OnInit {
       profile: {},
       gender: {},
       $personal: false,
+      $deleteAccount: false,
       $password: false,
       $myAds: false,
       $address: false,
       $other_mobile: '',
-      mobile_list : [],
+      mobile_list: [],
     };
     this.getUser();
     this.loadMyAds();
@@ -112,6 +113,7 @@ export class UserManagePage implements OnInit {
 
   showContent(type) {
     this.user.$personal = false;
+    this.user.$deleteAccount = false;
     this.user.$password = false;
     this.user.$myAds = false;
     this.user.$address = false;
@@ -126,6 +128,8 @@ export class UserManagePage implements OnInit {
       this.user.$address = true;
     } else if (type == 'mobile') {
       this.user.$mobile = true;
+    } else if (type == 'deleteAccount') {
+      this.user.$deleteAccount = true;
     }
   }
   getUser() {
@@ -186,7 +190,6 @@ export class UserManagePage implements OnInit {
               this.user.profile.main_address.detailed_address =
                 this.user.profile.main_address.detailed_address;
             }
-            console.log(this.user.profile.main_address.$country);
 
             this.user.$genderList = [
               {
@@ -340,6 +343,59 @@ export class UserManagePage implements OnInit {
     }
   }
 
+  async deleteMyAccount() {
+    const alert = await this.alertController.create({
+      header: 'تأكيد حذف الحساب',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {},
+        },
+        {
+          text: 'OK',
+          role: 'confirm',
+          handler: () => {
+            if (this.isite.db.userSession) {
+              let userId = this.isite.db.userSession.id;
+
+              this.isite
+                .api({
+                  url: '/api/user/logout',
+                })
+                .subscribe((resUser: any) => {
+                  this.isite
+                    .api({
+                      url: '/api/user/delete',
+                      body: { id: userId, souq: true },
+                    })
+                    .subscribe((resDelete: any) => {
+                      if (resDelete.done) {
+                      }
+                    });
+                  if (resUser.accessToken) {
+                    this.isite.accessToken = resUser.accessToken;
+                  }
+                  if (resUser.done) {
+                    this.isite.db.userSession = null;
+                    this.isite.getUserSession(() => {
+                      this.router.navigateByUrl('/', {
+                        replaceUrl: true,
+                      });
+                    });
+                  }
+                });
+            }
+          },
+        },
+      ],
+    });
+
+    await alert.present();
+
+    const { role } = await alert.onDidDismiss();
+  }
+
   getCountries() {
     this.isite
       .api({
@@ -451,13 +507,14 @@ export interface user {
   mobile: string;
   profile: any;
   $personal: boolean;
+  $deleteAccount: boolean;
   $password: boolean;
   $myAds: boolean;
   $address: boolean;
   $other_mobile: string;
   $mobile: boolean;
   $genderList: any[];
-  mobile_list : any[];
+  mobile_list: any[];
   gender: any;
 }
 export interface countries_list {

@@ -46,6 +46,7 @@
 .main-buttons {
     flex-flow: row-reverse;
     margin: 5px 10px 15px 0px;
+    overflow: scroll;
 }
 
 .error-item {

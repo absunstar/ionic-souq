@@ -224,6 +224,7 @@ export class ContentDetailsPage implements OnInit {
       const loading = await this.loadingCtrl.create({
         message: 'جارى التحميل',
       });
+      
       await loading.present();
       this.isite
         .api({
@@ -248,6 +249,7 @@ export class ContentDetailsPage implements OnInit {
               area: res.doc.address.area || { name_ar: '', name_en: '', id: 0 },
             };
             this.content = res.doc;
+            this.activity.follow = res.doc.$follow || false;
             this.content.$number_favorites = res.doc.number_favorites || 0;
             this.content.date = new Date(this.content.date);
             if (this.content.category_require_list) {
@@ -286,8 +288,8 @@ export class ContentDetailsPage implements OnInit {
                 }
               });
             }
-
-            if (this.isite.db.userSession) {
+            
+            if (this.isite.db.userSession && this.isite.db.userSession.feedback_list) {
               this.activity.favorite =
                 this.isite.db.userSession.feedback_list.some(
                   (_f) =>
@@ -337,7 +339,7 @@ export class ContentDetailsPage implements OnInit {
         this.activity.favorite = false;
       }
     } else if (type == 'follow') {
-      if (other == 'true') {
+      if (other == 'true') {        
         this.activity.follow = true;
       } else if (other == 'false') {
         this.activity.follow = false;

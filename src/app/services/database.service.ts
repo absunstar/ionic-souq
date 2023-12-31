@@ -74,6 +74,7 @@ export interface setting {
 export interface userSession {
   id: number;
   message_count: number;
+  notific_count: number;
   main_address: any;
   email: string;
   name: string;

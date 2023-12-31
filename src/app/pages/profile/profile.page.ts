@@ -44,6 +44,7 @@ export class ProfilePage implements OnInit {
     this.user = {
       id: 0,
       message_count: 0,
+      notific_count: 0,
       $busy: false,
       $same_email: false,
       $is_follow: false,
@@ -294,6 +295,7 @@ export interface user {
   id: number;
   $busy: boolean;
   message_count: number;
+  notific_count: number;
   $same_email: boolean;
   $is_follow: boolean;
   $isOnline: boolean;

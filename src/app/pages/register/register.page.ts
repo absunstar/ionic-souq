@@ -136,6 +136,10 @@ export class RegisterPage implements OnInit {
         let country = this.countriesList.find(
           (a) => a.id == Number(user.$country)
         );
+        if (!country) {
+          user.$error = 'يجب إختيار الدولة';
+          return;
+        }
 
         let obj = {
           email: user.email,

@@ -1,0 +1,154 @@
+<ion-header class="main-padding-notific">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button class="main-color"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="notific-buttons" *ngIf="notificList && notificList.length > 0">
+    <ion-button (click)="deleteNotific()" color="danger">
+      <ion-icon name="trash-outline"></ion-icon>
+      <ion-label>حذف الإشعارات</ion-label>
+    </ion-button>
+    <ion-button (click)="setOpen(true);getUser()" color="medium">
+      <ion-icon name="settings-outline"></ion-icon>
+      <ion-label>إعدادات الإشعارات</ion-label>
+    </ion-button>
+  </div>
+  <ion-list *ngIf="notificList && notificList.length > 0">
+    <ion-item class="content-items" button *ngFor="let notif of notificList">
+      <div
+        class="div-notif"
+        [ngClass]="{'bg_notific' : !notif.show}"
+        (click)="updateNotific(notif)"
+      >
+        <ion-label class="ion-text-wrap">
+          <!--    [routerLink]="['/notif-details']"
+          [queryParams]="{id: notif.id,name :notif.name}" -->
+          <div *ngIf="notif.type == 'comments_my_ads'">
+            <p class="font-18 main-color bold">يوجد رد جديد على إعلان</p>
+          </div>
+          <div *ngIf="notif.type == 'private_messages'">
+            <p class="font-18 main-color bold">يوجد رسالة خاصة جديدة</p>
+            <p class="font-16 bold">{{ notif.action.name }}</p>
+          </div>
+          <div *ngIf="notif.type == 'replies_ads_followed'">
+            <p class="font-18 main-color bold">يوجد رد جديد على إعلان قمت بمتابعته</p>
+            <p class="font-16 bold">تعليق جديد على {{ notif.action.name }}</p>
+          </div>
+          <div *ngIf="notif.type == 'ads_members_follow'">
+            <p class="font-18 main-color bold">يوجد إعلان جديد لشخص قمت بمتابعته</p>
+            <p class="font-16 bold"> {{ notif.action.name }}</p>
+          </div>
+          <p class="time-publish">
+            {{notif.$time}} <ion-icon name="time-outline"></ion-icon>
+          </p>
+        </ion-label>
+        <!-- ion-badge -->
+        <ion-label slot="end">
+          <p class="time-publish text-right">
+            <!--   [routerLink]="['/profile']"
+            [queryParams]="{
+          id: notif.user_action.id,
+          name: notif.user_action.name,
+          last_name: notif.user_action.last_name
+        }" -->
+            {{ notif.user_action.name }}
+            <ion-icon name="person-outline"></ion-icon>
+          </p>
+        </ion-label>
+      </div>
+    </ion-item>
+  </ion-list>
+
+  <p class="notific-label" *ngIf="!notificList ||notificList.length < 1">
+    لا يوجد إشعارات
+  </p>
+
+  <ion-modal [isOpen]="notificSettingModal">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>إعدادات الإشعارات</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="setOpen(false)">إغلاق</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-list *ngIf="user && user.notific_setting">
+          <ion-item>
+            <ion-label class="text-right">التنبيهات الفورية</ion-label>
+            <ion-checkbox
+              slot="end"
+              [(ngModel)]="user.notific_setting.instant_alerts"
+            ></ion-checkbox>
+          </ion-item>
+          <ion-item>
+            <ion-label class="text-right"
+              >إعلانات أعضاء قمت بمتابعتهم</ion-label
+            >
+            <ion-checkbox
+              slot="end"
+              [(ngModel)]="user.notific_setting.ads_members_follow"
+            ></ion-checkbox>
+          </ion-item>
+          <ion-item>
+            <ion-label class="text-right"
+              >إعلانات أقسام قمت بمتابعتها</ion-label
+            >
+            <ion-checkbox
+              slot="end"
+              [(ngModel)]="user.notific_setting.ads_sections_followed"
+            ></ion-checkbox>
+          </ion-item>
+          <ion-item>
+            <ion-label class="text-right"
+              >إعلانات عمليات بحث قمت بمتابعتها</ion-label
+            >
+            <ion-checkbox
+              slot="end"
+              [(ngModel)]="user.notific_setting.ads_searches_followed"
+            ></ion-checkbox>
+          </ion-item>
+          <ion-item>
+            <ion-label class="text-right"
+              >ردود على إعلانات قمت بمتابعتها</ion-label
+            >
+            <ion-checkbox
+              slot="end"
+              [(ngModel)]="user.notific_setting.replies_ads_followed"
+            ></ion-checkbox>
+          </ion-item>
+          <ion-item>
+            <ion-label class="text-right">تعليفات على إعلاناتي</ion-label>
+            <ion-checkbox
+              slot="end"
+              [(ngModel)]="user.notific_setting.comments_my_ads"
+            ></ion-checkbox>
+          </ion-item>
+          <ion-item>
+            <ion-label class="text-right">الرسائل الخاصة</ion-label>
+            <ion-checkbox
+              slot="end"
+              [(ngModel)]="user.notific_setting.private_messages"
+            ></ion-checkbox>
+          </ion-item>
+        </ion-list>
+        <div>
+          <ion-button
+            expand="block"
+            (click)="saveNotificSetting()"
+            color="warning"
+          >
+            <ion-icon name="save-outline"></ion-icon>
+            <ion-label>حفظ التغييرات</ion-label>
+          </ion-button>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+  <div class="margin-footer-notific"></div>
+
+</ion-content>

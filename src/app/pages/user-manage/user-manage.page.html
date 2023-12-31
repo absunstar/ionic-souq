@@ -23,7 +23,11 @@
     <ion-button (click)="showContent('myAds')" class="button-manage">
       <ion-label>إعلاناتي</ion-label>
     </ion-button>
+    <ion-button (click)="showContent('deleteAccount')" class="button-manage">
+      <ion-label>حذف الحساب</ion-label>
+    </ion-button>
   </ion-buttons>
+ 
   <ion-row *ngIf="user.$personal">
     <ion-item>
       <div (click)="selectImage('cover')" class="upload-img">
@@ -362,5 +366,11 @@
       <ion-label *ngIf="user.$error" class="errors">{{user.$error}}</ion-label>
     </ion-item>
     <p class="no-ads-text" *ngIf="!contentList ||contentList.length < 1">لا يوجد إعلانات</p>
+  </ion-row>
+  <ion-row *ngIf="user.$deleteAccount">
+      <ion-button (click)="deleteMyAccount()" color="danger">
+        <ion-icon name="trash-outline"></ion-icon>
+        <ion-label>حذف حسابي</ion-label>
+      </ion-button>
   </ion-row>
 </ion-content>

@@ -121,6 +121,7 @@ export class IsiteService {
             image_url: resUserSession.session.user.profile.image_url,
             feedback_list: resUserSession.session.user.feedback_list,
             message_count: resUserSession.session.user.message_count,
+            notific_count: resUserSession.session.user.notific_count,
             main_address: resUserSession.session.user.profile.main_address,
           };
           this.db.userSession.image_url =

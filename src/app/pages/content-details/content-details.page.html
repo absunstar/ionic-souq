@@ -129,7 +129,7 @@
     </div> -->
 
     <ion-button
-    *ngIf="!isite.db.userSession || userAd.id != isite.db.userSession.id"
+      *ngIf="!isite.db.userSession || userAd.id != isite.db.userSession.id"
       (click)="setOpen(true,'connectModal',null)"
       color="success"
       size="default"
@@ -211,7 +211,9 @@
           </ion-toolbar>
         </ion-header>
         <ion-content class="ion-padding">
-          <p class="center font-22 main-color">{{userMessage.name}} {{userMessage.last_name}}</p>
+          <p class="center font-22 main-color">
+            {{userMessage.name}} {{userMessage.last_name}}
+          </p>
 
           <ion-item>
             <ion-label>أكتب رسالتك هنا</ion-label>
@@ -235,11 +237,17 @@
       >
     </div>
 
-    <ion-row *ngIf="isite.db.userSession && userAd.id != isite.db.userSession.id" style="place-content: center">
+    <ion-row
+      *ngIf="isite.db.userSession && userAd.id != isite.db.userSession.id"
+      style="place-content: center"
+    >
       <div class="btn-group">
         <a class="center"><ion-icon name="flag-outline"></ion-icon> </a>
         <a class="center"><ion-icon name="share-social-outline"></ion-icon> </a>
-        <a class="center" *ngIf="userAd.id != isite.db.userSession.id" (click)="setOpen(true,'messageModal',userAd)"
+        <a
+          class="center"
+          *ngIf="userAd.id != isite.db.userSession.id"
+          (click)="setOpen(true,'messageModal',userAd)"
           ><ion-icon name="mail-unread-outline"></ion-icon>
         </a>
         <a
@@ -287,6 +295,22 @@
     </div>
 
     <div class="row" ng-hide="content.disable_replies_feature">
+      <ion-button
+        *ngIf="isite.db.userSession && userAd.id != isite.db.userSession.id && !activity.follow"
+        color="tertiary"
+        (click)="updateFeedback('follow','true',null )"
+        >متابعة التعليقات
+        <ion-icon name="wifi-outline"></ion-icon>
+      </ion-button>
+
+      <ion-button
+        *ngIf="isite.db.userSession && userAd.id != isite.db.userSession.id && activity.follow"
+        color="tertiary"
+        (click)="updateFeedback('follow','false',null )"
+        >إلغاء متابعة التعليقات
+        <ion-icon name="wifi-outline"></ion-icon>
+      </ion-button>
+
       <ion-item>
         <ion-textarea
           [(ngModel)]="activity.comment"
@@ -442,4 +466,5 @@
       </div>
     </div>
   </div>
+  <div class="margin-footer-display"></div>
 </ion-content>
