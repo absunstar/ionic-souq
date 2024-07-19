@@ -18,14 +18,15 @@ ion-toolbar {
   }
 }
 .company-title {
-  background-image: linear-gradient(to left, #009688, gold, #009688, gold);
+  background-image: linear-gradient(to left, #009688, #bcaa13, #009688, #aa9526);
   -webkit-background-clip: text;
   color: transparent;
-  font-size: 24px;
+  font-size: 20px;
   font-weight: bold;
+  min-width: 70%;
   float: right;
   margin-top: 15px;
-  width: 55%;
+  margin-right: 5px;
   text-wrap: pretty;
   font-family: fangsong;
   text-align: right;

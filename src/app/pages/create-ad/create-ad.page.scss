@@ -147,10 +147,9 @@ ion-radio.ios::part(container) {
   border-radius: 4px;
 }
 .title-uploadimg-createAd {
-  position: fixed;
-  left: 40px;
-  top: 95px;
-  margin: 5px;
+  position: relative;
+  top: 75px;
+  margin: 6px;
   font-weight: bold;
   color: #009688;
 }
@@ -164,8 +163,8 @@ ion-radio.ios::part(container) {
 }
 
 .title-uploadimg {
-  position: fixed;
-  top: 50px;
+  position: relative;
+  top: 75px;
   margin: 6px;
   font-weight: bold;
   color: #009688;
@@ -174,5 +173,6 @@ ion-radio.ios::part(container) {
 .upload-img {
   padding: 5px 5px 0px 5px;
   border-radius: 50%;
-  border: 1px dashed #009688;
+  width: 100%;
+  text-align: center;
 }

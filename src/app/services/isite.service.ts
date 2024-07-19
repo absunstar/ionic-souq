@@ -21,11 +21,11 @@ import { get } from 'http';
 @Injectable({
   providedIn: 'root',
 })
-
+// https://harajtmor.com
 export class IsiteService {
   busy: boolean = false;
   accessToken: string = null;
-  baseURL: string = 'https://harajtmor.com';
+  baseURL: string = 'http://127.0.0.1';
   loader: HTMLIonLoadingElement = null;
   browser: InAppBrowserObject = null;
   constructor(
@@ -136,7 +136,7 @@ export class IsiteService {
   async getSetting() {
     this.api('/api/default_setting/get').subscribe((res: any) => {
       if (res.done) {
-
+        
         this.db.setting = res.doc;
         this.db.setting.tax_number_show = res.doc.tax_number_show || false;
         this.db.setting.enable_sending_messages_mobile_taqnyat = res.doc.enable_sending_messages_mobile_taqnyat || false;
@@ -144,6 +144,8 @@ export class IsiteService {
           res.doc.commercial_registration_no_show || false;
         this.db.setting.commercial_registration_no =
           res.doc.commercial_registration_no || '';
+        this.db.setting.show_commission_add_content = res.doc.show_commission_add_content;
+        this.db.setting.tax_number = res.doc.tax_number || '';
         this.db.setting.tax_number = res.doc.tax_number || '';
         this.db.setting.transfer_form_text = res.doc.transfer_form_text || '';
         this.db.setting.you_tube_accouunt = res.doc.you_tube_accouunt || '';

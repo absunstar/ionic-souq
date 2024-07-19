@@ -16,6 +16,8 @@ export class DatabaseService {
       site_name: '',
       tax_number_show: false,
       enable_sending_messages_mobile_taqnyat: false,
+      show_commission_add_content: false,
+      commission_value: '',
       commercial_registration_no_show: false,
       commercial_registration_no: '',
       content: {},
@@ -47,6 +49,8 @@ export interface time {
   time1: string;
 }
 export interface setting {
+  commission_value: any;
+  show_commission_add_content: any;
   site_name: string;
   commission_description: string;
   commission_main_title: string;

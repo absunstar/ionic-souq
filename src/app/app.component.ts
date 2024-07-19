@@ -63,7 +63,7 @@ export class AppComponent {
               })
               .subscribe((resUser: any) => {
                 if (resUser.accessToken) {
-                  this.isite.accessToken = resUser.accessToken;
+                  this.isite.accessToken = null;
                 }
                 if (resUser.done) {
                   this.isite.db.userSession = null;

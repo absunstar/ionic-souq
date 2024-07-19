@@ -50,8 +50,12 @@ export class CommissionPage implements OnInit {
 
   calc() {
     setTimeout(() => {
+      let commission_value = 0;
+      if(this.isite.db.setting.show_commission_add_content){
+        commission_value = Number(this.isite.db.setting.commission_value)
+      }
       this.commission_due = 0;
-      this.commission_due = (this.price * 1) / 100;
+      this.commission_due = (this.price * commission_value) / 100;
       if (this.commission_due < 1) {
         this.commission_due = 0;
       }

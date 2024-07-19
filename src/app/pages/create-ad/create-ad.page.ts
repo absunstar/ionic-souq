@@ -98,6 +98,9 @@ export class CreateAdPage implements OnInit {
       date: new Date(),
       expiry_date: new Date(),
     };
+    if(this.isite.db.setting.commercial_registration_no_show) {
+      this.selectStep(null,'accept');
+    }
     this.getCategories();
     this.getCountries();
     this.getCurrencies();
