@@ -49,8 +49,8 @@ export interface time {
   time1: string;
 }
 export interface setting {
-  commission_value: any;
-  show_commission_add_content: any;
+  commission_value: string;
+  show_commission_add_content: boolean;
   site_name: string;
   commission_description: string;
   commission_main_title: string;
