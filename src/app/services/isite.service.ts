@@ -25,7 +25,7 @@ import { get } from 'http';
 export class IsiteService {
   busy: boolean = false;
   accessToken: string = null;
-  baseURL: string = 'http://127.0.0.1';
+  baseURL: string = 'https://harajtmor.com';
   loader: HTMLIonLoadingElement = null;
   browser: InAppBrowserObject = null;
   constructor(
@@ -136,7 +136,7 @@ export class IsiteService {
   async getSetting() {
     this.api('/api/default_setting/get').subscribe((res: any) => {
       if (res.done) {
-        
+
         this.db.setting = res.doc;
         this.db.setting.tax_number_show = res.doc.tax_number_show || false;
         this.db.setting.enable_sending_messages_mobile_taqnyat = res.doc.enable_sending_messages_mobile_taqnyat || false;
