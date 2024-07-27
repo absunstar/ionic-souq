@@ -3,8 +3,8 @@
 }
 
 .title-uploadimg {
-  position: fixed;
-  top: 50px;
+  position: relative;
+  top: 75px;
   margin: 6px;
   font-weight: bold;
   color: #009688;
@@ -13,7 +13,8 @@
 .upload-img {
   padding: 5px 5px 0px 5px;
   border-radius: 50%;
-  border: 1px dashed #009688;
+  width: 100%;
+  text-align: center;
 }
 .main-color {
   color: #009688;

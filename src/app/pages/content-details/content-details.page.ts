@@ -156,8 +156,8 @@ export class ContentDetailsPage implements OnInit {
             name: resUser.doc.profile.name,
             last_name: resUser.doc.profile.last_name,
             $image_url: this.isite.baseURL + resUser.doc.profile.image_url,
-            image_url:  resUser.doc.profile.image_url,
-            $mobile : resUser.doc.country_code + this.content.mobile,
+            image_url: resUser.doc.profile.image_url,
+            $mobile : this.content.mobile,
           };
 
         }

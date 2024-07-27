@@ -98,6 +98,10 @@ export class CreateAdPage implements OnInit {
       date: new Date(),
       expiry_date: new Date(),
     };
+    
+    if(!this.isite.db.setting.show_commission_add_content) {
+      this.selectStep(null,'accept');
+    }
     this.getCategories();
     this.getCountries();
     this.getCurrencies();

@@ -21,7 +21,6 @@ import { get } from 'http';
 @Injectable({
   providedIn: 'root',
 })
-
 export class IsiteService {
   busy: boolean = false;
   accessToken: string = null;
@@ -144,6 +143,8 @@ export class IsiteService {
           res.doc.commercial_registration_no_show || false;
         this.db.setting.commercial_registration_no =
           res.doc.commercial_registration_no || '';
+        this.db.setting.show_commission_add_content = res.doc.show_commission_add_content;
+        this.db.setting.tax_number = res.doc.tax_number || '';
         this.db.setting.tax_number = res.doc.tax_number || '';
         this.db.setting.transfer_form_text = res.doc.transfer_form_text || '';
         this.db.setting.you_tube_accouunt = res.doc.you_tube_accouunt || '';
