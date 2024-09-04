@@ -53,7 +53,7 @@
     <div class="category-list h-bg-green">
       <div
         class="category"
-        (click)="selectStep('current','choose_address')"
+        (click)="selectStep(cat,'choose_address')"
         *ngFor="let cat of top_category_list"
       >
         <img src="{{cat.image_url}}" alt="" />
@@ -146,7 +146,6 @@
         okText="إختيار"
         cancelText="إغلاق"
         [(ngModel)]="content.$area"
-        (ionChange)="getCities(content.$area)"
       >
         <ion-select-option *ngFor="let area of areas_list" value="{{area.id}}">
           {{area.name_ar}}

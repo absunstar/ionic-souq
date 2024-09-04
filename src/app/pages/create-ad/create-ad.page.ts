@@ -98,9 +98,9 @@ export class CreateAdPage implements OnInit {
       date: new Date(),
       expiry_date: new Date(),
     };
-    
-    if(!this.isite.db.setting.show_commission_add_content) {
-      this.selectStep(null,'accept');
+
+    if (!this.isite.db.setting.show_commission_add_content) {
+      this.selectStep(null, 'accept');
     }
     this.getCategories();
     this.getCountries();
@@ -110,36 +110,51 @@ export class CreateAdPage implements OnInit {
 
   ngOnInit() {}
 
-  async selectImage(type) {
-    await Camera.checkPermissions().then((permissions) => {
-      if (permissions.photos !== 'granted') {
-        Camera.requestPermissions();
-      }
-    });
- 
-    const image = await Camera.getPhoto({
-      quality: 90,
-      allowEditing: false,
-      resultType: CameraResultType.DataUrl,
-      source: CameraSource.Prompt, // Camera, Photos or Prompt!
-    });
-    this.startUpload(image, type);
+  async selectImage(type: string) {
+    this.content.$error = '';
+
+    Camera.checkPermissions()
+      .then(async (permissions) => {
+        if (
+          permissions.photos === 'denied' ||
+          permissions.camera === 'denied'
+        ) {
+          let p = await Camera.requestPermissions();
+          if (p.photos === 'denied' || p.camera === 'denied') {
+            return false;
+          } else {
+            return this.selectImage(type);
+          }
+        }
+        const image = await Camera.getPhoto({
+          quality: 90,
+          allowEditing: false,
+          resultType: CameraResultType.DataUrl,
+          source: CameraSource.Photos, // Camera, Photos or Prompt!
+        });
+        if (image) {
+          this.startUpload(image, type);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
-  async startUpload(image: any, type) {
+  async startUpload(image: any, type: string) {
+    this.content.$error = '';
     const base64Response = await fetch(image.dataUrl);
     const blob = await base64Response.blob();
     const formData = new FormData();
-    formData.append('fileToUpload', blob, 'image1.png');
+    formData.append('fileToUpload', blob, 'image1.jpg');
     this.uploadData(formData, type);
   }
-  async uploadData(formData: FormData, type) {
-    const loading = await this.loadingCtrl.create({
-      message: 'جاري تحميل الصورة',
-    });
-    await loading.present();
-    this.http
-      .post(`${this.isite.baseURL}/x-api/upload/image`, formData)
+
+  async uploadData(formData: FormData, type: string) {
+    this.content.$error = '';
+
+    this.isite
+      .api({ url: '/x-api/upload/image', body: formData })
       .subscribe((res: any) => {
         if (type == 'list') {
           this.content.$image_url = res.image.url;
@@ -148,11 +163,9 @@ export class CreateAdPage implements OnInit {
           this.content.image_url = res.image.url;
           this.content.$image_url_main = this.isite.baseURL + res.image.url;
         }
-        /* this.user.image_url = res.image.url;
-        this.user.$image_url = this.isite.baseURL + res.image.url; */
-        loading.dismiss();
       });
   }
+
   upDownList(list, type, index) {
     let element = list[index];
     let toIndex = index;
@@ -175,13 +188,14 @@ export class CreateAdPage implements OnInit {
     this.content.$show_finish = false;
 
     if (type == 'main_category') {
-      this.content.main_category = c;
       this.content.$show_choose_address = true;
     } else if (type == 'accept') {
       this.content.mobile = this.isite.db.userSession.mobile;
       this.content.$accept = true;
       this.content.$show_category = true;
     } else if (type == 'choose_address') {
+      this.content.main_category = c;
+
       this.content.$show_address = true;
       if (c == 'current') {
         if (this.isite.db.userSession.main_address) {
@@ -328,7 +342,7 @@ export class CreateAdPage implements OnInit {
     } else if (!this.content.description) {
       this.content.$error = 'يجب كتابة تفاصيل الإعلان';
       this.content.$busy = false;
-return;
+      return;
     }
     if (this.content.$country) {
       this.content.address.country = this.countries_list.find(
@@ -367,7 +381,8 @@ return;
         }
       }
     }
-    this.isite
+    
+     this.isite
       .api({
         url: '/api/contents/add',
         body: this.content,
@@ -379,7 +394,7 @@ return;
             this.router.navigateByUrl('/home', { replaceUrl: true });
           });
         }
-      });
+      }); 
   }
 
   getUnits() {

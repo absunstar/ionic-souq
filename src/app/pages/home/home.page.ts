@@ -39,6 +39,7 @@ export class HomePage implements OnInit {
       near: false,
       with_photos: false,
       price: 'lowest',
+      text_search: '',
       price_to: 0,
       price_from: 0,
     };
@@ -58,6 +59,7 @@ export class HomePage implements OnInit {
     this.filter.price_to = this.filter.price_to || 500000;
     this.filter.price_from = this.filter.price_from || 0;
     this[id] = type;
+    
   }
   async menu() {
     const modal = await this.modalCtrl.create({
@@ -227,6 +229,7 @@ export interface filter {
   near: boolean;
   with_photos: boolean;
   price: string;
+  text_search: string;
   price_to: number;
   price_from: number;
 }

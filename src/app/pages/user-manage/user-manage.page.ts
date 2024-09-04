@@ -70,31 +70,52 @@ export class UserManagePage implements OnInit {
   }
 
   ngOnInit() {}
+  
+  async selectImage(type: string) {
+    this.user.$error = '';
 
-  async selectImage(type) {
-    const image = await Camera.getPhoto({
-      quality: 90,
-      allowEditing: false,
-      resultType: CameraResultType.DataUrl,
-      source: CameraSource.Prompt, // Camera, Photos or Prompt!
-    });
-    this.startUpload(image, type);
+    Camera.checkPermissions()
+      .then(async (permissions) => {
+        if (
+          permissions.photos === 'denied' ||
+          permissions.camera === 'denied'
+        ) {
+          let p = await Camera.requestPermissions();
+          if (p.photos === 'denied' || p.camera === 'denied') {
+            return false;
+          } else {
+            return this.selectImage(type);
+          }
+        }
+        const image = await Camera.getPhoto({
+          quality: 90,
+          allowEditing: false,
+          resultType: CameraResultType.DataUrl,
+          source: CameraSource.Photos, // Camera, Photos or Prompt!
+        });
+        if (image) {
+          this.startUpload(image, type);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
-  async startUpload(image: any, type) {
+  async startUpload(image: any, type: string) {
+    this.user.$error = '';
     const base64Response = await fetch(image.dataUrl);
     const blob = await base64Response.blob();
     const formData = new FormData();
-    formData.append('fileToUpload', blob, 'image1.png');
+    formData.append('fileToUpload', blob, 'image1.jpg');
     this.uploadData(formData, type);
   }
-  async uploadData(formData: FormData, type) {
-    const loading = await this.loadingCtrl.create({
-      message: 'جاري تحميل الصورة',
-    });
-    await loading.present();
-    this.http
-      .post(`${this.isite.baseURL}/x-api/upload/image`, formData)
+
+  async uploadData(formData: FormData, type: string) {
+    this.user.$error = '';
+
+    this.isite
+      .api({ url: '/x-api/upload/image', body: formData })
       .subscribe((res: any) => {
         if (type == 'logo') {
           this.user.profile.image_url = res.image.url;
@@ -104,10 +125,6 @@ export class UserManagePage implements OnInit {
           this.user.profile.$cover = this.isite.baseURL + res.image.url;
         }
         this.editPersonalInfoUser(type);
-
-        /* this.user.image_url = res.image.url;
-        this.user.$image_url = this.isite.baseURL + res.image.url; */
-        loading.dismiss();
       });
   }
 
