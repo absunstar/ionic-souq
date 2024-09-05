@@ -28,7 +28,19 @@ export class DatabaseService {
       twitter_accouunt: '',
       facebook_account: '',
       powered_whatsapp: '',
+      clock_logo: '',
       powered_logo: '',
+      show_page_register: false,
+      show_page_commission: false,
+      show_page_featured_ads: false,
+      show_page_pay_duplicate_goods: false,
+      show_page_terms_use: false,
+      show_page_membership_verification: false,
+      show_page_evaluation_system: false,
+      show_page_discount_system: false,
+      show_page_blacklist_andling: false,
+      show_page_prohibited_goods_advertisements: false,
+      show_page_frequently_questions: false,
       powered_title: '',
       phone: '',
       email: '',
@@ -55,6 +67,17 @@ export interface setting {
   commission_description: string;
   commission_main_title: string;
   commission_logo: string;
+  show_page_register: boolean;
+  show_page_commission: boolean;
+  show_page_featured_ads: boolean;
+  show_page_pay_duplicate_goods: boolean;
+  show_page_terms_use: boolean;
+  show_page_membership_verification: boolean;
+  show_page_evaluation_system: boolean;
+  show_page_discount_system: boolean;
+  show_page_blacklist_andling: boolean;
+  show_page_prohibited_goods_advertisements: boolean;
+  show_page_frequently_questions: boolean;
   tax_number_show: boolean;
   enable_sending_messages_mobile_taqnyat : boolean;
   commercial_registration_no_show: boolean;
@@ -70,6 +93,7 @@ export interface setting {
   bank_account_list : any[];
   content: any;
   powered_whatsapp: string;
+  clock_logo: string;
   powered_logo: string;
   powered_title: string;
   email: string;
