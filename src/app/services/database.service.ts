@@ -16,6 +16,7 @@ export class DatabaseService {
       site_name: '',
       tax_number_show: false,
       enable_sending_messages_mobile_taqnyat: false,
+      hide_city_area: false,
       show_commission_add_content: false,
       commission_value: '',
       commercial_registration_no_show: false,
@@ -80,6 +81,7 @@ export interface setting {
   show_page_frequently_questions: boolean;
   tax_number_show: boolean;
   enable_sending_messages_mobile_taqnyat : boolean;
+  hide_city_area : boolean;
   commercial_registration_no_show: boolean;
   commercial_registration_no: string;
   tax_number: string;

@@ -140,6 +140,7 @@ export class IsiteService {
         this.db.setting = res.doc;
         this.db.setting.tax_number_show = res.doc.tax_number_show || false;
         this.db.setting.enable_sending_messages_mobile_taqnyat = res.doc.enable_sending_messages_mobile_taqnyat || false;
+        this.db.setting.hide_city_area = res.doc.hide_city_area || false;
         this.db.setting.commercial_registration_no_show =
           res.doc.commercial_registration_no_show || false;
         this.db.setting.commercial_registration_no =
