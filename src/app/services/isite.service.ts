@@ -21,6 +21,7 @@ import { get } from 'http';
 @Injectable({
   providedIn: 'root',
 })
+/* 'https://harajtmor.com' */
 export class IsiteService {
   busy: boolean = false;
   accessToken: string = null;
@@ -135,10 +136,11 @@ export class IsiteService {
   async getSetting() {
     this.api('/api/default_setting/get').subscribe((res: any) => {
       if (res.done) {
-
+        
         this.db.setting = res.doc;
         this.db.setting.tax_number_show = res.doc.tax_number_show || false;
         this.db.setting.enable_sending_messages_mobile_taqnyat = res.doc.enable_sending_messages_mobile_taqnyat || false;
+        this.db.setting.hide_city_area = res.doc.hide_city_area || false;
         this.db.setting.commercial_registration_no_show =
           res.doc.commercial_registration_no_show || false;
         this.db.setting.commercial_registration_no =
@@ -152,6 +154,17 @@ export class IsiteService {
         this.db.setting.twitter_accouunt = res.doc.twitter_accouunt || '';
         this.db.setting.facebook_account = res.doc.facebook_account || '';
         this.db.setting.powered_whatsapp = res.doc.powered_whatsapp || '';
+        this.db.setting.show_page_register = res.doc.show_page_register || '';
+        this.db.setting.show_page_commission = res.doc.show_page_commission || '';
+        this.db.setting.show_page_featured_ads = res.doc.show_page_featured_ads || '';
+        this.db.setting.show_page_pay_duplicate_goods = res.doc.show_page_pay_duplicate_goods || '';
+        this.db.setting.show_page_terms_use = res.doc.show_page_terms_use || '';
+        this.db.setting.show_page_membership_verification = res.doc.show_page_membership_verification || '';
+        this.db.setting.show_page_evaluation_system = res.doc.show_page_evaluation_system || '';
+        this.db.setting.show_page_discount_system = res.doc.show_page_discount_system || '';
+        this.db.setting.show_page_blacklist_andling = res.doc.show_page_blacklist_andling || '';
+        this.db.setting.show_page_prohibited_goods_advertisements = res.doc.show_page_prohibited_goods_advertisements || '';
+        this.db.setting.show_page_frequently_questions = res.doc.show_page_frequently_questions || '';
         this.db.setting.powered_logo = res.doc.powered_logo || '';
         this.db.setting.powered_title = res.doc.powered_title || '';
         this.db.setting.currency = res.doc.currency || {};
@@ -167,6 +180,10 @@ export class IsiteService {
         if (this.db.setting.powered_logo) {
           this.db.setting.powered_logo =
             this.baseURL + this.db.setting.powered_logo;
+        }
+        if (this.db.setting.clock_logo) {
+          this.db.setting.clock_logo =
+            this.baseURL + this.db.setting.clock_logo;
         }
       }
     });

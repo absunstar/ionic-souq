@@ -55,7 +55,10 @@
       <!-- <span id="time1"> </span> -->
       <span class="clock-area">
         <span> {{ isite.db.time.time1 }}</span>
-        <img src="assets/clock2.png" />
+        <img
+          *ngIf="isite.db.setting && isite.db.setting.clock_logo"
+          [src]="isite.db.setting.clock_logo"
+        />
       </span>
       <ion-buttons slot="start"> </ion-buttons>
 
@@ -175,9 +178,10 @@
       </ion-toolbar>
     </ion-footer>
     <ion-card class="card-menu">
-      <ion-card-content (click)="hideMenu()">
+      <ion-card-content (click)="hideMenu()" *ngIf="isite.db.setting">
         <ion-label
           class="card-label-menu"
+          *ngIf="isite.db.setting.show_page_register"
           [routerLink]="['/pages-content']"
           [queryParams]="{
             type: 'register'
@@ -185,12 +189,16 @@
           ><ion-icon class="card-icon-menu" name="people-outline"></ion-icon>
           تسجيل</ion-label
         >
-        <ion-label class="card-label-menu" [routerLink]="['/commission']"
+        <ion-label
+          class="card-label-menu"
+          *ngIf="isite.db.setting.show_page_commission"
+          [routerLink]="['/commission']"
           ><ion-icon class="card-icon-menu" name="cash-outline"></ion-icon> حساب
           و سداد عمولة الموقع</ion-label
         >
         <ion-label
           class="card-label-menu"
+          *ngIf="isite.db.setting.show_page_featured_ads"
           [routerLink]="['/pages-content']"
           [queryParams]="{
             type: 'premium-ads'
@@ -200,6 +208,7 @@
         >
         <ion-label
           class="card-label-menu"
+          *ngIf="isite.db.setting.show_page_pay_duplicate_goods"
           [routerLink]="['/pages-content']"
           [queryParams]="{
             type: 'services-membership'
@@ -209,6 +218,7 @@
         >
         <ion-label
           class="card-label-menu"
+          *ngIf="isite.db.setting.show_page_terms_use"
           [routerLink]="['/pages-content']"
           [queryParams]="{
             type: 'terms'
@@ -221,6 +231,7 @@
         >
         <ion-label
           class="card-label-menu"
+          *ngIf="isite.db.setting.show_page_membership_verification"
           [routerLink]="['/pages-content']"
           [queryParams]="{
             type: 'verify'
@@ -230,6 +241,7 @@
         >
         <ion-label
           class="card-label-menu"
+          *ngIf="isite.db.setting.show_page_evaluation_system"
           [routerLink]="['/pages-content']"
           [queryParams]="{
             type: 'rating'
@@ -239,6 +251,7 @@
         >
         <ion-label
           class="card-label-menu"
+          *ngIf="isite.db.setting.show_page_discount_system"
           [routerLink]="['/pages-content']"
           [queryParams]="{
             type: 'discount'
@@ -248,6 +261,7 @@
         >
         <ion-label
           class="card-label-menu"
+          *ngIf="isite.db.setting.show_page_blacklist_andling"
           [routerLink]="['/pages-content']"
           [queryParams]="{
             type: 'checkAcc'
@@ -260,6 +274,7 @@
         >
         <ion-label
           class="card-label-menu"
+          *ngIf="isite.db.setting.show_page_prohibited_goods_advertisements"
           [routerLink]="['/pages-content']"
           [queryParams]="{
             type: 'forbiddenContents'
@@ -269,6 +284,7 @@
         >
         <ion-label
           class="card-label-menu"
+          *ngIf="isite.db.setting.show_page_frequently_questions"
           [routerLink]="['/pages-content']"
           [queryParams]="{
             type: 'faq'
@@ -357,11 +373,14 @@
     slot="bottom"
     *ngIf="isite.db.userSession && isite.db.userSession.id"
   >
-  <ion-tab-button
+    <ion-tab-button
       tab="chat"
       *ngIf="isite.db.userSession && isite.db.userSession.id"
     >
-      <ion-icon name="notifications-outline" [routerLink]="['/notific']"></ion-icon>
+      <ion-icon
+        name="notifications-outline"
+        [routerLink]="['/notific']"
+      ></ion-icon>
       <ion-label [routerLink]="['/notific']" class="large">الإشعارات</ion-label>
       <ion-badge class="badge-msg">{{
         isite.db.userSession.notific_count
@@ -375,7 +394,7 @@
       <ion-icon [routerLink]="['/favorite']" name="heart"></ion-icon>
       <ion-label class="large" [routerLink]="['/favorite']">المفضله</ion-label>
     </ion-tab-button>
-    
+
     <ion-tab-button
       tab="chat"
       *ngIf="isite.db.userSession && isite.db.userSession.id"

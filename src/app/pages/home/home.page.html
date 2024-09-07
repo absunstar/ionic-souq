@@ -105,6 +105,15 @@
         </ion-header>
         <ion-content class="ion-padding">
           <ion-item>
+            <ion-input
+              [clearInput]="true"
+              label="بحث شامل"
+              labelPlacement="floating"
+              placeholder="بحث شامل"
+              [(ngModel)]="filter.text_search"
+            ></ion-input>
+          </ion-item>
+          <ion-item>
             <ion-label class="text-right">جديد فقط</ion-label>
             <ion-checkbox slot="end" [(ngModel)]="filter.new"></ion-checkbox>
           </ion-item>
@@ -170,7 +179,7 @@
             expand="block"
             class="filter-search"
             color="success"
-            (click)="setOpen(false, 'filterModal');loadPosts({more : false })"
+            (click)="modal.dismiss();loadPosts({more : false })"
           >
             <ion-icon name="log-in-outline"></ion-icon>
             <ion-label>بحث</ion-label>

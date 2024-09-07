@@ -40,7 +40,6 @@ export class RegisterPage implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     public http: HttpClient,
-    public loadingCtrl: LoadingController
   ) {
     this.user = {
       $error: '',
@@ -74,35 +73,59 @@ export class RegisterPage implements OnInit {
   }
 
   ngOnInit() {}
-
   async selectImage() {
-    const image = await Camera.getPhoto({
-      quality: 90,
-      allowEditing: false,
-      resultType: CameraResultType.DataUrl,
-      source: CameraSource.Prompt, // Camera, Photos or Prompt!
-    });
-    this.startUpload(image);
+    this.user.$error = '';
+
+    Camera.checkPermissions()
+      .then(async (permissions) => {
+
+        if (
+          permissions.photos === 'denied' ||
+          permissions.camera === 'denied'
+        ) {
+          let p = await Camera.requestPermissions();
+          if (p.photos === 'denied' || p.camera === 'denied') {
+            return false;
+          } else {
+            return this.selectImage();
+          }
+        }
+        const image = await Camera.getPhoto({
+          quality: 90,
+          allowEditing: false,
+          resultType: CameraResultType.DataUrl,
+          source: CameraSource.Prompt, // Camera, Photos or Prompt!
+        });
+        if (image) {
+          this.startUpload(image);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   async startUpload(image: any) {
+    this.user.$error = '';
     const base64Response = await fetch(image.dataUrl);
     const blob = await base64Response.blob();
     const formData = new FormData();
-    formData.append('fileToUpload', blob, 'image1.png');
+    formData.append('fileToUpload', blob, 'image1.jpg');
     this.uploadData(formData);
   }
+  
   async uploadData(formData: FormData) {
-    const loading = await this.loadingCtrl.create({
-      message: 'جاري تحميل الصورة',
-    });
-    await loading.present();
-    this.http
-      .post(`${this.isite.baseURL}/x-api/upload/image`, formData)
+    this.user.$error = '';
+
+    this.isite
+      .api({ url: '/x-api/upload/image', body: formData })
       .subscribe((res: any) => {
-        this.user.image_url = res.image.url;
-        this.user.$image_url = this.isite.baseURL + res.image.url;
-        loading.dismiss();
+        if(res.image) {
+
+          this.user.image_url = res.image.url;
+          this.user.$image_url = this.isite.baseURL + this.user.image_url;
+        }
+        
       });
   }
 
@@ -195,9 +218,11 @@ export class RegisterPage implements OnInit {
         },
       })
       .subscribe((res: any) => {
+        
         if (!this.isite.db.setting.enable_sending_messages_mobile_taqnyat) {
           this.user.$showContent = true;
         }
+        
         if (res.done && res.list.length > 0) {
           for (let i = 0; i < res.list.length; i++) {
             const element = res.list[i];
@@ -306,6 +331,7 @@ export class RegisterPage implements OnInit {
           this.mailer = res.doc;
           this.user.mobile = this.mailer.mobile;
           this.user.$country = this.mailer.country.id.toString();
+          
           this.user.$showContent = true;
         } else {
           this.mailer.$error = res.error;

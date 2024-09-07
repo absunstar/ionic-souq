@@ -26,7 +26,8 @@
       </p>
       <p class="time-publish" *ngIf="content.address.country.id">
         {{content.address.country.name_ar}} {{content.address.gov.name_ar}}
-        {{content.address.city.name_ar}} {{content.address.area.name_ar}}
+        <span *ngIf="!isite.db.setting.hide_city_area">{{content.address.city.name_ar}} {{content.address.area.name_ar}}</span>
+        
         <ion-icon name="navigate-outline"></ion-icon>
       </p>
       <p class="time-publish" *ngIf="content.address.detailed_address">

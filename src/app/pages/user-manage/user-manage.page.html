@@ -222,7 +222,7 @@
         </ion-select-option>
       </ion-select>
     </ion-item>
-    <ion-item class="error-item">
+    <ion-item class="error-item" *ngIf="!isite.db.setting.hide_city_area">
       <ion-label>المدينة</ion-label>
       <ion-select
         label="المدينة"
@@ -236,8 +236,8 @@
           {{city.name_ar}}
         </ion-select-option>
       </ion-select>
-    </ion-item>
-    <ion-item class="error-item">
+    </ion-item > 
+    <ion-item class="error-item" *ngIf="!isite.db.setting.hide_city_area">
       <ion-label>المنطقة</ion-label>
       <ion-select
         label="المنطقة"
