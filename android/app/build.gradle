@@ -9,9 +9,9 @@ android {
     defaultConfig {
         applicationId "com.harajtmor.app"
         minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 8
-        versionName "8.0"
+      targetSdkVersion targetSdkVersion
+      versionCode 9
+        versionName '9.1'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
