@@ -41,7 +41,6 @@ export class CreateAdPage implements OnInit {
     private alertController: AlertController,
     private router: Router,
     public http: HttpClient,
-    public loadingCtrl: LoadingController
   ) {
     this.content = {
       id: 0,
@@ -130,7 +129,7 @@ export class CreateAdPage implements OnInit {
           quality: 90,
           allowEditing: false,
           resultType: CameraResultType.DataUrl,
-          source: CameraSource.Photos, // Camera, Photos or Prompt!
+          source: CameraSource.Prompt, // Camera, Photos or Prompt!
         });
         if (image) {
           this.startUpload(image, type);

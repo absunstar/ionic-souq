@@ -38,7 +38,6 @@ export class UserManagePage implements OnInit {
     private alertController: AlertController,
     private router: Router,
     public http: HttpClient,
-    public loadingCtrl: LoadingController
   ) {
     this.user = {
       id: 0,
@@ -91,7 +90,7 @@ export class UserManagePage implements OnInit {
           quality: 90,
           allowEditing: false,
           resultType: CameraResultType.DataUrl,
-          source: CameraSource.Photos, // Camera, Photos or Prompt!
+          source: CameraSource.Prompt, // Camera, Photos or Prompt!
         });
         if (image) {
           this.startUpload(image, type);

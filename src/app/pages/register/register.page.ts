@@ -40,7 +40,6 @@ export class RegisterPage implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     public http: HttpClient,
-    public loadingCtrl: LoadingController
   ) {
     this.user = {
       $error: '',
@@ -95,7 +94,7 @@ export class RegisterPage implements OnInit {
           quality: 90,
           allowEditing: false,
           resultType: CameraResultType.DataUrl,
-          source: CameraSource.Photos, // Camera, Photos or Prompt!
+          source: CameraSource.Prompt, // Camera, Photos or Prompt!
         });
         if (image) {
           this.startUpload(image);
