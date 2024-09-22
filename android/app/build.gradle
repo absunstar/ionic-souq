@@ -10,8 +10,8 @@ android {
         applicationId "com.harajtmor.app"
         minSdkVersion rootProject.ext.minSdkVersion
       targetSdkVersion targetSdkVersion
-      versionCode 9
-        versionName '9.1'
+      versionCode 12
+        versionName '12'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
